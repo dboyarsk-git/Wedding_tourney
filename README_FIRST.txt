@@ -1,31 +1,26 @@
-TIM & DASHIA HOMEPAGE v1 — TYPEWRITER
+TIM & DASHIA COVER v3
 
-THIS PACKAGE ONLY BUILDS THE COVER PAGE.
+CHANGES
+- Green accent removed.
+- Maroon is the primary accent color.
+- Construction guy is extracted from the user's reference image and embedded
+  directly into index.html as transparent line art.
+- Our Story / Details / RSVP / Volleyball Tournament card titles now share
+  the same sizing system.
+- Ceremony icon is now an open Bible.
+- Admin button is at the bottom of the homepage.
 
-ROOT GITHUB PAGE
-index.html is the Tim & Dashia cover page.
-When GitHub Pages opens the repository, this is the page visitors see.
+ADMIN EDITING
+Click ADMIN at the bottom.
+Editable wording in the four cards will highlight.
+Click the words and type.
+Click SAVE CHANGES.
 
-STYLE
-- vintage cream / paper aesthetic
-- typewriter body text using Courier Prime
-- Tim & Dashia stays elegant serif
-- romantic handwritten accents stay script
-- deep forest green + maroon accents
-- construction details remain subtle
+IMPORTANT:
+For this cover-only stage, Admin edits are stored in your browser's localStorage.
+They do not yet update the public site for every visitor. Once the wording/layout
+is finalized, the Admin editor can be connected to Supabase for shared persistence.
 
-BUTTONS FOR NOW
-- Our Story -> blank placeholder page
-- Details -> blank placeholder page
-- RSVP -> blank placeholder page
-- Volleyball Tournament -> blank placeholder page
-
-NO SUPABASE
-NO TOURNAMENT ENGINE
-NO ADMIN
-NO SCORING
-
-This is intentionally just the cover page so we can perfect the homepage first.
-
-UPLOAD
-Upload the CONTENTS of this ZIP directly into the root of the Wedding_tourney GitHub repository.
+DEPLOY
+Upload the files in this ZIP directly to the ROOT of Wedding_tourney.
+GitHub Pages: main / (root)

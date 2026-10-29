@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#efe4d3">
-<title>Tim & Dashia — Cover Only v2</title>
-<!-- COVER_ONLY_V2_ROOT -->
+<title>Tim & Dashia — Cover v3</title>
+<!-- COVER_V3_MAROON_ADMIN -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
@@ -18,8 +18,9 @@
   --paper2:#e4d5c2;
   --ink:#3a2b22;
   --line:#aa957d;
-  --deep-green:#1f3b2c;
+  --primary-maroon:#6b1f2a;
   --maroon:#6b1f2a;
+  --maroon-dark:#4f1720;
   --construction-yellow:#e1b33f;
   --construction-black:#3b3028;
   --shadow:0 18px 55px rgba(62,42,27,.10);
@@ -80,14 +81,14 @@ a{color:inherit}
   letter-spacing:-.05em;
 }
 .hero h1 span{
-  font:500 .72em/1 var(--script);color:var(--deep-green);letter-spacing:0;
+  font:500 .72em/1 var(--script);color:var(--maroon);letter-spacing:0;
 }
 .tiny-caps{
   font:700 11px var(--type);letter-spacing:.17em;text-transform:uppercase;
 }
 .hero-script{
   margin:28px 0 15px;font:500 clamp(31px,4vw,49px)/1 var(--script);
-  color:var(--deep-green);
+  color:var(--maroon);
 }
 .subline{margin-top:6px}
 .heart-rule{
@@ -118,7 +119,11 @@ a{color:inherit}
   width:108px;height:30px;background:rgba(195,157,113,.55);
 }
 .builder{
-  position:absolute;left:4px;top:105px;width:125px;height:178px;color:var(--ink);z-index:4;
+  position:absolute;left:2px;top:80px;width:118px;height:auto;z-index:4;
+}
+.builder-reference{
+  object-fit:contain;
+  filter:contrast(1.08);
 }
 .under-note{
   position:absolute;left:7%;bottom:7px;z-index:5;
@@ -155,9 +160,16 @@ a{color:inherit}
   padding:40px 34px;text-align:center;
 }
 .script-heading{
-  font:500 clamp(44px,5vw,66px)/.95 var(--script);
+  font:500 clamp(42px,4vw,56px)/1 var(--script);
+  min-height:1.15em;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
 }
-.script-heading.smaller{font-size:clamp(38px,4vw,55px)}
+.script-heading.smaller{
+  font-size:clamp(42px,4vw,56px);
+}
 .heart{font:500 32px var(--script);color:var(--maroon);margin:6px 0 10px}
 .type-kicker{
   font:700 11px var(--type);letter-spacing:.13em;text-transform:uppercase;
@@ -171,7 +183,7 @@ a{color:inherit}
 }
 .outline-button{border:1px solid var(--ink)}
 .solid-button{
-  background:var(--deep-green);color:white;border:1px solid var(--deep-green);
+  background:var(--maroon);color:white;border:1px solid var(--maroon);
 }
 .details-card{
   min-height:360px;display:flex;flex-direction:column;justify-content:center;
@@ -183,7 +195,7 @@ a{color:inherit}
 .details-row>div{padding:20px 9px;border-right:1px solid var(--line)}
 .details-row>div:last-child{border-right:0}
 .detail-icon{
-  height:38px;display:grid;place-items:center;font-size:28px;margin-bottom:5px;color:var(--deep-green);
+  height:38px;display:grid;place-items:center;font-size:28px;margin-bottom:5px;color:var(--maroon);
 }
 .details-row span{
   display:block;font:700 9px var(--type);letter-spacing:.10em;text-transform:uppercase;
@@ -201,7 +213,7 @@ a{color:inherit}
   width:105px;height:26px;background:rgba(195,157,113,.43);
 }
 .action-icon{
-  font:500 54px var(--serif);color:var(--deep-green);line-height:1;margin-bottom:9px;
+  font:500 54px var(--serif);color:var(--maroon);line-height:1;margin-bottom:9px;
 }
 .closing{
   padding:85px 0 110px;text-align:center;
@@ -226,13 +238,144 @@ a{color:inherit}
   .hero h1{font-size:72px}
   .polaroid.front{width:235px;height:305px;right:28%}
   .polaroid.back{width:195px;height:255px}
-  .builder{width:102px;left:-6px}
+  .builder{width:96px;left:-4px;top:88px}
   .story-card{grid-template-columns:1fr}
   .story-photo{min-height:210px}
   .story-photo:after{writing-mode:horizontal-tb}
   .details-row{grid-template-columns:1fr 1fr}
   .details-row>div:nth-child(2){border-right:0}
   .details-row>div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+}
+
+
+/* v3 refinements */
+:root{
+  --maroon:#6b1f2a;
+  --maroon-dark:#4f1720;
+}
+
+/* Maroon is now the only accent color. */
+.hero h1 span,
+.hero-script,
+.heart,
+.heart-rule b,
+.detail-icon,
+.action-icon,
+.under-note{
+  color:var(--maroon)!important;
+}
+.solid-button{
+  background:var(--maroon)!important;
+  border-color:var(--maroon)!important;
+}
+.solid-button:hover{
+  background:var(--maroon-dark)!important;
+  border-color:var(--maroon-dark)!important;
+}
+
+/* Cohesive card typography */
+.story-copy,
+.details-card,
+.action-card{
+  font-size:15px;
+}
+.script-heading,
+.script-heading.smaller{
+  font-size:clamp(42px,4vw,56px)!important;
+  line-height:1!important;
+}
+.type-kicker{
+  font-size:11px!important;
+}
+.story-copy p,
+.action-card p{
+  font-size:15px!important;
+  line-height:1.6!important;
+}
+.outline-button,
+.solid-button{
+  font-size:10px!important;
+}
+
+/* Bible icon */
+.bible-icon{
+  width:34px;
+  height:34px;
+  display:block;
+  margin:auto;
+  color:var(--maroon);
+}
+
+/* Admin editor */
+.admin-section{
+  width:min(1200px,94vw);
+  margin:15px auto 65px;
+  padding-top:24px;
+  text-align:center;
+  border-top:1px solid rgba(58,43,34,.12);
+}
+.admin-button{
+  border:1px solid var(--maroon);
+  color:var(--maroon);
+  background:transparent;
+  padding:10px 18px;
+  cursor:pointer;
+  font:700 10px var(--type);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.admin-button:hover{
+  background:var(--maroon);
+  color:white;
+}
+.admin-panel{
+  width:min(700px,94vw);
+  margin:18px auto 0;
+  padding:22px;
+  background:rgba(244,234,219,.95);
+  border:1px solid rgba(58,43,34,.16);
+  box-shadow:var(--shadow);
+}
+.admin-title{
+  font:500 30px var(--script);
+  color:var(--maroon);
+}
+.admin-copy{
+  margin:8px 0 16px;
+  font:400 13px/1.6 var(--type);
+}
+.admin-actions{
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.admin-actions button{
+  border:1px solid var(--ink);
+  background:var(--ink);
+  color:white;
+  padding:9px 13px;
+  cursor:pointer;
+  font:700 9px var(--type);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.admin-actions button:nth-child(2){
+  background:transparent;
+  color:var(--maroon);
+  border-color:var(--maroon);
+}
+.admin-status{
+  min-height:18px;
+  margin-top:12px;
+  font:700 10px var(--type);
+  color:var(--maroon);
+}
+body.admin-editing [data-edit-key]{
+  outline:1px dashed var(--maroon);
+  outline-offset:4px;
+  cursor:text;
+  background:rgba(107,31,42,.035);
 }
 
 </style>
@@ -281,59 +424,7 @@ a{color:inherit}
         <div class="photo-placeholder">PHOTO<br>COMING LATER</div>
       </div>
 
-      <svg class="builder" viewBox="0 0 150 210" fill="none" aria-hidden="true">
-  <!-- small hand-drawn construction guy matched to the reference image -->
-  <g stroke="#3a2b22" stroke-linecap="round" stroke-linejoin="round">
-    <!-- step ladder -->
-    <path d="M37 193L54 112" stroke-width="3.5"/>
-    <path d="M91 193L78 112" stroke-width="3.5"/>
-    <path d="M43 166H87M47 145H84M51 125H81" stroke-width="3.2"/>
-    <path d="M32 194h18M83 194h18" stroke-width="3.2"/>
-
-    <!-- head -->
-    <circle cx="69" cy="67" r="14.5" stroke-width="3.5"/>
-
-    <!-- tilted hard hat -->
-    <path d="M55 61c4-11 20-16 29-7" stroke-width="3.5"/>
-    <path d="M52 64l35-8" stroke-width="3.5"/>
-    <path d="M65 51l6-5 8 3 4 6" stroke-width="3"/>
-
-    <!-- tiny face / smile -->
-    <path d="M63 68c4 3 8 3 12 0" stroke-width="2.6"/>
-
-    <!-- slim body -->
-    <path d="M69 82l1 36" stroke-width="3.5"/>
-
-    <!-- left arm resting downward -->
-    <path d="M67 90l-10 19" stroke-width="3.5"/>
-    <path d="M57 109l-4 9" stroke-width="3"/>
-
-    <!-- raised right arm -->
-    <path d="M73 90l16-21" stroke-width="3.5"/>
-    <path d="M89 69l9-8" stroke-width="3.2"/>
-
-    <!-- little hand -->
-    <path d="M97 61l3-4M98 62l5 1" stroke-width="2.5"/>
-
-    <!-- legs standing on ladder -->
-    <path d="M70 118l-10 29" stroke-width="3.5"/>
-    <path d="M70 118l11 29" stroke-width="3.5"/>
-
-    <!-- tiny shoes -->
-    <path d="M56 148h9M78 148h9" stroke-width="3"/>
-  </g>
-
-  <!-- little heart above him, like the reference -->
-  <path d="M48 31c-8-7-15 3-8 10l8 9 8-9c7-7 0-17-8-10Z"
-        stroke="#3a2b22" stroke-width="2.8" stroke-linejoin="round"/>
-
-  <!-- tiny construction-yellow spark at his raised hand -->
-  <g stroke="#e1b33f" stroke-width="2.8" stroke-linecap="round">
-    <path d="M106 51l5-4"/>
-    <path d="M108 57h7"/>
-    <path d="M103 46l1-6"/>
-  </g>
-</svg>
+      <img class="builder builder-reference" src="data:image/png;base64,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" alt="" aria-hidden="true">
 
       <div class="under-note">Under<br>Construction ♡</div>
     </div>
@@ -343,38 +434,42 @@ a{color:inherit}
     <a class="story-card card-link" href="our-story.html">
       <div class="story-photo"></div>
       <div class="story-copy">
-        <div class="script-heading">Our Story</div>
+        <div class="script-heading" data-edit-key="story_title">Our Story</div>
         <div class="heart">♡</div>
-        <div class="type-kicker">Two paths. One story.</div>
-        <p>From volleyball courts to forever —<br>this is just the beginning.</p>
-        <span class="outline-button">Learn More →</span>
+        <div class="type-kicker" data-edit-key="story_kicker">Two paths. One story.</div>
+        <p data-edit-key="story_body">From volleyball courts to forever —<br>this is just the beginning.</p>
+        <span class="outline-button" data-edit-key="story_button">Learn More →</span>
       </div>
     </a>
 
     <a class="details-card card-link" href="details.html">
-      <div class="script-heading">Details</div>
+      <div class="script-heading" data-edit-key="details_title">Details</div>
       <div class="heart">♡</div>
 
       <div class="details-row">
         <div>
           <div class="detail-icon">▣</div>
-          <span>Date</span>
-          <strong>TBD</strong>
+          <span data-edit-key="date_label">Date</span>
+          <strong data-edit-key="date_value">TBD</strong>
         </div>
         <div>
           <div class="detail-icon">⌖</div>
-          <span>Location</span>
-          <strong>TBD</strong>
+          <span data-edit-key="location_label">Location</span>
+          <strong data-edit-key="location_value">TBD</strong>
         </div>
         <div>
-          <div class="detail-icon">♢</div>
-          <span>Ceremony</span>
-          <strong>TBD</strong>
+          <div class="detail-icon"><svg class="bible-icon" viewBox="0 0 48 48" aria-hidden="true">
+  <path d="M8 8h13c4 0 7 2 7 6v26c0-4-3-6-7-6H8V8Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+  <path d="M40 8H27c-4 0-7 2-7 6v26c0-4 3-6 7-6h13V8Z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/>
+  <path d="M24 12v22M29 15h6M32 12v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg></div>
+          <span data-edit-key="ceremony_label">Ceremony</span>
+          <strong data-edit-key="ceremony_value">TBD</strong>
         </div>
         <div>
           <div class="detail-icon">◉</div>
-          <span>Tournament</span>
-          <strong>TBD</strong>
+          <span data-edit-key="tournament_label">Tournament</span>
+          <strong data-edit-key="tournament_value">TBD</strong>
         </div>
       </div>
     </a>
@@ -383,18 +478,18 @@ a{color:inherit}
   <section class="action-grid">
     <a class="action-card card-link" href="rsvp.html">
       <div class="action-icon">✉</div>
-      <div class="script-heading">RSVP</div>
-      <div class="type-kicker">For the Ceremony</div>
-      <p>Let us know if you’ll be joining us<br>for the celebration!</p>
-      <span class="solid-button">RSVP Now →</span>
+      <div class="script-heading" data-edit-key="rsvp_title">RSVP</div>
+      <div class="type-kicker" data-edit-key="rsvp_kicker">For the Ceremony</div>
+      <p data-edit-key="rsvp_body">Let us know if you’ll be joining us<br>for the celebration!</p>
+      <span class="solid-button" data-edit-key="rsvp_button">RSVP Now →</span>
     </a>
 
     <a class="action-card card-link" href="volleyball.html">
       <div class="action-icon">◉</div>
-      <div class="script-heading smaller">Volleyball Tournament</div>
-      <div class="type-kicker">RSVP Your Team</div>
-      <p>Register your team for the tournament!</p>
-      <span class="solid-button">Register Team →</span>
+      <div class="script-heading smaller" data-edit-key="vball_title">Volleyball Tournament</div>
+      <div class="type-kicker" data-edit-key="vball_kicker">RSVP Your Team</div>
+      <p data-edit-key="vball_body">Register your team for the tournament!</p>
+      <span class="solid-button" data-edit-key="vball_button">Register Team →</span>
     </a>
   </section>
 
@@ -404,6 +499,21 @@ a{color:inherit}
       <i></i><b>♡</b><i></i>
     </div>
   </section>
+
+<section class="admin-section">
+  <button class="admin-button" id="adminButton" type="button">Admin</button>
+  <div class="admin-panel" id="adminPanel" hidden>
+    <div class="admin-title">Homepage Edit Mode</div>
+    <div class="admin-copy">Click any highlighted wording in the four cards, type your change, then save.</div>
+    <div class="admin-actions">
+      <button type="button" id="saveEdits">Save Changes</button>
+      <button type="button" id="resetEdits">Reset Text</button>
+      <button type="button" id="closeAdmin">Done</button>
+    </div>
+    <div class="admin-status" id="adminStatus"></div>
+  </div>
+</section>
+
 </main>
 
 <script>
@@ -414,6 +524,66 @@ menuButton?.addEventListener("click",()=>navLinks?.classList.toggle("open"));
 document.querySelectorAll(".nav-links a").forEach(a=>{
   a.addEventListener("click",()=>navLinks?.classList.remove("open"));
 });
+
+</script>
+<script>
+
+const ADMIN_STORAGE_KEY="timDashiaCoverEditsV3";
+const editableEls=[...document.querySelectorAll("[data-edit-key]")];
+const adminButton=document.getElementById("adminButton");
+const adminPanel=document.getElementById("adminPanel");
+const saveEdits=document.getElementById("saveEdits");
+const resetEdits=document.getElementById("resetEdits");
+const closeAdmin=document.getElementById("closeAdmin");
+const adminStatus=document.getElementById("adminStatus");
+
+const defaultText={};
+editableEls.forEach(el=>{ defaultText[el.dataset.editKey]=el.innerHTML; });
+
+function loadEdits(){
+  try{
+    const saved=JSON.parse(localStorage.getItem(ADMIN_STORAGE_KEY)||"{}");
+    editableEls.forEach(el=>{
+      const key=el.dataset.editKey;
+      if(Object.prototype.hasOwnProperty.call(saved,key)) el.innerHTML=saved[key];
+    });
+  }catch(e){ console.warn("Could not load saved homepage edits",e); }
+}
+
+function setAdminMode(on){
+  document.body.classList.toggle("admin-editing",on);
+  adminPanel.hidden=!on;
+  editableEls.forEach(el=>{
+    el.contentEditable=on ? "true" : "false";
+    el.spellcheck=on;
+  });
+  if(on){
+    adminStatus.textContent="Edit mode is on.";
+    adminPanel.scrollIntoView({behavior:"smooth",block:"center"});
+  }
+}
+
+adminButton?.addEventListener("click",()=>setAdminMode(true));
+
+closeAdmin?.addEventListener("click",()=>{
+  setAdminMode(false);
+  adminStatus.textContent="";
+});
+
+saveEdits?.addEventListener("click",()=>{
+  const saved={};
+  editableEls.forEach(el=>{ saved[el.dataset.editKey]=el.innerHTML; });
+  localStorage.setItem(ADMIN_STORAGE_KEY,JSON.stringify(saved));
+  adminStatus.textContent="Saved on this browser.";
+});
+
+resetEdits?.addEventListener("click",()=>{
+  editableEls.forEach(el=>{ el.innerHTML=defaultText[el.dataset.editKey]; });
+  localStorage.removeItem(ADMIN_STORAGE_KEY);
+  adminStatus.textContent="Text reset to the original version.";
+});
+
+loadEdits();
 
 </script>
 </body>

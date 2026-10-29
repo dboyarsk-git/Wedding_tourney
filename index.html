@@ -14,7 +14,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>ONE WAY Grass 4s — v60</title>
+<title>Wedding Bash Volleyball — Tim & Dashia</title>
 <meta name="oneway-build" content="v60">
 <script>
 /* ONE WAY v42:
@@ -1696,15 +1696,20 @@ body.admin-mode #paymentCard.payment-disabled-public{
 }
 
 </style>
+<link rel="stylesheet" href="theme.css">
 </head>
 <body>
-<a href="../index.html" style="position:fixed;right:12px;bottom:12px;z-index:9999;background:#f2eee5;color:#2d241e;border:1px solid rgba(45,36,30,.25);padding:9px 12px;border-radius:999px;text-decoration:none;font:700 10px/1 Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 4px 16px rgba(0,0,0,.12)">← Wedding Home</a>
+<div class="wedding-subnav">
+  <a href="../index.html">← Tim &amp; Dashia Home</a>
+  <span>Wedding Bash · Volleyball Tournament</span>
+  <a href="?view=register">RSVP Your Team →</a>
+</div>
 <div class="shell">
 <section class="hero">
-<div class="kicker">New Hope Youth • Charlotte, NC</div>
-<div class="brandline"><span class="oneway">oneway</span><span class="conference">grass 4s</span></div>
-<p>ONE WAY Conference volleyball at Church of New Hope. Pool play, live standings, bracket play, and a full-screen courtside scorer — all in one place.</p>
-<div class="verse">“I am the way, the truth, and the life.” — John 14:6 <span class="arrow">→</span></div>
+<div class="kicker">Tim & Dashia • Wedding Bash</div>
+<div class="brandline"><span class="oneway">Wedding Bash</span><span class="conference">volleyball 4s</span></div>
+<p>The tournament side of Tim & Dashia’s celebration. Team registration, pool play, live standings, bracket play, and the full-screen courtside scorer all stay together here.</p>
+<div class="verse">Same team. Always. <span class="arrow">♡</span></div>
 <div class="sync" id="syncStatus"><span class="dot"></span><span id="syncText">Connecting live sync…</span></div>
 <div class="pill blue" id="liveBuildBadge" style="margin-top:8px">LIVE BUILD v60</div>
 </section>
@@ -1731,7 +1736,7 @@ body.admin-mode #paymentCard.payment-disabled-public{
 </div>
 
 <div class="panel">
-<div class="section-title"><h2>Everything You Need to Know</h2><span class="pill orange">ONE WAY Conference</span></div>
+<div class="section-title"><h2>Everything You Need to Know</h2><span class="pill orange">Wedding Bash</span></div>
 <div class="rules-columns">
   <div class="rules-column rules-column-left">
 <div class="rule-card" id="prizeCard">
@@ -6575,8 +6580,8 @@ window.addEventListener("load",()=>{
   const requested=new URLSearchParams(window.location.search).get("view");
   if(requested && ["home","register","teams","schedule","standings","bracket"].includes(requested)){
     setTimeout(()=>{
-      try{ if(typeof showView==="function") showView(requested); }catch(e){ console.warn("Requested tournament view:",e); }
-    },250);
+      try{ if(typeof showView==="function") showView(requested); }catch(e){ console.warn(e); }
+    },300);
   }
 });
 </script>

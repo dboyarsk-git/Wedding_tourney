@@ -1,86 +1,61 @@
 
 const SUPABASE_URL="https://uygotksjyqusbdoepzft.supabase.co";
 const SUPABASE_KEY="sb_publishable_7946Ght6J3pY2k9UcNbkhA_dDTwn89q";
-const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
 const form=document.getElementById("rsvpForm");
 const statusBox=document.getElementById("rsvpStatus");
-const submitBtn=document.getElementById("submitRsvp");
+const submit=document.getElementById("submitRsvp");
 
-function showStatus(message,type="ok"){
+function text(id){return String(document.getElementById(id)?.value||"").trim()}
+function status(message,type="ok"){
   statusBox.textContent=message;
   statusBox.className=`status show ${type}`;
 }
-function setBusy(busy){
-  submitBtn.disabled=busy;
-  submitBtn.textContent=busy?"Sending…":"Send RSVP";
-}
-function safeString(v){return String(v??"").trim()}
 
-form?.addEventListener("submit",async(e)=>{
+form?.addEventListener("submit",async e=>{
   e.preventDefault();
-  if(safeString(document.getElementById("website").value))return;
+  if(text("website"))return;
 
-  const payload={
-    p_guest_name:safeString(document.getElementById("guestName").value),
-    p_email:safeString(document.getElementById("email").value),
-    p_phone:safeString(document.getElementById("phone").value),
-    p_attendance:safeString(document.getElementById("attendance").value),
+  const args={
+    p_guest_name:text("guestName"),
+    p_email:text("email"),
+    p_phone:text("phone"),
+    p_attendance:text("attendance"),
     p_party_size:Number(document.getElementById("partySize").value||1),
-    p_guest_names:safeString(document.getElementById("guestNames").value),
-    p_message:safeString(document.getElementById("message").value)
+    p_guest_names:text("guestNames"),
+    p_message:text("message")
   };
 
-  if(!payload.p_guest_name||!payload.p_email||!payload.p_attendance){
-    showStatus("Please complete your name, email, and attendance response.","bad");
-    return;
-  }
+  submit.disabled=true;submit.textContent="Sending…";
 
-  setBusy(true);
   try{
-    const {data,error}=await supabaseClient.rpc("submit_wedding_rsvp",payload);
+    const {data,error}=await sb.rpc("submit_wedding_rsvp",args);
     if(error)throw error;
 
-    const result=data||{};
-    document.getElementById("previewGuest").textContent=payload.p_guest_name;
-    document.getElementById("previewCode").textContent=`Confirmation · ${result.confirmation_code||"Saved"}`;
+    const code=data?.confirmation_code||"Saved";
+    document.getElementById("previewGuest").textContent=args.p_guest_name;
+    document.getElementById("previewCode").textContent=`Confirmation · ${code}`;
 
-    let emailNote="";
+    let emailMsg=" Your RSVP is saved.";
     try{
       const response=await fetch(`${SUPABASE_URL}/functions/v1/send-rsvp-confirmation`,{
         method:"POST",
-        headers:{
-          "Content-Type":"application/json",
-          "apikey":SUPABASE_KEY,
-          "Authorization":`Bearer ${SUPABASE_KEY}`
-        },
+        headers:{"Content-Type":"application/json","apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`},
         body:JSON.stringify({
-          guest_name:payload.p_guest_name,
-          email:payload.p_email,
-          attendance:payload.p_attendance,
-          party_size:payload.p_party_size,
-          confirmation_code:result.confirmation_code||"",
-          date:"TBD",
-          location:"TBD",
-          ceremony:"TBD"
+          guest_name:args.p_guest_name,email:args.p_email,attendance:args.p_attendance,
+          party_size:args.p_party_size,confirmation_code:code,date:"TBD",location:"TBD",ceremony:"TBD"
         })
       });
-      if(response.ok){
-        emailNote=" A confirmation email was also sent.";
-      }else{
-        emailNote=" Your RSVP is saved; email delivery is not connected yet.";
-      }
-    }catch{
-      emailNote=" Your RSVP is saved; email delivery is not connected yet.";
-    }
+      emailMsg=response.ok?" A confirmation email was sent.":" Email delivery is not connected yet.";
+    }catch{emailMsg=" Email delivery is not connected yet.";}
 
-    showStatus(`RSVP saved! Confirmation ${result.confirmation_code||""}.${emailNote}`,"ok");
-    form.reset();
-    document.getElementById("partySize").value=1;
+    status(`RSVP saved! Confirmation ${code}.${emailMsg}`,"ok");
+    form.reset();document.getElementById("partySize").value=1;
   }catch(err){
     console.error(err);
-    showStatus("Your RSVP could not be saved. Please try again or contact Tim & Dashia.","bad");
+    status("Your RSVP could not be saved. Please try again.","bad");
   }finally{
-    setBusy(false);
+    submit.disabled=false;submit.textContent="Send RSVP";
   }
 });

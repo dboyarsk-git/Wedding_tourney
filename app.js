@@ -1,21 +1,11 @@
 
-const menuBtn=document.querySelector(".mobile-menu");
-const navLinks=document.querySelector(".nav-links");
-menuBtn?.addEventListener("click",()=>navLinks?.classList.toggle("open"));
-document.querySelectorAll(".nav-links a,.nav-links button").forEach(el=>{
-  el.addEventListener("click",()=>navLinks?.classList.remove("open"));
-});
+const menu=document.querySelector(".menu");
+const nav=document.querySelector(".navlinks");
+menu?.addEventListener("click",()=>nav?.classList.toggle("open"));
+document.querySelectorAll(".navlinks a,.navlinks button").forEach(el=>el.addEventListener("click",()=>nav?.classList.remove("open")));
 
-const storyModal=document.getElementById("storyModal");
-document.querySelectorAll("[data-open-story]").forEach(btn=>{
-  btn.addEventListener("click",()=>storyModal?.classList.add("open"));
-});
-document.querySelectorAll("[data-close-story]").forEach(btn=>{
-  btn.addEventListener("click",()=>storyModal?.classList.remove("open"));
-});
-storyModal?.addEventListener("click",e=>{
-  if(e.target===storyModal)storyModal.classList.remove("open");
-});
-document.addEventListener("keydown",e=>{
-  if(e.key==="Escape")storyModal?.classList.remove("open");
-});
+const story=document.getElementById("storyModal");
+document.querySelectorAll("[data-story-open]").forEach(el=>el.addEventListener("click",()=>story?.classList.add("open")));
+document.querySelectorAll("[data-story-close]").forEach(el=>el.addEventListener("click",()=>story?.classList.remove("open")));
+story?.addEventListener("click",e=>{if(e.target===story)story.classList.remove("open")});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")story?.classList.remove("open")});

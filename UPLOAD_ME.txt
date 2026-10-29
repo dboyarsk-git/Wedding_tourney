@@ -1,0 +1,48 @@
+UPLOAD THESE FILES DIRECTLY TO THE ROOT OF THE Wedding_tourney REPO:
+
+index.html
+our-story.html
+details.html
+rsvp.html
+volleyball.html
+.nojekyll
+
+IMPORTANT:
+Delete the old root index.html first.
+Then upload this new index.html.
+Commit to main.
+GitHub Pages must be set to:
+  main / (root)
+
+Open:
+https://dboyarsk-git.github.io/Wedding_tourney/?final=1
+
+The browser title should say:
+Tim & Dashia — Cover FINAL
+
+
+V4 ADMIN EDIT FIX
+When Admin edit mode is ON:
+- card links do not navigate
+- RSVP/Register buttons do not navigate
+- top nav links do not navigate
+- editable text can be clicked and typed into normally
+
+When you click DONE:
+- navigation is restored
+
+
+V5 CHANGES
+- Construction graphic is ONLY the little guy + ladder.
+- Removed stray A / heart / sparks / background fragments.
+- Admin mode now HARD-LOCKS navigation.
+- While Admin is ON, no link or page switch can activate.
+- Editable text still works.
+- Click DONE to restore normal navigation.
+
+
+V6 ADMIN BEHAVIOR
+- Top navigation stays usable while Admin mode is ON.
+- Only clickable content cards are disabled while editing.
+- Editable wording can still be clicked and typed into.
+- DONE restores normal card navigation.

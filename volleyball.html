@@ -15,7 +15,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>Tim & Dashia — Our Big Day Volleyball 4s</title>
-<meta name="wedding-tournament-build" content="v10-theme-v60-engine">
+<meta name="wedding-tournament-build" content="v11-cohesive-copy-v60-engine">
 <meta name="oneway-build" content="v60">
 <script>
 /* ONE WAY v42:
@@ -1706,16 +1706,18 @@ body.admin-mode #paymentCard.payment-disabled-public{
 <body>
 <div class="shell">
 <section class="hero">
-<div class="kicker">Tim &amp; Dashia • Our Big Day</div>
-<div class="brandline"><span class="oneway">Our Big Day</span><span class="conference">Volleyball 4s</span></div>
-<p>A little competition for our big celebration. Register your team, follow the schedule, watch the standings, and play through the championship bracket — all in one place.</p>
+<div class="kicker">Our Wedding &amp; Volleyball Tournament</div>
+<div class="brandline"><span class="oneway">Tim &amp; Dashia</span><span class="conference">Volleyball Tournament</span></div>
+<div class="tournament-tiny-caps">Love · Volleyball · Good Times</div>
+<div class="tournament-hero-script">A celebration of love and sport...</div>
+<p><b>RSVP Your Team.</b> Register your team for the tournament, then follow the schedule, standings, and championship bracket right here.</p>
 <div class="verse">Mark 10:9 • “Therefore what God has joined together, let no one separate.”</div>
 <div class="sync" id="syncStatus"><span class="dot"></span><span id="syncText">Connecting live sync…</span></div>
 <div class="pill blue" id="liveBuildBadge" style="margin-top:8px">LIVE TOURNAMENT</div>
 </section>
 
 <nav class="nav" id="nav">
-<a class="wedding-home-link" href="index.html">← Wedding Home</a><button data-view="home" class="active">Welcome</button><button data-view="register">Register Team</button><button data-view="teams">Teams</button><button data-view="schedule">Schedule</button><button data-view="standings">Standings</button><button data-view="bracket">Bracket</button><button class="admin" id="adminBtn">Admin</button>
+<a class="wedding-home-link" href="index.html">← Wedding Home</a><button data-view="home" class="active">Details</button><button data-view="register">RSVP Your Team</button><button data-view="teams">Teams</button><button data-view="schedule">Schedule</button><button data-view="standings">Standings</button><button data-view="bracket">Bracket</button><button class="admin" id="adminBtn">Admin</button>
 </nav>
 
 <div class="live-data-guard hidden" id="liveDataGuard">
@@ -1736,7 +1738,7 @@ body.admin-mode #paymentCard.payment-disabled-public{
 </div>
 
 <div class="panel">
-<div class="section-title"><h2>Everything You Need to Know</h2><span class="pill orange">Our Big Day</span></div>
+<div class="section-title"><div><h2>Details</h2><div class="muted">Everything you need to know about the volleyball side of our big day.</div></div><span class="pill orange">Love · Volleyball · Good Times</span></div>
 <div class="rules-columns">
   <div class="rules-column rules-column-left">
 <div class="rule-card" id="prizeCard">
@@ -1924,14 +1926,14 @@ body.admin-mode #paymentCard.payment-disabled-public{
 <section id="view-register" class="view hidden">
 <div class="panel">
 <div class="section-title">
-<div><h2>Register a Team</h2><div class="muted">The captain submits the complete roster once. No separate teammate confirmation link is required.</div></div>
+<div><h2>RSVP Your Team</h2><div class="muted">Register your team for the tournament! The captain submits the complete roster once.</div></div>
 <span class="pill orange" id="registrationCount">Loading…</span>
 </div>
 
-<div id="registrationClosedBanner" class="registration-closed hidden">Registration is currently closed. Pools have been finalized.</div>
+<div id="registrationClosedBanner" class="registration-closed hidden">Team RSVP is currently closed. Pools have been finalized.</div>
 <div class="register-layout">
 <div class="card">
-<h3 style="margin-top:0">Captain Registration</h3>
+<h3 style="margin-top:0">Team RSVP</h3>
 <div class="form-grid">
 <div class="form-field full"><label>Team Name</label><input id="regTeamName" maxlength="50" placeholder="Team name"></div>
 <div class="form-field full">
@@ -2041,11 +2043,11 @@ body.admin-mode #paymentCard.payment-disabled-public{
 <section id="view-bracket" class="view hidden"><div class="panel"><div class="section-title"><div><h2>Championship bracket</h2><div class="muted" id="bracketNote">Semifinal scoring unlocks after all pool matches are final.</div></div></div><div class="bracket-grid" id="bracketGrid"></div></div></section>
 </main>
 <footer>
-<div>Tim &amp; Dashia • Our Big Day Volleyball 4s • Mark 10:9 • v60 tournament engine</div>
+<div>Our Wedding &amp; Volleyball Tournament • Tim &amp; Dashia • Mark 10:9</div>
 <div class="copyright-box">
-© 2026 Tim &amp; Dashia • Our Big Day Volleyball Tournament.
-Built for our wedding celebration and tournament.
-Love, volleyball, and good times.
+A celebration of love and sport...<br>
+Love · Volleyball · Good Times<br>
+© 2026 Tim &amp; Dashia
 </div>
 </footer>
 </div>
@@ -2054,12 +2056,12 @@ Love, volleyball, and good times.
 <div class="registration-success-overlay" id="registrationSuccessOverlay">
   <div class="registration-success-card">
     <span class="pill green" id="registrationSuccessStatus">REGISTERED ✓</span>
-    <h2>Registration Complete</h2>
+    <h2>Team RSVP Complete</h2>
     <div class="muted">Team</div>
     <div style="font-size:1.25rem;font-weight:900;margin-top:2px" id="registrationSuccessTeam"></div>
 
     <p style="line-height:1.55" id="registrationSuccessSummary">
-      Your team is registered. No teammate confirmation link is required.
+      Your team is officially in! No separate teammate confirmation link is required.
     </p>
 
     <div class="registration-payment-box" id="registrationPaymentBox">
@@ -6917,6 +6919,31 @@ footer:after{
   .verse{font-size:16px}
   .panel{padding:18px}
   .section-title h2,.panel h2{font-size:31px}
+}
+
+
+
+/* v11 — copy hierarchy copied from the wedding homepage */
+.tournament-tiny-caps{
+  margin-top:14px;
+  color:var(--ink);
+  font:700 11px/1.4 var(--type);
+  letter-spacing:.17em;
+  text-transform:uppercase;
+}
+.tournament-hero-script{
+  margin:10px 0 8px;
+  color:var(--maroon);
+  font:500 clamp(27px,4vw,43px)/1.05 var(--script);
+}
+.hero .brandline{
+  flex-wrap:wrap;
+}
+.hero .oneway{
+  white-space:nowrap;
+}
+.hero .conference{
+  white-space:nowrap;
 }
 
 </style>

@@ -58,3 +58,9 @@ V7 FIX
 V8
 - Construction buddy restored and made larger/more visible.
 - Colored hard hat and outfit so he reads clearly on the page.
+
+
+V9
+- Replaced the drawn construction figure with the exact construction buddy image requested.
+- Buddy is embedded directly inside index.html, so there is no separate image file to upload.
+- Existing Admin editing and spacebar fixes are preserved.

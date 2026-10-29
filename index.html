@@ -16,6 +16,7 @@
 <meta http-equiv="Expires" content="0">
 <title>Wedding Bash Volleyball — Tim & Dashia</title>
 <meta name="oneway-build" content="v60">
+<meta name="wedding-bash-theme" content="cover-theme-v1">
 <script>
 /* ONE WAY v42:
    Player-by-player confirmation is intentionally disabled for this tournament.
@@ -1696,22 +1697,286 @@ body.admin-mode #paymentCard.payment-disabled-public{
 }
 
 </style>
-<link rel="stylesheet" href="theme.css">
+
+<style id="tim-dashia-cover-theme">
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Montserrat:wght@400;500;600;700&display=swap');
+
+:root{
+  --ink:#35281f!important;
+  --charcoal:#4d3e34!important;
+  --cream:#f3ebdc!important;
+  --paper:#faf6ee!important;
+  --blue:#ded0bd!important;
+  --orange:#c96e49!important;
+  --orange-deep:#a95636!important;
+  --sage:#d8cfbc!important;
+  --line:#c8b8a3!important;
+  --good:#657c62!important;
+  --bad:#974c43!important;
+  --shadow:0 20px 56px rgba(62,44,31,.11)!important;
+  --radius:2px!important;
+}
+html{background:#f3ebdc!important}
+body{
+  font-family:"Montserrat",system-ui,sans-serif!important;
+  color:var(--ink)!important;
+  background:
+    radial-gradient(circle at 18% 8%,rgba(255,255,255,.78),transparent 28%),
+    radial-gradient(circle at 86% 27%,rgba(201,110,73,.06),transparent 25%),
+    linear-gradient(180deg,#faf6ee,#f1e7d7)!important;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.16;
+  background-image:
+    repeating-linear-gradient(0deg,rgba(93,70,52,.035) 0 1px,transparent 1px 4px);
+}
+.wedding-subnav{
+  position:sticky;top:0;z-index:300;min-height:48px;
+  padding:11px max(14px,calc((100vw - 1180px)/2));
+  display:flex;gap:18px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+  background:rgba(250,246,238,.95);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(53,40,31,.11);
+  font:600 10px "Montserrat";letter-spacing:.14em;text-transform:uppercase
+}
+.wedding-subnav a{text-decoration:none;color:var(--ink)}
+.wedding-subnav a:hover{color:var(--orange)}
+.shell{max-width:1180px!important;padding:28px 22px!important}
+.wedding-cover-hero{
+  min-height:455px!important;border-radius:0!important;padding:0!important;
+  background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible!important;
+}
+.wedding-cover-hero:after{display:none!important}
+.cover-grid{
+  position:relative;display:grid;grid-template-columns:1.03fr .97fr;gap:50px;
+  align-items:center;min-height:455px;padding:45px 36px;
+  background:rgba(250,246,238,.70);
+  border:1px solid rgba(53,40,31,.10);
+  box-shadow:var(--shadow);
+}
+.cover-copy{position:relative;z-index:4;min-width:0}
+.cover-eyebrow{
+  margin-top:25px;font:500 12px "Montserrat";letter-spacing:.28em;text-transform:uppercase
+}
+.cover-brand{display:block!important;margin:13px 0 18px!important}
+.cover-brand .oneway{
+  display:block;font:500 clamp(3.9rem,7vw,6.8rem)/.78 "Cormorant Garamond"!important;
+  letter-spacing:-.045em!important;color:var(--ink)!important;
+}
+.cover-brand .conference{
+  display:block;margin-top:8px;font:500 clamp(2.9rem,5vw,5.1rem)/.88 "Cormorant Garamond"!important;
+  letter-spacing:-.045em!important;color:var(--ink)!important;
+}
+.cover-script{font:500 clamp(2rem,3.5vw,3.2rem)/1 "Caveat";color:var(--orange);margin:0 0 18px}
+.cover-copy p{max-width:610px!important;font:400 1.22rem/1.55 "Cormorant Garamond"!important;color:#58483d}
+.cover-live-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:20px}
+.sync,.pill{border-radius:0!important}
+.sync{background:#f6ecdf!important;border:1px solid rgba(53,40,31,.12)!important}
+.pill.blue{background:#eadbc8!important;color:#5a4637!important}
+.cover-paper-scene{position:relative;min-height:370px;color:var(--ink)}
+.cover-paper-back{
+  position:absolute;width:78%;height:310px;right:10%;top:24px;background:#dfd2bf;
+  transform:rotate(-4deg);box-shadow:var(--shadow)
+}
+.cover-paper-card{
+  position:absolute;width:82%;min-height:315px;right:2%;top:47px;padding:52px 34px 34px;
+  text-align:center;background:#f7f0e4;border:1px solid rgba(53,40,31,.12);
+  transform:rotate(2deg);box-shadow:var(--shadow)
+}
+.cover-mask{
+  position:absolute;top:-17px;left:50%;width:125px;height:34px;
+  transform:translateX(-50%) rotate(3deg);background:rgba(197,161,116,.54)
+}
+.cover-small{font:600 10px "Montserrat";letter-spacing:.22em;text-transform:uppercase}
+.cover-card-title{margin-top:20px;font:500 3rem/1 "Cormorant Garamond"}
+.cover-card-title span{display:block;font:500 3rem/1 "Caveat";color:var(--orange)}
+.cover-card-copy{margin:25px auto 0;max-width:280px;font:500 10px/1.7 "Montserrat";letter-spacing:.13em;text-transform:uppercase}
+.cover-heart{margin-top:18px;font:500 34px "Caveat"}
+.cover-worker{position:absolute;left:-2px;bottom:-7px;width:140px;height:185px;color:var(--ink);z-index:6}
+.cover-cone{position:absolute;width:57px;height:72px;color:var(--ink);z-index:8}
+.cone-left{left:-12px;bottom:-20px;transform:rotate(-7deg)}
+.cone-right{right:12px;bottom:-20px;transform:rotate(7deg)}
+.cover-tape{
+  position:absolute;z-index:7;width:245px;height:23px;
+  background:repeating-linear-gradient(135deg,#dfb23f 0 24px,#3b3028 24px 48px)
+}
+.cover-tape-a{right:-45px;top:55px;transform:rotate(8deg)}
+.cover-tape-b{left:-70px;bottom:25px;transform:rotate(-7deg)}
+
+#nav,.nav{
+  position:sticky!important;top:58px!important;z-index:40!important;
+  margin:18px 0!important;padding:8px!important;border-radius:0!important;
+  background:rgba(250,246,238,.95)!important;border:1px solid rgba(53,40,31,.12)!important;
+  box-shadow:0 10px 28px rgba(62,44,31,.06)!important
+}
+.nav button{
+  border-radius:0!important;padding:10px 14px!important;
+  font:600 .68rem "Montserrat"!important;letter-spacing:.11em!important;text-transform:uppercase!important;
+  color:var(--ink)!important
+}
+.nav button.active{background:var(--ink)!important;color:white!important}
+.nav .admin{background:var(--orange)!important;color:white!important}
+
+.panel{
+  position:relative;border-radius:0!important;padding:24px!important;
+  background:rgba(250,246,238,.91)!important;border:1px solid rgba(53,40,31,.12)!important;
+  box-shadow:var(--shadow)!important
+}
+.panel:before{
+  content:"";position:absolute;top:-10px;left:45px;width:82px;height:20px;
+  background:rgba(195,158,115,.28);transform:rotate(-2deg);pointer-events:none
+}
+.section-title h2{
+  font:600 2.1rem/1 "Cormorant Garamond"!important;letter-spacing:-.025em!important
+}
+.muted{color:#76675c!important}
+.grid.cards{gap:14px!important}
+.card,.rule-card,.match-card,.pool-preview-card,#paymentCard,.registration-success-card,.rule-editor-card{
+  border-radius:0!important;background:#fffaf2!important;border:1px solid #cbbba7!important;
+  box-shadow:none!important
+}
+.card .metric,.metric{font-family:"Cormorant Garamond",serif!important;font-weight:600!important;font-size:2.4rem!important}
+.label,.form-field label,th{
+  font-family:"Montserrat",sans-serif!important;letter-spacing:.12em!important;
+  color:#77685d!important
+}
+.rule-card h3,.pool-card h3,.match-card strong,.registration-success-card h2{
+  font-family:"Cormorant Garamond",serif!important
+}
+.rule-card h3,.pool-card h3{font-size:1.35rem!important}
+.rule-list{font-family:"Cormorant Garamond",serif!important;font-size:1.03rem!important}
+.callout{
+  border-radius:0!important;border-left:4px solid var(--orange)!important;
+  background:#fff1e5!important
+}
+.table-wrap{border-radius:0!important;border-color:#cbbba7!important}
+table{background:#fffaf2!important}
+th{background:#eadfce!important}
+td,th{border-color:#e6dbcd!important}
+.match-head{background:#eadfce!important}
+.winner{background:#edf0e2!important}
+.pool-badge,.pill,.pending-badge{border-radius:0!important}
+.pool-badge{background:#ddcfba!important}
+.pending-badge{background:#f1dfc6!important;color:#774b31!important}
+.progressbar,.progressbar>span{border-radius:0!important}
+.progressbar>span{background:var(--orange)!important}
+
+.form-field input,.form-field select,.team-input,.ref-select,textarea{
+  border-radius:0!important;background:#fffaf2!important;border-color:#c7b6a1!important
+}
+.primary,.score-btn{background:var(--orange)!important;color:white!important;border-radius:0!important}
+.small-btn,.ghost,.danger,.cancel-team,.delete-team{border-radius:0!important}
+.score-btn{box-shadow:none!important}
+.registration-closed,.tournament-not-finalized,.scoring-readiness,.live-data-guard{
+  border-radius:0!important
+}
+.payment-public-box,.registration-payment-box,.admin-contact,.copyright-box{
+  border-radius:0!important
+}
+footer{
+  color:#74665c!important;font:400 1rem "Cormorant Garamond"!important
+}
+
+/* Keep the scorer intentionally high-contrast and operational. */
+.score-overlay{background:#211a16!important}
+.score-top,.score-bottom{background:#2d241f!important}
+.score-side.blue{background:#c96e49!important}
+.score-side.red{background:#d9c6a9!important;color:#2d241f!important}
+.score-bottom button,.minus,.score-device-lock,.score-protection-card,.modal-box{
+  border-radius:0!important
+}
+
+/* Admin and modal surfaces stay on-theme without changing behavior. */
+.modal-box,.rule-editor-card,.registration-success-card,.score-protection-card{
+  background:#faf6ee!important;color:var(--ink)!important
+}
+
+@media(max-width:900px){
+  .cover-grid{grid-template-columns:1fr;gap:15px;padding:34px 22px}
+  .cover-paper-scene{min-height:375px;margin-top:8px}
+  #nav,.nav{position:static!important;top:auto!important}
+}
+@media(max-width:650px){
+  .wedding-subnav{justify-content:center;text-align:center}
+  .wedding-subnav span{width:100%;order:-1}
+  .shell{padding:12px!important}
+  .cover-grid{padding:28px 17px}
+  .cover-brand .oneway{font-size:4rem!important}
+  .cover-brand .conference{font-size:3rem!important}
+  .cover-paper-card{width:87%;right:2%;padding:43px 22px 28px}
+  .cover-paper-back{width:82%}
+  .cover-worker{width:115px;left:-12px}
+  .cover-card-title,.cover-card-title span{font-size:2.45rem}
+  .cover-tape-a{right:-85px}
+  .cover-tape-b{left:-95px}
+}
+</style>
+
 </head>
 <body>
 <div class="wedding-subnav">
-  <a href="../index.html">← Tim &amp; Dashia Home</a>
+  <a href="../index.html">← Tim &amp; Dashia</a>
   <span>Wedding Bash · Volleyball Tournament</span>
   <a href="?view=register">RSVP Your Team →</a>
 </div>
+
 <div class="shell">
-<section class="hero">
-<div class="kicker">Tim & Dashia • Wedding Bash</div>
-<div class="brandline"><span class="oneway">Wedding Bash</span><span class="conference">volleyball 4s</span></div>
-<p>The tournament side of Tim & Dashia’s celebration. Team registration, pool play, live standings, bracket play, and the full-screen courtside scorer all stay together here.</p>
-<div class="verse">Same team. Always. <span class="arrow">♡</span></div>
-<div class="sync" id="syncStatus"><span class="dot"></span><span id="syncText">Connecting live sync…</span></div>
-<div class="pill blue" id="liveBuildBadge" style="margin-top:8px">LIVE BUILD v60</div>
+<section class="hero wedding-cover-hero">
+  <div class="cover-tape cover-tape-a" aria-hidden="true"></div>
+  <div class="cover-tape cover-tape-b" aria-hidden="true"></div>
+
+  <svg class="cover-cone cone-left" viewBox="0 0 72 88" fill="none" aria-hidden="true">
+    <path d="M15 71h42M10 79c14-4 39-4 52 0" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
+    <path d="M27 70L36 13c.4-2.3 3.7-2.3 4.1 0L50 70" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round"/>
+    <path d="M25 54c8 4 17 5 27 1M29 37c7 3 13 4 19 1" stroke="#c96e49" stroke-width="5.2" stroke-linecap="round"/>
+    <path d="M17 70h38c3 0 5 2 5 5H12c0-3 2-5 5-5Z" stroke="currentColor" stroke-width="3.2"/>
+  </svg>
+
+  <svg class="cover-cone cone-right" viewBox="0 0 72 88" fill="none" aria-hidden="true">
+    <path d="M15 71h42M10 79c14-4 39-4 52 0" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
+    <path d="M27 70L36 13c.4-2.3 3.7-2.3 4.1 0L50 70" stroke="currentColor" stroke-width="3.2" stroke-linejoin="round"/>
+    <path d="M25 54c8 4 17 5 27 1M29 37c7 3 13 4 19 1" stroke="#c96e49" stroke-width="5.2" stroke-linecap="round"/>
+    <path d="M17 70h38c3 0 5 2 5 5H12c0-3 2-5 5-5Z" stroke="currentColor" stroke-width="3.2"/>
+  </svg>
+
+  <div class="cover-grid">
+    <div class="cover-copy">
+      <div class="kicker">Tim &amp; Dashia · Wedding Bash</div>
+      <div class="cover-eyebrow">Two events. One celebration.</div>
+      <div class="brandline cover-brand">
+        <span class="oneway">Wedding Bash</span>
+        <span class="conference">Volleyball</span>
+      </div>
+      <div class="cover-script">Same team. Always.</div>
+      <p>
+        The tournament side of our celebration — team registration, pool play,
+        live standings, bracket play, and courtside scoring all live here.
+      </p>
+
+      <div class="cover-live-row">
+        <div class="sync" id="syncStatus"><span class="dot"></span><span id="syncText">Connecting live sync…</span></div>
+        <div class="pill blue" id="liveBuildBadge">LIVE BUILD v60</div>
+      </div>
+    </div>
+
+    <div class="cover-paper-scene" aria-hidden="true">
+      <div class="cover-paper-back"></div>
+      <div class="cover-paper-card">
+        <div class="cover-mask"></div>
+        <div class="cover-small">The Wedding Bash</div>
+        <div class="cover-card-title"><span>Volleyball</span>Tournament</div>
+        <div class="cover-card-copy">Details · Teams · Schedule · Standings · Bracket</div>
+        <div class="cover-heart">♡</div>
+      </div>
+
+      <svg class="cover-worker" viewBox="0 0 150 195" fill="none">
+        <circle cx="62" cy="45" r="17" stroke="currentColor" stroke-width="4"/>
+        <path d="M44 38c7-16 30-18 40-4l-42 8 2-4Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M78 22l13 8M47 63l-9 35m51-37 13 34M56 66l22 6 3 42H50l6-48ZM59 114l-10 58m29-58 8 57" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M41 173h18m20 0h19M102 87l17-20M117 64l11 11" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+        <path d="M129 74l-4 19" stroke="#c96e49" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
 </section>
 
 <nav class="nav" id="nav">
@@ -1856,7 +2121,7 @@ body.admin-mode #paymentCard.payment-disabled-public{
 <button class="small-btn admin-only rule-edit-btn" data-edit-rule="conduct" type="button">Edit</button>
 </div>
 <ul class="rule-list">
-<li>This is an official Christian church event hosted for the ONE WAY Conference at CNH.</li>
+<li>This tournament is part of Tim & Dashia’s Wedding Bash celebration.</li>
 <li>Players are expected to represent that through appropriate clothing, language, conduct, and sportsmanship.</li>
 <li>Disrespectful comments toward women or other players will not be tolerated.</li>
 <li>No excessive arguing, trash talking, or inappropriate behavior.</li>
@@ -1871,7 +2136,7 @@ body.admin-mode #paymentCard.payment-disabled-public{
 <button class="small-btn admin-only rule-edit-btn" data-edit-rule="location" type="button">Edit</button>
 </div>
 <ul class="rule-list">
-<li><b>Location:</b> Church of New Hope</li>
+<li><b>Location:</b> TBD</li>
 <li><b>Saturday Registration &amp; Check-In:</b> during the morning conference break at the clothing spot.</li>
 <li><b>Eligibility:</b> every player must be <b>registered, paid, and checked in before 1:00 PM</b> in order to play.</li>
 <li><b>Pool Play:</b> starts <b>exactly at 1:00 PM on Saturday, October 3</b>. Teams should be ready to play as soon as their court slot opens.</li>
@@ -1924,7 +2189,7 @@ body.admin-mode #paymentCard.payment-disabled-public{
 <section id="view-register" class="view hidden">
 <div class="panel">
 <div class="section-title">
-<div><h2>Register a Team</h2><div class="muted">The captain submits the complete roster once. No player confirmation link is required for ONE WAY.</div></div>
+<div><h2>Register a Team</h2><div class="muted">The captain submits the complete roster once. No separate player confirmation link is required for the Wedding Bash tournament.</div></div>
 <span class="pill orange" id="registrationCount">Loading…</span>
 </div>
 
@@ -1956,7 +2221,7 @@ body.admin-mode #paymentCard.payment-disabled-public{
 <div class="form-field full">
 <label class="agree-row">
 <input type="checkbox" id="regAgreement">
-<span>I confirm that this roster is correct, all four players are committed to the team, and the team agrees to the ONE WAY Grass 4s tournament rules.</span>
+<span>I confirm that this roster is correct, all four players are committed to the team, and the team agrees to the Wedding Bash Volleyball 4s tournament rules.</span>
 </label>
 </div>
 <div class="form-field full"><button class="primary" id="submitRegistration">Submit Team Registration</button></div>
@@ -1992,7 +2257,7 @@ body.admin-mode #paymentCard.payment-disabled-public{
 
       <label class="agree-row confirm-commitment">
         <input type="checkbox" id="playerRulesAgreement">
-        <span><b>Yes, I am committed to playing for this team.</b> I have read and agree to the ONE WAY Grass 4s tournament rules, conduct requirements, and event policies.</span>
+        <span><b>Yes, I am committed to playing for this team.</b> I have read and agree to the Wedding Bash Volleyball 4s tournament rules, conduct requirements, and event policies.</span>
       </label>
 
       <button class="primary" id="confirmPlayerBtn" style="margin-top:14px">Yes — Confirm My Spot</button>
@@ -2041,7 +2306,7 @@ body.admin-mode #paymentCard.payment-disabled-public{
 <section id="view-bracket" class="view hidden"><div class="panel"><div class="section-title"><div><h2>Championship bracket</h2><div class="muted" id="bracketNote">Semifinal scoring unlocks after all pool matches are final.</div></div></div><div class="bracket-grid" id="bracketGrid"></div></div></section>
 </main>
 <footer>
-<div>ONE WAY Grass 4s • Church of New Hope • John 14:6 • Build FINAL v60</div>
+<div>Tim & Dashia • Wedding Bash Volleyball • Cover Theme • Scoring Engine v60</div>
 <div class="copyright-box">
 © 2026 Your Mom. Original tournament software, interface design, scoring workflow, and platform code — All Rights Reserved.
 Licensed use only. Unauthorized copying, resale, redistribution, or deployment is prohibited.
@@ -2460,7 +2725,7 @@ function showFullscreenHelp(){
       <ol>
         <li>Tap <b>Share</b>.</li>
         <li>Choose <b>Add to Home Screen</b>.</li>
-        <li>Open <b>ONE WAY</b> from the new Home Screen icon.</li>
+        <li>Open <b>Wedding Bash</b> from the new Home Screen icon.</li>
         <li>Open a match again. The scoreboard will fill the app window.</li>
       </ol>
       <p class="muted">This applies whether you opened the site in Safari, Chrome, or another browser on iPhone/iPad.</p>

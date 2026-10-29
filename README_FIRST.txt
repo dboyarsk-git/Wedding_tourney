@@ -1,49 +1,33 @@
-TIM & DASHIA — WEDDING + TOURNAMENT WEBSITE v2
+WEDDING BASH TOURNAMENT — COVER THEME v1
 
-THIS VERSION CHANGES THE ARCHITECTURE:
+This is the tournament sub-site redesigned to match the Tim & Dashia cover page.
 
-ROOT WEBSITE
-  /index.html
-  This is the actual Tim & Dashia homepage and matches the beige paper/construction concept.
+WHAT CHANGED
+- Full cream/beige paper aesthetic
+- Cormorant serif + handwritten Caveat script typography
+- Doodle construction worker
+- Doodle traffic cones
+- Caution tape
+- Torn-paper / invitation-card feel
+- Wedding Bash branding
+- Public ONE WAY / conference wording removed
+- Tournament location changed to TBD
+- Home link back to ../index.html
+- RSVP Your Team jumps to ?view=register
 
-WEDDING FOLDER
-  /wedding/details.html
-  /wedding/rsvp.html
-  Wedding information and ceremony RSVP.
+WHAT DID NOT CHANGE
+- Supabase project
+- v60 scoring backend
+- pool scoring
+- bracket auto-advance
+- score locks
+- Admin tools
+- team registration logic
+- live standings/bracket logic
 
-VOLLEYBALL FOLDER
+UPLOAD
+Place this index.html in:
   /volleyball/index.html
-  This is the full ONE WAY v60 tournament engine, but visually redesigned to match the wedding site.
-  Scoring, Admin, registration, standings, bracket and auto-advance logic are preserved.
+inside your Wedding_tourney GitHub repository.
 
-  /volleyball/theme.css
-  The wedding-theme override for the tournament sub-site.
-
-NAVIGATION
-  Volleyball Tournament -> /volleyball/index.html
-  RSVP Your Team -> /volleyball/index.html?view=register
-  Tournament sub-site has a permanent "Tim & Dashia Home" link back to the wedding site.
-
-IMPORTANT
-The tournament sub-site still points to the SAME existing Supabase project and does NOT reset tournament data.
-Its v60 scoring/backend behavior is preserved.
-
-GITHUB
-Upload the CONTENTS of this ZIP to the ROOT of the Wedding_tourney repository.
-Do not upload the outer TIM_DASHIA_WEDDING_TOURNEY_v2 folder as one nested folder.
-
-SUPABASE — CEREMONY RSVP
-Run:
-  /supabase/RUN_THIS_IN_SUPABASE_WEDDING_RSVP.sql
-
-This creates the private wedding_rsvps table and submit_wedding_rsvp RPC.
-
-EMAIL
-Ceremony RSVP saving works without email.
-For automatic confirmation emails, deploy:
-  /supabase/functions/send-rsvp-confirmation/index.ts
-and add RESEND_API_KEY as an Edge Function secret.
-
-TOURNAMENT BACKEND
-The package contains BACKUP_v60_TOURNAMENT_BACKEND.sql only as a backup.
-If your existing v60 Supabase backend is already working, DO NOT rerun/reset anything for the tournament just to deploy this visual redesign.
+No Supabase changes are required for this visual redesign.

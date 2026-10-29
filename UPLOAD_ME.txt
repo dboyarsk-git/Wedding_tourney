@@ -46,3 +46,15 @@ V6 ADMIN BEHAVIOR
 - Only clickable content cards are disabled while editing.
 - Editable wording can still be clicked and typed into.
 - DONE restores normal card navigation.
+
+
+V7 FIX
+- Spacebar now works normally while editing text.
+- Enter/line breaks also work inside editable text.
+- Linked cards are still blocked from navigating during Admin mode.
+- Top navigation remains usable.
+
+
+V8
+- Construction buddy restored and made larger/more visible.
+- Colored hard hat and outfit so he reads clearly on the page.

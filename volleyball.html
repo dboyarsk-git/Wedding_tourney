@@ -15,7 +15,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>Tim & Dashia — Our Big Day Volleyball 4s</title>
-<meta name="wedding-tournament-build" content="v11-cohesive-copy-v60-engine">
+<meta name="wedding-tournament-build" content="v12-true-homepage-match-v60-engine">
 <meta name="oneway-build" content="v60">
 <script>
 /* ONE WAY v42:
@@ -1704,20 +1704,39 @@ body.admin-mode #paymentCard.payment-disabled-public{
 </style>
 </head>
 <body>
+
+<header class="wedding-site-header">
+  <div class="wedding-nav-shell">
+    <a class="wedding-monogram" href="index.html">T | D</a>
+    <div class="wedding-nav-line"></div>
+    <button class="wedding-menu-button" id="weddingMenuButton" type="button">MENU</button>
+    <nav class="wedding-nav-links" id="weddingNavLinks">
+      <a href="index.html">Home</a>
+      <a href="our-story.html">Our Story</a>
+      <a href="details.html">Details</a>
+      <a href="rsvp.html">RSVP</a>
+      <a class="active" href="volleyball.html">Volleyball Tournament</a>
+    </nav>
+  </div>
+</header>
+
 <div class="shell">
-<section class="hero">
-<div class="kicker">Our Wedding &amp; Volleyball Tournament</div>
-<div class="brandline"><span class="oneway">Tim &amp; Dashia</span><span class="conference">Volleyball Tournament</span></div>
-<div class="tournament-tiny-caps">Love · Volleyball · Good Times</div>
-<div class="tournament-hero-script">A celebration of love and sport...</div>
-<p><b>RSVP Your Team.</b> Register your team for the tournament, then follow the schedule, standings, and championship bracket right here.</p>
-<div class="verse">Mark 10:9 • “Therefore what God has joined together, let no one separate.”</div>
-<div class="sync" id="syncStatus"><span class="dot"></span><span id="syncText">Connecting live sync…</span></div>
-<div class="pill blue" id="liveBuildBadge" style="margin-top:8px">LIVE TOURNAMENT</div>
+<section class="tournament-cover-card">
+  <div class="tournament-cover-icon">◉</div>
+  <div class="tournament-cover-title">Volleyball Tournament</div>
+  <div class="tournament-cover-kicker">RSVP Your Team</div>
+  <p class="tournament-cover-copy">Register your team for the tournament!</p>
+  <div class="tournament-cover-script">A little competition for our big celebration.</div>
+  <div class="tournament-cover-verse">Mark 10:9 · “Therefore what God has joined together, let no one separate.”</div>
+
+  <div class="tournament-status-row">
+    <div class="sync" id="syncStatus"><span class="dot"></span><span id="syncText">Connecting live sync…</span></div>
+    <div class="pill blue" id="liveBuildBadge">LIVE TOURNAMENT</div>
+  </div>
 </section>
 
 <nav class="nav" id="nav">
-<a class="wedding-home-link" href="index.html">← Wedding Home</a><button data-view="home" class="active">Details</button><button data-view="register">RSVP Your Team</button><button data-view="teams">Teams</button><button data-view="schedule">Schedule</button><button data-view="standings">Standings</button><button data-view="bracket">Bracket</button><button class="admin" id="adminBtn">Admin</button>
+<button data-view="home" class="active">Details</button><button data-view="register">RSVP Your Team</button><button data-view="teams">Teams</button><button data-view="schedule">Schedule</button><button data-view="standings">Standings</button><button data-view="bracket">Bracket</button><button class="admin" id="adminBtn">Admin</button>
 </nav>
 
 <div class="live-data-guard hidden" id="liveDataGuard">
@@ -1730,19 +1749,28 @@ body.admin-mode #paymentCard.payment-disabled-public{
 
 <main>
 <section id="view-home" class="view">
+<section class="tournament-overview-card">
+<div class="script-heading">Tournament Details</div>
+<div class="heart">♡</div>
+<div class="type-kicker">Love · Volleyball · Good Times</div>
 <div class="grid cards">
-<div class="card"><div class="label">Team cap</div><div class="metric">16</div><div class="muted" id="teamCapPaymentText">Loading entry details…</div></div>
+<div class="card"><div class="label">Team Cap</div><div class="metric">16</div><div class="muted" id="teamCapPaymentText">Loading entry details…</div></div>
 <div class="card"><div class="label">Courts</div><div class="metric">4</div><div class="muted">Up to 4 courts • 2–4 pools</div></div>
 <div class="card"><div class="label">Pool games</div><div class="metric">3–4</div><div class="muted">Per team, based on pool size</div></div>
 <div class="card"><div class="label">Advance</div><div class="metric">4</div><div class="muted">Semifinalists</div></div>
 </div>
+</section>
 
-<div class="panel">
-<div class="section-title"><div><h2>Details</h2><div class="muted">Everything you need to know about the volleyball side of our big day.</div></div><span class="pill orange">Love · Volleyball · Good Times</span></div>
+<div class="panel tournament-details-panel">
+<div class="section-title wedding-section-title">
+  <h2>Details</h2>
+  <div class="heart">♡</div>
+  <div class="type-kicker">Everything you need to know about the volleyball side of our big day.</div>
+</div>
 <div class="rules-columns">
   <div class="rules-column rules-column-left">
 <div class="rule-card" id="prizeCard">
-<h3>🏆 First Place Prize</h3>
+<h3>First Place Prize</h3>
 <p id="prizePublicText"><b>Prize: TBD.</b> Final prize details will be announced once confirmed.</p>
 <div class="admin-only" style="margin-top:12px;padding-top:12px;border-top:1px solid #e8ded2">
 <div class="muted" style="margin-bottom:6px">Admin First Place Prize Settings</div>
@@ -1757,7 +1785,7 @@ body.admin-mode #paymentCard.payment-disabled-public{
 </div>
 
 <div class="rule-card" id="secondPrizeCard">
-<h3>🥈 Second Place Prize</h3>
+<h3>Second Place Prize</h3>
 <p id="secondPrizePublicText"><b>Prize: TBD.</b> Final prize details will be announced once confirmed.</p>
 <div class="admin-only" style="margin-top:12px;padding-top:12px;border-top:1px solid #e8ded2">
 <div class="muted" style="margin-bottom:6px">Admin Second Place Prize Settings</div>
@@ -1773,7 +1801,7 @@ body.admin-mode #paymentCard.payment-disabled-public{
 
 <div class="rule-card" id="paymentCard">
 <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
-<h3 style="margin:0">💵 Payments</h3>
+<h3 style="margin:0">Registration &amp; Payment</h3>
 <span class="pill admin-only" id="paymentModeBadge">Loading…</span>
 </div>
 
@@ -5682,7 +5710,8 @@ function renderSecondPrize(){
 
   const prize=String(state.settings?.secondPrizeText||"").trim();
 
-  if(!prize || prize.toUpperCase()==="TBD"){
+  const legacyPrize=/one\s*way|church of new hope|conference merch/i.test(prize);
+  if(!prize || prize.toUpperCase()==="TBD" || legacyPrize){
     text.innerHTML="<b>Prize: TBD.</b> Final prize details will be announced once confirmed.";
   }else{
     text.textContent=`Second Place Prize: ${prize}`;
@@ -5779,7 +5808,8 @@ function renderPrize(){
 
   const prize=String(state.settings?.prizeText||"").trim();
 
-  if(!prize || prize.toUpperCase()==="TBD"){
+  const legacyPrize=/one\s*way|church of new hope|conference merch/i.test(prize);
+  if(!prize || prize.toUpperCase()==="TBD" || legacyPrize){
     text.innerHTML="<b>Prize: TBD.</b> Final prize details will be announced once confirmed.";
   }else{
     text.textContent=`First Place Prize: ${prize}`;
@@ -6576,6 +6606,20 @@ if(ONE_WAY_CONFIRMATIONS_ENABLED && startupConfirmToken){
 loadAll().finally(subscribeRealtime);
 })();
 </script>
+
+<script>
+(() => {
+  const btn = document.getElementById("weddingMenuButton");
+  const links = document.getElementById("weddingNavLinks");
+  if(btn && links){
+    btn.addEventListener("click", () => links.classList.toggle("open"));
+    links.addEventListener("click", e => {
+      if(e.target.closest("a")) links.classList.remove("open");
+    });
+  }
+})();
+</script>
+
 </body>
 </html>
 <style>.score-overlay{z-index:2147483000!important}.modal{z-index:2147483646!important}
@@ -6944,6 +6988,468 @@ footer:after{
 }
 .hero .conference{
   white-space:nowrap;
+}
+
+
+
+/* ================================================================
+   v12 TRUE MATCH — mirror the main Tim & Dashia cover page
+   Tournament logic is unchanged; only public composition is restyled.
+   ================================================================ */
+
+:root{
+  --cream:#efe4d3;
+  --cream2:#f8f0e4;
+  --paper:#f4eadb;
+  --paper2:#e4d5c2;
+  --ink:#3a2b22;
+  --line:#aa957d;
+  --maroon:#6b1f2a;
+  --maroon-dark:#4f1720;
+  --construction-yellow:#e1b33f;
+  --shadow:0 18px 55px rgba(62,42,27,.10);
+  --type:"Courier Prime","Courier New",monospace;
+  --serif:"Cormorant Garamond",Georgia,serif;
+  --script:"Caveat",cursive;
+}
+
+body{
+  margin:0;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 15% 5%,rgba(255,255,255,.5),transparent 28%),
+    linear-gradient(180deg,#f8f0e4 0%,#efe4d3 100%);
+}
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.11;
+  background-image:repeating-linear-gradient(0deg,rgba(70,48,34,.06) 0 1px,transparent 1px 4px);
+  z-index:-1;
+}
+
+/* exact wedding header language */
+.wedding-site-header{
+  position:sticky;
+  top:0;
+  z-index:120;
+  background:rgba(248,240,228,.95);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(58,43,34,.08);
+}
+.wedding-nav-shell{
+  width:min(1200px,93vw);
+  margin:auto;
+  min-height:70px;
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+.wedding-monogram{
+  font:500 27px var(--serif);
+  letter-spacing:.27em;
+  text-decoration:none;
+  white-space:nowrap;
+}
+.wedding-nav-line{
+  height:1px;
+  background:var(--line);
+  flex:1;
+  max-width:330px;
+}
+.wedding-nav-links{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  gap:28px;
+}
+.wedding-nav-links a{
+  color:var(--ink);
+  font:700 10px var(--type);
+  letter-spacing:.11em;
+  text-transform:uppercase;
+  text-decoration:none;
+  padding:8px 0;
+  border-bottom:1px solid transparent;
+}
+.wedding-nav-links a:hover,
+.wedding-nav-links a.active{
+  border-bottom-color:var(--ink);
+}
+.wedding-menu-button{
+  display:none;
+  margin-left:auto;
+  border:1px solid var(--line);
+  background:transparent;
+  padding:8px 12px;
+  color:var(--ink);
+  font:700 10px var(--type);
+  letter-spacing:.1em;
+}
+
+/* same page width as homepage */
+.shell{
+  width:min(1200px,94vw)!important;
+  max-width:none!important;
+  margin:0 auto!important;
+  padding:42px 0 70px!important;
+}
+
+/* Hero now looks like the homepage RSVP / volleyball stationery cards */
+.tournament-cover-card{
+  position:relative;
+  min-height:390px;
+  margin:0 auto 28px;
+  padding:55px 34px 46px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:rgba(244,234,219,.90);
+  border:1px solid rgba(58,43,34,.14);
+  box-shadow:var(--shadow);
+}
+.tournament-cover-card:before{
+  content:"";
+  position:absolute;
+  top:-15px;
+  left:50%;
+  width:108px;
+  height:30px;
+  transform:translateX(-50%) rotate(2deg);
+  background:rgba(195,157,113,.52);
+}
+.tournament-cover-icon{
+  width:58px;
+  height:58px;
+  display:grid;
+  place-items:center;
+  margin-bottom:18px;
+  border:3px solid var(--maroon);
+  border-radius:50%;
+  color:var(--maroon);
+  font-size:37px;
+  line-height:1;
+}
+.tournament-cover-title{
+  font:500 clamp(48px,6vw,72px)/.96 var(--script);
+  color:var(--ink);
+}
+.tournament-cover-kicker,
+.type-kicker{
+  margin-top:8px;
+  font:700 11px var(--type);
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+.tournament-cover-copy{
+  margin:24px 0 0;
+  font:400 17px/1.6 var(--type);
+}
+.tournament-cover-script{
+  margin-top:14px;
+  color:var(--maroon);
+  font:500 27px/1 var(--script);
+}
+.tournament-cover-verse{
+  margin-top:22px;
+  color:var(--maroon);
+  font:500 17px/1.25 var(--script);
+}
+.tournament-status-row{
+  margin-top:24px;
+}
+#liveBuildBadge{
+  display:none!important;
+}
+.sync{
+  display:inline-flex!important;
+  width:auto!important;
+  padding:7px 11px!important;
+  background:transparent!important;
+  border:0!important;
+  color:#77675b!important;
+  box-shadow:none!important;
+  font:700 9px var(--type)!important;
+  letter-spacing:.04em;
+}
+
+/* Tournament nav = secondary editorial strip, not a separate app header */
+.nav{
+  position:sticky!important;
+  top:70px!important;
+  z-index:110!important;
+  margin:0 0 28px!important;
+  padding:8px 14px!important;
+  display:flex!important;
+  justify-content:center!important;
+  gap:20px!important;
+  border:1px solid rgba(58,43,34,.12)!important;
+  border-radius:0!important;
+  background:rgba(248,240,228,.97)!important;
+  box-shadow:0 10px 30px rgba(62,42,27,.05)!important;
+}
+.nav button{
+  padding:9px 0!important;
+  border:0!important;
+  border-bottom:1px solid transparent!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:var(--ink)!important;
+  font:700 9px var(--type)!important;
+  letter-spacing:.10em!important;
+  text-transform:uppercase!important;
+}
+.nav button:hover{
+  border-bottom-color:var(--maroon)!important;
+}
+.nav button.active{
+  color:var(--maroon)!important;
+  border-bottom-color:var(--maroon)!important;
+}
+.nav .admin{
+  margin-left:22px!important;
+  padding:8px 13px!important;
+  border:1px solid var(--maroon)!important;
+  color:var(--maroon)!important;
+}
+.nav .admin:hover{
+  background:var(--maroon)!important;
+  color:white!important;
+}
+
+/* Tournament overview now copies the homepage Details card */
+.tournament-overview-card{
+  margin:0 0 28px;
+  padding:40px 34px;
+  text-align:center;
+  background:rgba(244,234,219,.90);
+  border:1px solid rgba(58,43,34,.14);
+  box-shadow:var(--shadow);
+}
+.script-heading{
+  font:500 clamp(42px,4vw,56px)/1 var(--script);
+}
+.heart{
+  margin:6px 0 10px;
+  color:var(--maroon);
+  font:500 32px var(--script);
+}
+.tournament-overview-card .grid.cards{
+  display:grid!important;
+  grid-template-columns:repeat(4,1fr)!important;
+  gap:0!important;
+  margin-top:25px!important;
+  border-top:1px solid var(--line)!important;
+  border-bottom:1px solid var(--line)!important;
+}
+.tournament-overview-card .grid.cards .card{
+  min-height:142px!important;
+  padding:24px 12px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border:0!important;
+  border-right:1px solid var(--line)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.tournament-overview-card .grid.cards .card:last-child{
+  border-right:0!important;
+}
+.tournament-overview-card .label{
+  font:700 9px var(--type)!important;
+  letter-spacing:.10em!important;
+  color:var(--ink)!important;
+}
+.tournament-overview-card .metric{
+  margin:8px 0 4px!important;
+  color:var(--maroon)!important;
+  font:500 34px/1 var(--serif)!important;
+}
+.tournament-overview-card .muted{
+  font:400 11px/1.35 var(--type)!important;
+  color:#76685d!important;
+}
+
+/* Details / rules = the same paper-card family as homepage */
+.panel,
+.rule-card,
+.card,
+.match-card{
+  border-radius:0!important;
+}
+.tournament-details-panel,
+.panel{
+  padding:40px 34px!important;
+  background:rgba(244,234,219,.90)!important;
+  border:1px solid rgba(58,43,34,.14)!important;
+  box-shadow:var(--shadow)!important;
+}
+.tournament-details-panel:before,
+.panel:before{
+  width:108px!important;
+  height:28px!important;
+  top:-14px!important;
+  background:rgba(195,157,113,.48)!important;
+}
+.wedding-section-title{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:0!important;
+  margin-bottom:30px!important;
+  text-align:center!important;
+}
+.wedding-section-title h2{
+  margin:0!important;
+  color:var(--ink)!important;
+  font:500 clamp(42px,4vw,56px)/1 var(--script)!important;
+}
+.wedding-section-title .type-kicker{
+  max-width:650px;
+  color:var(--ink);
+  line-height:1.55;
+}
+.rules-columns{
+  gap:22px!important;
+}
+.rule-card{
+  padding:25px 24px!important;
+  background:rgba(255,250,243,.52)!important;
+  border:1px solid rgba(58,43,34,.14)!important;
+  box-shadow:none!important;
+}
+.rule-card h3{
+  margin:0 0 14px!important;
+  color:var(--ink)!important;
+  font:500 28px/1.05 var(--serif)!important;
+}
+.rule-card p,
+.rule-card li,
+.payment-line{
+  font:400 14px/1.65 var(--type)!important;
+}
+.rule-card b,
+.payment-line b{
+  color:var(--maroon);
+}
+
+/* All functional views feel like stationery rather than software */
+.view > .panel,
+#view-register > .panel,
+#view-teams > .panel,
+#view-schedule > .panel,
+#view-standings > .panel,
+#view-bracket > .panel{
+  margin-top:28px!important;
+}
+.section-title h2,
+.panel > h2{
+  color:var(--ink)!important;
+  font:500 clamp(38px,4vw,52px)/1 var(--script)!important;
+}
+.primary,
+.score-btn{
+  border-radius:0!important;
+  background:var(--maroon)!important;
+  font:700 10px var(--type)!important;
+  letter-spacing:.08em!important;
+  text-transform:uppercase!important;
+}
+.small-btn,
+.ghost{
+  border-radius:0!important;
+  font-family:var(--type)!important;
+}
+.team-input,
+.form-field input,
+.form-field select,
+select{
+  border-radius:0!important;
+  font-family:var(--type)!important;
+}
+
+/* clean footer, matching main site */
+footer{
+  margin-top:34px!important;
+  padding:55px 10px 70px!important;
+  border-top:1px solid rgba(58,43,34,.12);
+  color:var(--ink)!important;
+}
+.copyright-box{
+  background:transparent!important;
+  border:0!important;
+  color:#76685d!important;
+}
+footer:after{
+  margin-top:22px!important;
+  color:var(--maroon)!important;
+  font:500 25px var(--serif)!important;
+  letter-spacing:.28em!important;
+}
+
+/* operational warning still visible, but in-theme */
+.live-data-guard{
+  border-radius:0!important;
+  border:1px solid rgba(107,31,42,.25)!important;
+  background:#f2e1de!important;
+}
+
+/* mobile */
+@media(max-width:900px){
+  .wedding-nav-line{display:none}
+  .wedding-menu-button{display:block}
+  .wedding-nav-links{
+    display:none;
+    position:absolute;
+    top:66px;
+    left:4vw;
+    right:4vw;
+    padding:18px;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:15px;
+    background:#f8f0e4;
+    border:1px solid var(--line);
+  }
+  .wedding-nav-links.open{display:flex}
+  .nav{
+    top:70px!important;
+    justify-content:flex-start!important;
+    overflow-x:auto!important;
+    flex-wrap:nowrap!important;
+    gap:17px!important;
+  }
+  .nav button{white-space:nowrap}
+  .nav .admin{margin-left:0!important}
+  .tournament-overview-card .grid.cards{
+    grid-template-columns:1fr 1fr!important;
+  }
+  .tournament-overview-card .grid.cards .card:nth-child(2){
+    border-right:0!important;
+  }
+  .tournament-overview-card .grid.cards .card:nth-child(-n+2){
+    border-bottom:1px solid var(--line)!important;
+  }
+}
+@media(max-width:600px){
+  .shell{padding-top:26px!important}
+  .tournament-cover-card{
+    min-height:330px;
+    padding:44px 22px 38px;
+  }
+  .tournament-cover-title{font-size:48px}
+  .tournament-cover-copy{font-size:15px}
+  .tournament-details-panel,.panel,.tournament-overview-card{
+    padding:30px 20px!important;
+  }
 }
 
 </style>

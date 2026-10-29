@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#efe4d3">
+<title>Tim & Dashia — Cover Only v2</title>
+<!-- COVER_ONLY_V2_ROOT -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --cream:#efe4d3;
+  --cream2:#f8f0e4;
+  --paper:#f4eadb;
+  --paper2:#e4d5c2;
+  --ink:#3a2b22;
+  --line:#aa957d;
+  --deep-green:#1f3b2c;
+  --maroon:#6b1f2a;
+  --construction-yellow:#e1b33f;
+  --construction-black:#3b3028;
+  --shadow:0 18px 55px rgba(62,42,27,.10);
+  --type:"Courier Prime","Courier New",monospace;
+  --serif:"Cormorant Garamond",Georgia,serif;
+  --script:"Caveat",cursive;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--ink);
+  background:
+    radial-gradient(circle at 15% 5%,rgba(255,255,255,.5),transparent 28%),
+    linear-gradient(180deg,#f8f0e4 0%,#efe4d3 100%);
+  min-height:100vh;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.11;
+  background-image:repeating-linear-gradient(0deg,rgba(70,48,34,.06) 0 1px,transparent 1px 4px);
+  z-index:-1;
+}
+a{color:inherit}
+.site-header{
+  position:sticky;top:0;z-index:40;
+  background:rgba(248,240,228,.95);backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(58,43,34,.08);
+}
+.nav-shell{
+  width:min(1200px,93vw);margin:auto;min-height:70px;
+  display:flex;align-items:center;gap:18px;
+}
+.monogram{
+  font:500 27px var(--serif);letter-spacing:.27em;text-decoration:none;white-space:nowrap;
+}
+.nav-line{height:1px;background:var(--line);flex:1;max-width:330px}
+.nav-links{margin-left:auto;display:flex;align-items:center;gap:28px}
+.nav-links a{
+  font:700 10px var(--type);letter-spacing:.11em;text-transform:uppercase;text-decoration:none;
+  padding:8px 0;border-bottom:1px solid transparent;
+}
+.nav-links a:hover,.nav-links a.active{border-bottom-color:var(--ink)}
+.menu-button{
+  display:none;margin-left:auto;border:1px solid var(--line);background:transparent;
+  padding:8px 12px;font:700 10px var(--type);letter-spacing:.1em;
+}
+
+.hero{
+  width:min(1200px,94vw);margin:auto;padding:66px 0 46px;
+  display:grid;grid-template-columns:1.02fr .98fr;gap:36px;align-items:center;
+}
+.hero-copy{text-align:center;padding-left:10px}
+.eyebrow{
+  font:700 13px/1.55 var(--type);letter-spacing:.16em;text-transform:uppercase;
+  margin-bottom:20px;
+}
+.hero h1{
+  margin:0 0 21px;font:500 clamp(74px,9.2vw,135px)/.75 var(--serif);
+  letter-spacing:-.05em;
+}
+.hero h1 span{
+  font:500 .72em/1 var(--script);color:var(--deep-green);letter-spacing:0;
+}
+.tiny-caps{
+  font:700 11px var(--type);letter-spacing:.17em;text-transform:uppercase;
+}
+.hero-script{
+  margin:28px 0 15px;font:500 clamp(31px,4vw,49px)/1 var(--script);
+  color:var(--deep-green);
+}
+.subline{margin-top:6px}
+.heart-rule{
+  display:flex;justify-content:center;align-items:center;gap:15px;margin-top:25px;
+}
+.heart-rule i{display:block;height:1px;width:76px;background:var(--line)}
+.heart-rule b{font:500 33px var(--script);color:var(--maroon)}
+
+.hero-collage{position:relative;min-height:450px}
+.polaroid{
+  position:absolute;background:#f8f0e4;border:1px solid rgba(58,43,34,.12);
+  box-shadow:var(--shadow);padding:14px 14px 45px;
+}
+.polaroid.back{
+  width:255px;height:305px;right:1%;top:88px;transform:rotate(5deg);
+}
+.polaroid.front{
+  width:290px;height:350px;right:27%;top:5px;transform:rotate(-4deg);z-index:2;
+}
+.photo-placeholder{
+  width:100%;height:100%;display:grid;place-items:center;text-align:center;
+  background:linear-gradient(135deg,#cfc2b1,#a99b8a);
+  color:rgba(255,255,255,.83);
+  font:700 10px/1.6 var(--type);letter-spacing:.13em;
+}
+.tape-piece{
+  position:absolute;top:-16px;left:50%;transform:translateX(-50%) rotate(3deg);
+  width:108px;height:30px;background:rgba(195,157,113,.55);
+}
+.builder{
+  position:absolute;left:4px;top:105px;width:125px;height:178px;color:var(--ink);z-index:4;
+}
+.under-note{
+  position:absolute;left:7%;bottom:7px;z-index:5;
+  background:#e5d4bd;border:1px solid rgba(58,43,34,.11);
+  padding:16px 23px;box-shadow:var(--shadow);transform:rotate(-5deg);
+  font:500 31px/1 var(--script);color:var(--maroon);
+}
+
+.mid-grid,.action-grid{
+  width:min(1200px,94vw);margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:26px;
+}
+.mid-grid{padding-top:12px}
+.action-grid{margin-top:28px}
+.card-link{
+  color:var(--ink);text-decoration:none;
+  border:1px solid rgba(58,43,34,.14);
+  background:rgba(244,234,219,.9);box-shadow:var(--shadow);
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.card-link:hover{transform:translateY(-3px);box-shadow:0 24px 70px rgba(62,42,27,.14)}
+
+.story-card{
+  min-height:360px;display:grid;grid-template-columns:.43fr .57fr;overflow:hidden;
+}
+.story-photo{
+  background:linear-gradient(135deg,#c9b9a6,#a99988);position:relative;
+}
+.story-photo:after{
+  content:"PHOTO COMING LATER";position:absolute;inset:0;display:grid;place-items:center;
+  color:rgba(255,255,255,.76);font:700 9px var(--type);letter-spacing:.12em;writing-mode:vertical-rl;
+}
+.story-copy,.details-card,.action-card{
+  padding:40px 34px;text-align:center;
+}
+.script-heading{
+  font:500 clamp(44px,5vw,66px)/.95 var(--script);
+}
+.script-heading.smaller{font-size:clamp(38px,4vw,55px)}
+.heart{font:500 32px var(--script);color:var(--maroon);margin:6px 0 10px}
+.type-kicker{
+  font:700 11px var(--type);letter-spacing:.13em;text-transform:uppercase;
+}
+.story-copy p,.action-card p{
+  font:400 15px/1.6 var(--type);margin:16px 0 0;
+}
+.outline-button,.solid-button{
+  display:inline-block;margin-top:18px;padding:12px 19px;
+  font:700 10px var(--type);letter-spacing:.10em;text-transform:uppercase;
+}
+.outline-button{border:1px solid var(--ink)}
+.solid-button{
+  background:var(--deep-green);color:white;border:1px solid var(--deep-green);
+}
+.details-card{
+  min-height:360px;display:flex;flex-direction:column;justify-content:center;
+}
+.details-row{
+  display:grid;grid-template-columns:repeat(4,1fr);margin-top:25px;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.details-row>div{padding:20px 9px;border-right:1px solid var(--line)}
+.details-row>div:last-child{border-right:0}
+.detail-icon{
+  height:38px;display:grid;place-items:center;font-size:28px;margin-bottom:5px;color:var(--deep-green);
+}
+.details-row span{
+  display:block;font:700 9px var(--type);letter-spacing:.10em;text-transform:uppercase;
+}
+.details-row strong{
+  display:block;margin-top:7px;font:700 12px var(--type);letter-spacing:.06em;
+}
+
+.action-card{
+  min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;
+}
+.action-card:before{
+  content:"";position:absolute;top:-12px;left:50%;transform:translateX(-50%) rotate(-2deg);
+  width:105px;height:26px;background:rgba(195,157,113,.43);
+}
+.action-icon{
+  font:500 54px var(--serif);color:var(--deep-green);line-height:1;margin-bottom:9px;
+}
+.closing{
+  padding:85px 0 110px;text-align:center;
+}
+.closing .type-kicker{font-size:14px}
+
+@media(max-width:900px){
+  .nav-line{display:none}
+  .menu-button{display:block}
+  .nav-links{
+    display:none;position:absolute;top:66px;left:4vw;right:4vw;
+    background:#f8f0e4;border:1px solid var(--line);
+    padding:18px;flex-direction:column;align-items:flex-start;gap:15px;
+  }
+  .nav-links.open{display:flex}
+  .hero,.mid-grid,.action-grid{grid-template-columns:1fr}
+  .hero-copy{padding-left:0}
+  .hero-collage{min-height:420px}
+}
+@media(max-width:600px){
+  .hero{padding-top:44px}
+  .hero h1{font-size:72px}
+  .polaroid.front{width:235px;height:305px;right:28%}
+  .polaroid.back{width:195px;height:255px}
+  .builder{width:102px;left:-6px}
+  .story-card{grid-template-columns:1fr}
+  .story-photo{min-height:210px}
+  .story-photo:after{writing-mode:horizontal-tb}
+  .details-row{grid-template-columns:1fr 1fr}
+  .details-row>div:nth-child(2){border-right:0}
+  .details-row>div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+}
+
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="nav-shell">
+    <a class="monogram" href="index.html">T | D</a>
+    <div class="nav-line"></div>
+    <button class="menu-button" id="menuButton" type="button">MENU</button>
+    <nav class="nav-links" id="navLinks">
+      <a class="active" href="index.html">Home</a>
+      <a href="our-story.html">Our Story</a>
+      <a href="details.html">Details</a>
+      <a href="rsvp.html">RSVP</a>
+      <a href="volleyball.html">Volleyball Tournament</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow">Our Wedding &amp;<br>Volleyball Tournament</div>
+
+      <h1>Tim <span>&amp;</span> Dashia</h1>
+
+      <div class="tiny-caps">Love · Volleyball · Good Times</div>
+
+      <div class="hero-script">A celebration of love and sport...</div>
+      <div class="tiny-caps subline">Stay tuned for more details</div>
+
+      <div class="heart-rule">
+        <i></i><b>♡</b><i></i>
+      </div>
+    </div>
+
+    <div class="hero-collage" aria-label="Future photo collage">
+      <div class="polaroid back">
+        <div class="photo-placeholder">PHOTO<br>COMING LATER</div>
+      </div>
+
+      <div class="polaroid front">
+        <div class="tape-piece"></div>
+        <div class="photo-placeholder">PHOTO<br>COMING LATER</div>
+      </div>
+
+      <svg class="builder" viewBox="0 0 150 210" fill="none" aria-hidden="true">
+  <!-- small hand-drawn construction guy matched to the reference image -->
+  <g stroke="#3a2b22" stroke-linecap="round" stroke-linejoin="round">
+    <!-- step ladder -->
+    <path d="M37 193L54 112" stroke-width="3.5"/>
+    <path d="M91 193L78 112" stroke-width="3.5"/>
+    <path d="M43 166H87M47 145H84M51 125H81" stroke-width="3.2"/>
+    <path d="M32 194h18M83 194h18" stroke-width="3.2"/>
+
+    <!-- head -->
+    <circle cx="69" cy="67" r="14.5" stroke-width="3.5"/>
+
+    <!-- tilted hard hat -->
+    <path d="M55 61c4-11 20-16 29-7" stroke-width="3.5"/>
+    <path d="M52 64l35-8" stroke-width="3.5"/>
+    <path d="M65 51l6-5 8 3 4 6" stroke-width="3"/>
+
+    <!-- tiny face / smile -->
+    <path d="M63 68c4 3 8 3 12 0" stroke-width="2.6"/>
+
+    <!-- slim body -->
+    <path d="M69 82l1 36" stroke-width="3.5"/>
+
+    <!-- left arm resting downward -->
+    <path d="M67 90l-10 19" stroke-width="3.5"/>
+    <path d="M57 109l-4 9" stroke-width="3"/>
+
+    <!-- raised right arm -->
+    <path d="M73 90l16-21" stroke-width="3.5"/>
+    <path d="M89 69l9-8" stroke-width="3.2"/>
+
+    <!-- little hand -->
+    <path d="M97 61l3-4M98 62l5 1" stroke-width="2.5"/>
+
+    <!-- legs standing on ladder -->
+    <path d="M70 118l-10 29" stroke-width="3.5"/>
+    <path d="M70 118l11 29" stroke-width="3.5"/>
+
+    <!-- tiny shoes -->
+    <path d="M56 148h9M78 148h9" stroke-width="3"/>
+  </g>
+
+  <!-- little heart above him, like the reference -->
+  <path d="M48 31c-8-7-15 3-8 10l8 9 8-9c7-7 0-17-8-10Z"
+        stroke="#3a2b22" stroke-width="2.8" stroke-linejoin="round"/>
+
+  <!-- tiny construction-yellow spark at his raised hand -->
+  <g stroke="#e1b33f" stroke-width="2.8" stroke-linecap="round">
+    <path d="M106 51l5-4"/>
+    <path d="M108 57h7"/>
+    <path d="M103 46l1-6"/>
+  </g>
+</svg>
+
+      <div class="under-note">Under<br>Construction ♡</div>
+    </div>
+  </section>
+
+  <section class="mid-grid">
+    <a class="story-card card-link" href="our-story.html">
+      <div class="story-photo"></div>
+      <div class="story-copy">
+        <div class="script-heading">Our Story</div>
+        <div class="heart">♡</div>
+        <div class="type-kicker">Two paths. One story.</div>
+        <p>From volleyball courts to forever —<br>this is just the beginning.</p>
+        <span class="outline-button">Learn More →</span>
+      </div>
+    </a>
+
+    <a class="details-card card-link" href="details.html">
+      <div class="script-heading">Details</div>
+      <div class="heart">♡</div>
+
+      <div class="details-row">
+        <div>
+          <div class="detail-icon">▣</div>
+          <span>Date</span>
+          <strong>TBD</strong>
+        </div>
+        <div>
+          <div class="detail-icon">⌖</div>
+          <span>Location</span>
+          <strong>TBD</strong>
+        </div>
+        <div>
+          <div class="detail-icon">♢</div>
+          <span>Ceremony</span>
+          <strong>TBD</strong>
+        </div>
+        <div>
+          <div class="detail-icon">◉</div>
+          <span>Tournament</span>
+          <strong>TBD</strong>
+        </div>
+      </div>
+    </a>
+  </section>
+
+  <section class="action-grid">
+    <a class="action-card card-link" href="rsvp.html">
+      <div class="action-icon">✉</div>
+      <div class="script-heading">RSVP</div>
+      <div class="type-kicker">For the Ceremony</div>
+      <p>Let us know if you’ll be joining us<br>for the celebration!</p>
+      <span class="solid-button">RSVP Now →</span>
+    </a>
+
+    <a class="action-card card-link" href="volleyball.html">
+      <div class="action-icon">◉</div>
+      <div class="script-heading smaller">Volleyball Tournament</div>
+      <div class="type-kicker">RSVP Your Team</div>
+      <p>Register your team for the tournament!</p>
+      <span class="solid-button">Register Team →</span>
+    </a>
+  </section>
+
+  <section class="closing">
+    <div class="type-kicker">Let’s Try This</div>
+    <div class="heart-rule">
+      <i></i><b>♡</b><i></i>
+    </div>
+  </section>
+</main>
+
+<script>
+
+const menuButton=document.getElementById("menuButton");
+const navLinks=document.getElementById("navLinks");
+menuButton?.addEventListener("click",()=>navLinks?.classList.toggle("open"));
+document.querySelectorAll(".nav-links a").forEach(a=>{
+  a.addEventListener("click",()=>navLinks?.classList.remove("open"));
+});
+
+</script>
+</body>
+</html>

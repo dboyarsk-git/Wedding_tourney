@@ -15,7 +15,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>Tim & Dashia — Our Big Day Volleyball 4s</title>
-<meta name="wedding-tournament-build" content="v12-true-homepage-match-v60-engine">
+<meta name="wedding-tournament-build" content="v13-readable-homepage-theme-v60-engine">
 <meta name="oneway-build" content="v60">
 <script>
 /* ONE WAY v42:
@@ -7450,6 +7450,280 @@ footer:after{
   .tournament-details-panel,.panel,.tournament-overview-card{
     padding:30px 20px!important;
   }
+}
+
+
+
+/* ================================================================
+   v13 READABILITY PASS
+   Same visual language as the wedding homepage:
+   - Caveat for romantic display headings
+   - Cormorant Garamond for readable content
+   - Courier Prime only for small editorial labels / buttons / nav
+   ================================================================ */
+
+/* General readable content */
+body{
+  font-family:var(--serif)!important;
+  font-size:18px;
+  line-height:1.5;
+}
+
+/* Main descriptive text: elegant, much easier to read */
+p,
+li,
+td,
+.muted,
+.card,
+.rule-card,
+.panel,
+.payment-line,
+.roster-line,
+.admin-contact,
+.callout,
+.registration-success-card,
+.registration-payment-box,
+.confirm-box,
+.modal-box{
+  font-family:var(--serif)!important;
+  font-size:18px!important;
+  line-height:1.48!important;
+  letter-spacing:0!important;
+}
+
+/* Homepage-style hero copy */
+.tournament-cover-copy{
+  max-width:650px;
+  margin-top:22px!important;
+  font:500 21px/1.45 var(--serif)!important;
+}
+.tournament-cover-script{
+  font-size:30px!important;
+}
+.tournament-cover-verse{
+  max-width:720px;
+  font-size:20px!important;
+  line-height:1.3!important;
+}
+
+/* Typewriter stays as a SMALL accent only */
+.wedding-nav-links a,
+.wedding-menu-button,
+.nav button,
+.nav .admin,
+.type-kicker,
+.tournament-cover-kicker,
+.label,
+.form-field label,
+th,
+.primary,
+.score-btn,
+.small-btn,
+.ghost,
+.pill,
+.sync,
+button{
+  font-family:var(--type)!important;
+}
+
+/* Tiny editorial accents — same idea as the homepage */
+.type-kicker,
+.tournament-cover-kicker{
+  font-size:10px!important;
+  line-height:1.45!important;
+  letter-spacing:.13em!important;
+}
+.label,
+.form-field label{
+  font-size:10px!important;
+  line-height:1.4!important;
+  letter-spacing:.09em!important;
+  text-transform:uppercase!important;
+}
+th{
+  font-size:10px!important;
+  line-height:1.35!important;
+  letter-spacing:.07em!important;
+}
+
+/* Details overview values become elegant rather than monospace-heavy */
+.tournament-overview-card .metric{
+  font:500 39px/1 var(--serif)!important;
+}
+.tournament-overview-card .muted{
+  font:500 16px/1.25 var(--serif)!important;
+}
+.tournament-overview-card .label{
+  font:700 9px/1.3 var(--type)!important;
+}
+
+/* Rule cards: wedding invitation feel */
+.rule-card{
+  padding:30px 30px!important;
+}
+.rule-card h3{
+  margin-bottom:13px!important;
+  font:500 31px/1.05 var(--serif)!important;
+}
+.rule-card p,
+.rule-card li,
+.payment-line{
+  font:500 18px/1.5 var(--serif)!important;
+}
+.rule-card ul{
+  padding-left:22px;
+}
+.rule-card li + li{
+  margin-top:7px;
+}
+
+/* Functional section descriptions */
+.section-title .muted,
+.panel .muted{
+  font:500 17px/1.45 var(--serif)!important;
+  color:#75665b!important;
+}
+
+/* Inputs should feel like the wedding site, but remain easy to use */
+.team-input,
+.form-field input,
+.form-field select,
+select,
+textarea{
+  font-family:var(--serif)!important;
+  font-size:17px!important;
+  line-height:1.35!important;
+  color:var(--ink)!important;
+}
+.team-input::placeholder,
+.form-field input::placeholder,
+textarea::placeholder{
+  color:#9a887a!important;
+  font-style:italic;
+}
+
+/* Tables / schedules / standings */
+table{
+  font-family:var(--serif)!important;
+}
+td{
+  font-size:16px!important;
+  line-height:1.4!important;
+}
+.match-head,
+.pool-badge{
+  font-family:var(--type)!important;
+  font-size:10px!important;
+  letter-spacing:.06em!important;
+}
+.match-card{
+  font-family:var(--serif)!important;
+}
+.match-card .team,
+.match-card .score,
+.score-name{
+  font-family:var(--serif)!important;
+}
+
+/* Buttons stay crisp and editorial, never paragraph-like */
+.primary,
+.score-btn,
+.small-btn,
+.ghost,
+button{
+  font-size:10px!important;
+  line-height:1.2!important;
+  letter-spacing:.07em!important;
+}
+
+/* Registration / teams content needs breathing room */
+#view-register .grid.two,
+#view-teams .grid.two,
+.rules-columns{
+  gap:26px!important;
+}
+#view-register .card,
+#view-teams .card{
+  padding:28px!important;
+}
+.roster-line,
+.admin-contact{
+  padding:12px 14px!important;
+}
+
+/* Admin can remain more utilitarian, but not hard to read */
+#adminPanel,
+.admin-panel,
+.modal-box,
+.confirm-box{
+  font-family:var(--serif)!important;
+}
+#adminPanel p,
+.admin-panel p,
+.modal-box p,
+.confirm-box p{
+  font:500 17px/1.45 var(--serif)!important;
+}
+
+/* Keep handwritten/display headings consistent with the front page */
+.tournament-cover-title,
+.script-heading,
+.wedding-section-title h2,
+.section-title h2,
+.panel > h2{
+  font-family:var(--script)!important;
+  font-weight:500!important;
+}
+.rule-card h3,
+.card h3,
+.pool-card h3{
+  font-family:var(--serif)!important;
+  font-weight:500!important;
+}
+
+/* Make content panels feel less dense */
+.tournament-details-panel,
+.panel{
+  padding:46px 42px!important;
+}
+.rules-columns{
+  margin-top:8px;
+}
+.rule-card{
+  min-height:auto!important;
+}
+
+/* Softer line contrast, like the homepage */
+.rule-card,
+.card,
+.panel,
+.tournament-overview-card,
+.tournament-cover-card{
+  border-color:rgba(58,43,34,.12)!important;
+}
+table,
+.table-wrap{
+  border-color:rgba(58,43,34,.12)!important;
+}
+
+/* Mobile readability */
+@media(max-width:700px){
+  body{font-size:17px}
+  .tournament-cover-copy{font-size:19px!important}
+  .tournament-cover-verse{font-size:18px!important}
+  .rule-card p,
+  .rule-card li,
+  .payment-line{
+    font-size:17px!important;
+  }
+  .tournament-details-panel,
+  .panel{
+    padding:32px 22px!important;
+  }
+  .rule-card{
+    padding:24px 20px!important;
+  }
+  td{font-size:15px!important}
 }
 
 </style>

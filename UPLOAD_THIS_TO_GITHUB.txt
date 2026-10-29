@@ -1,0 +1,27 @@
+WEDDING_TOURNEY — DEPLOY READY
+
+Upload the FILES INSIDE THIS ZIP directly into the ROOT of your GitHub repository.
+
+Your repository root should show:
+
+index.html
+our-story.html
+details.html
+rsvp.html
+volleyball.html
+.nojekyll
+
+DO NOT upload the outer folder itself.
+
+GitHub Pages:
+Branch: main
+Folder: /(root)
+
+Then open:
+https://dboyarsk-git.github.io/Wedding_tourney/
+
+If you get 404:
+- Make sure index.html is visible in the repository root.
+- Make sure it is exactly lowercase index.html.
+- Make sure GitHub Pages is main / (root).
+- Make sure the latest Pages deployment is green.

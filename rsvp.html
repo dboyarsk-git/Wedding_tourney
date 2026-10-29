@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ceremony RSVP · Tim & Dashia</title>
+<link rel="stylesheet" href="../styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<header class="site-header"><div class="wrap nav">
+<a class="monogram" href="../index.html">T | D</a>
+<button class="mobile-menu">MENU</button>
+<nav class="nav-links">
+<a href="../index.html">Home</a><a href="details.html">Details</a><a href="rsvp.html">RSVP Ceremony</a>
+<a href="../volleyball/index.html">Volleyball Tournament</a><a href="../volleyball/index.html?view=register">RSVP Your Team</a>
+</nav></div></header>
+
+<section class="page-hero">
+<div class="kicker">Tim & Dashia</div>
+<h1>Ceremony RSVP</h1>
+<p>We can’t wait to celebrate with you.</p>
+</section>
+
+<section class="section" style="padding-top:10px">
+<div class="wrap rsvp-layout">
+  <div class="paper-panel">
+    <form id="rsvpForm">
+      <div class="form-grid">
+        <div class="field full"><label for="guestName">Your name</label><input id="guestName" name="guestName" required autocomplete="name"></div>
+        <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" required autocomplete="email"></div>
+        <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" autocomplete="tel"></div>
+        <div class="field"><label for="attendance">Will you attend?</label>
+          <select id="attendance" name="attendance" required>
+            <option value="">Choose one</option><option value="yes">Joyfully accepting</option><option value="no">Regretfully declining</option><option value="maybe">Not sure yet</option>
+          </select>
+        </div>
+        <div class="field"><label for="partySize">Party size</label><input id="partySize" name="partySize" type="number" min="1" max="10" value="1" required></div>
+        <div class="field full"><label for="guestNames">Names of additional guests</label><input id="guestNames" name="guestNames" placeholder="Optional"></div>
+        <div class="field full"><label for="message">Message for Tim & Dashia</label><textarea id="message" name="message" placeholder="Optional"></textarea></div>
+        <div class="field full" style="position:absolute;left:-9999px" aria-hidden="true">
+          <label for="website">Website</label><input id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+      </div>
+      <p class="form-note">Your RSVP is saved privately. Guest responses are not displayed publicly on the website.</p>
+      <button class="btn" id="submitRsvp" type="submit">Send RSVP</button>
+      <div class="status" id="rsvpStatus"></div>
+    </form>
+  </div>
+
+  <aside class="confirm-card">
+    <div class="smallcaps">Ceremony RSVP</div>
+    <h2>Tim <span class="amp">&</span> Dashia</h2>
+    <div class="script" style="font-size:30px">Confirmation card preview</div>
+    <hr>
+    <div class="smallcaps">Date</div><div class="card-line">TBD</div>
+    <div class="smallcaps" style="margin-top:18px">Location</div><div class="card-line">TBD</div>
+    <div class="smallcaps" style="margin-top:18px">Ceremony</div><div class="card-line">TBD</div>
+    <hr>
+    <div class="card-line" id="previewGuest">Your name will appear here</div>
+    <div class="confirmation-code" id="previewCode">Confirmation · Pending RSVP</div>
+  </aside>
+</div>
+</section>
+
+<section class="construction-band">
+<div class="caution-strip tape-left"></div>
+<div class="doodle-cone cone-left" aria-hidden="true">
+<svg viewBox="0 0 72 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M16 71h40M10 79c13-4 39-4 52 0" stroke="#3a2c23" stroke-width="3.2" stroke-linecap="round"/>
+  <path d="M27 70L36 13c.4-2.2 3.7-2.2 4.1 0L50 70" stroke="#3a2c23" stroke-width="3.2" stroke-linejoin="round"/>
+  <path d="M25 54c8 4 17 5 27 1M29 37c7 3 13 4 19 1" stroke="#c96f4a" stroke-width="5.2" stroke-linecap="round"/>
+  <path d="M17 70h38c3 0 5 2 5 5H12c0-3 2-5 5-5Z" stroke="#3a2c23" stroke-width="3.2" stroke-linejoin="round"/>
+  <path d="M34 10l3-5m4 6 5-3m-15 4-5-3" stroke="#3a2c23" stroke-width="2.6" stroke-linecap="round"/>
+</svg>
+</div>
+
+<div class="construction-note"><h2>The invitation card is still being built.</h2><p>The confirmation email already has a matching placeholder card so the real date, venue and invitation artwork can be swapped in later.</p></div>
+</section>
+
+<footer class="footer"><a href="../index.html">← Back Home</a></footer>
+<script src="../app.js"></script>
+<script src="rsvp.js"></script>
+</body></html>

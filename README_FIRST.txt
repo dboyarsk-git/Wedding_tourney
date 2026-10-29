@@ -1,63 +1,45 @@
-TIM & DASHIA WEDDING SITE v3
+TIM & DASHIA — OUR BIG DAY v6
 
-THIS IS THE RESTARTED STRUCTURE YOU ASKED FOR.
-
-ROOT HOMEPAGE
-  index.html
-  Tim & Dashia cover page = the actual main website.
-  Home, Our Story, Details, RSVP, Volleyball Tournament all belong to this same design.
-
-OUR STORY
-  Lives on the homepage.
-  Learn More opens a popup.
-
-DETAILS
-  Lives on the homepage for now.
-  Date / Location / Ceremony / Attire are TBD.
-
-RSVP
-  rsvp.html
-  Separate wedding ceremony RSVP page.
-  Supabase SQL is included in /supabase.
-
-VOLLEYBALL TOURNAMENT
-  /volleyball/index.html
-  The working v60 tournament engine is embedded as the tournament side of the wedding website.
-  Clicking Volleyball Tournament lands directly on REGISTER TEAM.
-  Teams, Schedule, Standings, Bracket, Admin and protected scoring remain available.
-  The entire public interface is reskinned to match the Tim & Dashia cover page.
-
-WEDDING BRAND CLEANUP
-  Public Christian church / ONE WAY Conference / Church of New Hope / John 14:6 language was removed.
-  Old editable rule text still stored in Supabase is automatically sanitized at display time.
-  Old ONE WAY / conference prize text is automatically displayed as Wedding Bash prize language.
-  Internal technical identifiers and legacy admin reset compatibility remain untouched where changing
-  them could break the existing backend.
+MAIN CHANGES
+1. All public “Wedding Bash” wording is now “Our Big Day”.
+2. Main palette is now:
+   - cream / paper
+   - deep forest green
+   - maroon
+3. Tournament Admin was removed from the top navigation.
+4. Admin now lives at the very bottom of the tournament page.
+5. When Admin is unlocked, the editable tournament information cards show
+   their edit controls just like the previous tournament site:
+   - First Place Prize
+   - Second Place Prize
+   - Location & Schedule
+   - Registration & Tournament Format
+   - Scoring
+   - Game Rules
+   - What to Wear & Play Nice
+   - Etiquette / Sportsmanship
+   - Payment information when enabled
+6. Existing v60 tournament scoring logic remains untouched:
+   - protected scoring lock
+   - pool auto-final at 15
+   - bracket 25 / 25 / 15
+   - bracket automatic set advancement
+7. Mark 10:9 remains integrated throughout the wedding experience.
 
 GITHUB
-Upload the CONTENTS of this ZIP to the ROOT of the Wedding_tourney repository.
+Upload the CONTENTS of this ZIP to the root of the Wedding_tourney repository.
 
-SUPABASE
-Tournament:
-  No changes required if your v60 tournament backend is already working.
+TOURNAMENT SUPABASE
+No new tournament SQL is needed for these wording/design/Admin-placement changes
+if the v60 tournament backend is already installed.
 
-Ceremony RSVP:
-  Run /supabase/RUN_THIS_IN_SUPABASE_WEDDING_RSVP.sql once.
-
-Email confirmations:
-  RSVP saving works without email.
-  To send emails, deploy /supabase/functions/send-rsvp-confirmation/index.ts
-  and configure RESEND_API_KEY.
+CEREMONY RSVP
+If not already installed, run:
+  supabase/RUN_THIS_IN_SUPABASE_WEDDING_RSVP.sql
 
 
-MARK 10:9
-Integrated into:
-- Main Tim & Dashia homepage hero
-- Homepage footer
-- Ceremony RSVP confirmation card preview
-- RSVP confirmation email template
-- Wedding Bash tournament hero as a subtle wedding tie-in
-
-Verse:
-“Therefore what God has joined together, let no one separate.”
-— Mark 10:9
+V7 COLOR NOTE
+- Main wedding accent: deep forest green
+- Secondary wedding accent: maroon
+- Construction/caution tape remains YELLOW + BLACK
+- Construction doodle accents remain construction-style, separate from wedding palette

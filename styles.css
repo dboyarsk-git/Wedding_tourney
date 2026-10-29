@@ -3,7 +3,7 @@
 
 :root{
   --cream:#f3ebdc;--cream2:#faf6ee;--paper:#f7f0e4;--paper2:#eadfce;
-  --ink:#35281f;--muted:#77685d;--line:#c4b29b;--rust:#c96e49;--rust2:#a95435;
+  --ink:#35281f;--muted:#77685d;--line:#c4b29b;--rust:#1f3b2c;--rust2:#6b1f2a;
   --shadow:0 20px 60px rgba(58,42,31,.11);--tape:#d6b486
 }
 *{box-sizing:border-box}
@@ -137,4 +137,57 @@ footer{padding:45px 0;border-top:1px solid rgba(53,40,31,.1);text-align:center;c
   letter-spacing:.03em;
   text-transform:none;
   color:#75665a;
+}
+
+
+/* Our Big Day v6 palette */
+:root{
+  --deep-green:#1f3b2c;
+  --deep-green-2:#294c39;
+  --maroon:#6b1f2a;
+  --maroon-2:#812b39;
+}
+.amp,
+.script,
+.story-copy h3,
+.action-paper h3,
+.page-hero .script,
+.confirmation-verse span,
+.wedding-verse .verse-ref{
+  color:var(--deep-green)!important;
+}
+.cover-under-note,
+.under-note{
+  color:var(--maroon)!important;
+}
+.cover-verse span,
+.footer-verse{
+  color:var(--maroon)!important;
+}
+.btn{
+  background:var(--deep-green)!important;
+  border-color:var(--deep-green)!important;
+}
+.btn:hover{
+  background:var(--maroon)!important;
+  border-color:var(--maroon)!important;
+}
+
+
+/* v7 — keep construction details yellow + black */
+.caution,
+.cover-tape,
+.hero-caution,
+.cover-tape-a,
+.cover-tape-b{
+  background:repeating-linear-gradient(
+    135deg,
+    var(--construction-yellow) 0 24px,
+    var(--construction-black) 24px 48px
+  )!important;
+}
+.cone path[stroke="#1f3b2c"],
+.cover-cone path[stroke="#1f3b2c"],
+.doodle-cone path[stroke="#1f3b2c"]{
+  stroke:#35281f!important;
 }

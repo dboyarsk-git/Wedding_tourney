@@ -1698,7 +1698,7 @@ body.admin-mode #paymentCard.payment-disabled-public{
 </style>
 
 <style id="wedding-bash-v3-theme">
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Montserrat:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:wght@400;500;600;700&display=swap');
 :root{--ink:#35281f!important;--charcoal:#4d3e34!important;--cream:#f3ebdc!important;--paper:#faf6ee!important;--blue:#ded0bd!important;--orange:#1f3b2c!important;--orange-deep:#6b1f2a!important;--sage:#d8cfbc!important;--line:#c7b59e!important;--good:#667b61!important;--bad:#6b1f2a!important;--shadow:0 20px 56px rgba(60,43,31,.11)!important;--radius:2px!important}
 body{font-family:"Montserrat",sans-serif!important;color:var(--ink)!important;background:radial-gradient(circle at 18% 7%,rgba(255,255,255,.78),transparent 30%),linear-gradient(180deg,#faf6ee,#f1e7d7)!important}
 .wedding-subnav{position:sticky;top:0;z-index:300;min-height:48px;padding:11px max(14px,calc((100vw - 1180px)/2));display:flex;gap:18px;justify-content:space-between;align-items:center;flex-wrap:wrap;background:rgba(250,246,238,.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(53,40,31,.11);font:600 10px "Montserrat";letter-spacing:.14em;text-transform:uppercase}
@@ -1872,6 +1872,83 @@ body.admin-mode .rule-edit-btn{
 }
 .hero-worker path[stroke="#1f3b2c"]{
   stroke:var(--construction-yellow)!important;
+}
+</style>
+
+
+<style id="v8-typewriter-theme">
+:root{
+  --typewriter:"Courier Prime","Courier New",monospace;
+}
+
+/* Typewriter UI + body copy */
+body,
+button,
+input,
+select,
+textarea,
+.nav button,
+.kicker,
+.label,
+.form-field label,
+th,
+.muted,
+.rule-list,
+.callout,
+.footer-note,
+.footer-admin-btn,
+.match-head,
+.team-public-name,
+.team-captain-public,
+.payment-line,
+.registration-closed,
+.tournament-not-finalized,
+.scoring-readiness,
+.live-data-guard,
+.admin-contact,
+.copyright-box{
+  font-family:var(--typewriter)!important;
+}
+
+/* Keep romantic/event display typography */
+.wedding-bash-title,
+.section-title h2,
+.rule-card h3,
+.pool-card h3,
+.registration-success-card h2,
+.metric{
+  font-family:"Cormorant Garamond",serif!important;
+}
+.wedding-script,
+.wedding-bash-title span{
+  font-family:"Caveat",cursive!important;
+}
+
+/* Typewriter editorial spacing */
+.nav button,
+.kicker,
+.label,
+.form-field label,
+th,
+.footer-admin-btn{
+  letter-spacing:.09em!important;
+}
+
+.hero-paper p,
+.rule-list,
+.muted,
+.callout,
+.payment-line{
+  line-height:1.65!important;
+  letter-spacing:.005em!important;
+}
+
+/* Score screen remains bold/clean, not typewriter-heavy */
+.score-number,
+.score-name,
+.score-top .center b,
+.score-bottom button{
+  font-family:"Montserrat",sans-serif!important;
 }
 </style>
 

@@ -43,3 +43,12 @@ V7 COLOR NOTE
 - Secondary wedding accent: maroon
 - Construction/caution tape remains YELLOW + BLACK
 - Construction doodle accents remain construction-style, separate from wedding palette
+
+
+V8 TYPEWRITER PREVIEW
+- Regular/body/UI text uses Courier Prime for an editorial/typewriter feel.
+- Tim & Dashia / major display headings remain elegant serif.
+- Handwritten script accents remain handwritten.
+- Scoring numbers remain bold and easy to read.
+- Deep green + maroon wedding palette preserved.
+- Construction yellow + black preserved.

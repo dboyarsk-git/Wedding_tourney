@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Montserrat:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Montserrat:wght@400;500;600;700&display=swap');
 
 :root{
   --cream:#f3ebdc;--cream2:#faf6ee;--paper:#f7f0e4;--paper2:#eadfce;
@@ -190,4 +190,108 @@ footer{padding:45px 0;border-top:1px solid rgba(53,40,31,.1);text-align:center;c
 .cover-cone path[stroke="#1f3b2c"],
 .doodle-cone path[stroke="#1f3b2c"]{
   stroke:#35281f!important;
+}
+
+
+/* v8 — TYPEWRITER PREVIEW
+   Keep the romantic display fonts, but make all practical/readable copy feel
+   like a typed wedding announcement. */
+:root{
+  --typewriter:"Courier Prime","Courier New",monospace;
+}
+
+/* Regular copy */
+body,
+button,
+input,
+select,
+textarea,
+.navlinks a,
+.navlinks button,
+.cover-links a,
+.cover-links button,
+.eyebrow,
+.hero-sub,
+.detail span,
+.details-cell span,
+.field label,
+.note,
+.status,
+.code,
+.fake-btn,
+.btn,
+.mobile,
+.cover-mobile,
+.back-btn,
+.embed-topbar span,
+footer{
+  font-family:var(--typewriter)!important;
+}
+
+/* Keep elegant wedding display faces */
+.names,
+.paper-card h2,
+.story-copy h2,
+.details-card h2,
+.action-paper h2,
+.page-hero h1,
+.confirm h2,
+.story-full h1,
+.detail strong,
+.details-cell strong{
+  font-family:"Cormorant Garamond",serif!important;
+}
+
+.script,
+.story-copy h3,
+.action-paper h3,
+.story-full h2,
+.cover-under-note,
+.under-note,
+.ending-script{
+  font-family:"Caveat",cursive!important;
+}
+
+/* More authentic typewriter rhythm */
+.hero-copy,
+.paper-card p,
+.story-copy p,
+.action-paper p,
+.details-card p,
+.story-full p,
+.confirm .line,
+.wedding-verse blockquote,
+.confirmation-verse{
+  font-family:var(--typewriter)!important;
+  letter-spacing:.01em!important;
+  line-height:1.65!important;
+}
+
+.eyebrow,
+.hero-sub,
+.detail span,
+.details-cell span,
+.field label,
+.code,
+.cover-links button,
+.cover-links a,
+.navlinks button,
+.navlinks a,
+.btn,
+.fake-btn{
+  letter-spacing:.10em!important;
+}
+
+/* Buttons feel like typed labels on paper */
+.btn,
+.fake-btn,
+.back-btn{
+  font-weight:700!important;
+  text-transform:uppercase!important;
+}
+
+/* Slightly soften metrics so typewriter doesn't overpower */
+.detail strong,
+.details-cell strong{
+  letter-spacing:.01em!important;
 }

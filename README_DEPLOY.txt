@@ -1,15 +1,19 @@
-TIM & DASHIA WEDDING TOURNEY v17
+TIM & DASHIA WEDDING SITE v20
 
-Upload every file in this folder directly to the ROOT of Wedding_tourney.
+Upload every file in this WEBSITE_UPLOAD folder directly to the ROOT of Wedding_tourney.
 
-Current build includes:
-- Wedding homepage with bottom heart only
-- Mobile-readable tournament typography/navigation
-- Clean mobile bracket spacing
-- $100/team ($25/player)
-- Supabase live data connection
-- Realtime + backup cross-device refresh sync
-- Tournament registration, admin, schedule, standings, bracket, scoring
+v20 RSVP:
+- Invite-only household lookup
+- Named guests only
+- Controlled plus-ones
+- Person-by-person Yes/No RSVP
+- Contact + mailing address updates
+- Private Guest List Admin using the tournament Admin code
 
-For Supabase database setup/repair, use the separate SUPABASE_SETUP folder
-from the full v17 ZIP. Do not upload the SQL files to GitHub Pages.
+Tournament:
+- Existing working Supabase connection preserved
+- Live cross-device sync preserved
+- $100/team • $25/player pricing preserved
+- Mobile/readability/bracket spacing fixes preserved
+
+IMPORTANT: Run SUPABASE_SETUP/04_WEDDING_RSVP_INVITE_ONLY_v20.sql in Supabase before using the new RSVP page.

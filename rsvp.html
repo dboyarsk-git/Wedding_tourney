@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="tim-dashia-site-build" content="v25-rsvp">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#efe4d3">
 <title>RSVP · Tim & Dashia</title>
@@ -107,6 +108,60 @@ textarea{min-height:105px;resize:vertical}
   body{font-size:19px}.page{padding-top:30px;width:min(95vw,980px)}.hero-card{padding:45px 22px 38px}.hero-copy{font-size:21px}.paper-card{padding:30px 20px}.section-copy{font-size:19px}.guest-row{grid-template-columns:1fr;gap:10px}.choice{width:100%}.choice button{flex:1;min-height:48px;font-size:13px}.input,textarea,select{font-size:18px}.btn{font-size:13px}.invite-found{flex-direction:column}.admin-card-head{flex-direction:column}.stats{grid-template-columns:1fr 1fr}.nav-links a{font-size:13px}
 }
 </style>
+
+<style id="v25-maroon-buttons">
+/* v25 — cohesive maroon buttons across the wedding site */
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.btn,
+.solid-button,
+.primary,
+.small-btn,
+.ghost,
+.danger,
+.light,
+.redbtn,
+.admin-button,
+.editor-button,
+.editor-tools button,
+.confirm-link button,
+.registration-success-link button,
+.registration-success-actions button,
+.rule-editor-actions button,
+.score-protection-actions button {
+  background:#6b1f2a !important;
+  color:#fff !important;
+  border-color:#6b1f2a !important;
+}
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+.btn:hover,
+.solid-button:hover,
+.primary:hover,
+.small-btn:hover,
+.ghost:hover,
+.danger:hover,
+.light:hover,
+.redbtn:hover,
+.admin-button:hover,
+.editor-button:hover,
+.editor-tools button:hover {
+  background:#4f1720 !important;
+  color:#fff !important;
+  border-color:#4f1720 !important;
+}
+button:disabled,
+input[type="button"]:disabled,
+input[type="submit"]:disabled {
+  opacity:.55 !important;
+  cursor:not-allowed !important;
+}
+</style>
+
 </head>
 <body>
 <header class="site-header">
@@ -129,7 +184,7 @@ textarea{min-height:105px;resize:vertical}
     <div class="kicker">Tim &amp; Dashia</div>
     <h1>RSVP</h1>
     <div class="script">We saved you a seat ♡</div>
-    <p class="hero-copy">Enter your name and the email or phone number connected to your invitation. We’ll pull up only the people included on your invitation.</p>
+    <p class="hero-copy">Enter your first name and last initial. We’ll pull up only the people included on your invitation. After we find you, add one email or phone number for your party.</p>
     <div class="heart-rule"><i></i><b>♡</b><i></i></div>
     <div id="backendStatus" class="status-banner">Checking RSVP system…</div>
   </section>
@@ -137,15 +192,16 @@ textarea{min-height:105px;resize:vertical}
   <section id="lookupCard" class="paper-card taped">
     <div class="step-label">Step One</div>
     <div class="section-title">Find your invitation</div>
-    <p class="section-copy">Use the name exactly as it appears on your invitation, plus the email address or phone number we have for your household.</p>
+    <p class="section-copy">Enter your <b>first name</b> and <b>last initial</b>. If we only have your first name on the guest list, you can leave the last initial blank.</p>
     <div class="form-grid">
       <div class="field">
-        <label for="lookupName">First &amp; Last Name</label>
-        <input class="input" id="lookupName" autocomplete="name" placeholder="Example: John Smith">
+        <label for="lookupFirstName">First Name</label>
+        <input class="input" id="lookupFirstName" autocomplete="given-name" placeholder="Example: Arina">
       </div>
       <div class="field">
-        <label for="lookupContact">Email or Phone</label>
-        <input class="input" id="lookupContact" autocomplete="email" placeholder="Email or phone number">
+        <label for="lookupLastInitial">Last Initial</label>
+        <input class="input" id="lookupLastInitial" maxlength="1" inputmode="text" autocomplete="family-name" placeholder="Example: B">
+        <div class="help">Leave blank only if we do not have your last name yet.</div>
       </div>
     </div>
     <div id="lookupMessage" class="help" style="margin-top:12px"></div>
@@ -167,15 +223,16 @@ textarea{min-height:105px;resize:vertical}
 
     <div class="contact-update">
       <div class="section-title" style="font-size:38px">Contact &amp; mailing info</div>
-      <p class="section-copy" style="margin-bottom:18px">We’ll keep one primary contact for the whole invitation. You can also update your mailing address if anything has changed.</p>
+      <p class="section-copy" style="margin-bottom:18px">Add <b>one email address or phone number</b> for your whole party so we can contact you about the wedding. You can enter both if you want.</p>
       <div class="form-grid">
         <div class="field">
-          <label for="contactEmail">Best Email</label>
+          <label for="contactEmail">Party Email</label>
           <input class="input" id="contactEmail" type="email" autocomplete="email">
         </div>
         <div class="field">
-          <label for="contactPhone">Best Phone</label>
+          <label for="contactPhone">Party Phone</label>
           <input class="input" id="contactPhone" type="tel" autocomplete="tel">
+          <div class="help">At least one email or phone number is required for the party.</div>
         </div>
         <div class="field full">
           <label for="mailingAddress">Mailing Address</label>
@@ -267,31 +324,53 @@ async function checkBackend(){
     if(data?.ready) setBackendStatus("good","RSVP system connected ♡");
     else setBackendStatus("bad","RSVP system is still under construction. Admin setup is not complete yet.");
   }catch(e){
-    setBackendStatus("bad","RSVP system is still under construction. Run the v20 RSVP Supabase setup before opening RSVPs.");
+    setBackendStatus("bad","RSVP system is still under construction. Run the v23 name-only RSVP lookup setup in Supabase before opening RSVPs.");
   }
 }
 
 function resetPublic(){
   invitation=null;
-  $("lookupName").value="";$("lookupContact").value="";$("lookupMessage").textContent="";
+  $("lookupFirstName").value="";$("lookupLastInitial").value="";$("lookupMessage").textContent="";
   $("rsvpCard").classList.add("hidden");$("successCard").classList.add("hidden");$("lookupCard").classList.remove("hidden");
   window.scrollTo({top:0,behavior:"smooth"});
 }
 
 async function findInvitation(){
-  const name=$("lookupName").value.trim(), contact=$("lookupContact").value.trim();
+  const firstName=$("lookupFirstName").value.trim();
+  const lastInitial=$("lookupLastInitial").value.trim().replace(/[^A-Za-z]/g,"").slice(0,1);
   const msg=$("lookupMessage");
-  if(name.length<2||contact.length<3){msg.textContent="Enter your full name and the email or phone number connected to your invitation.";return;}
-  $("findInviteBtn").disabled=true;msg.textContent="Looking for your invitation…";
+  if(firstName.length<2){
+    msg.textContent="Enter your first name. Add your last initial if we have your last name on the guest list.";
+    return;
+  }
+  $("findInviteBtn").disabled=true;
+  msg.textContent="Looking for your invitation…";
   try{
-    const {data,error}=await sb.rpc("find_wedding_invitation",{p_name:name,p_contact:contact});
+    const {data,error}=await sb.rpc("find_wedding_invitation_name_only",{
+      p_first_name:firstName,
+      p_last_initial:lastInitial
+    });
     if(error)throw error;
-    if(!data?.found){msg.textContent="We couldn’t match that invitation. Check the spelling and try the email or phone number we may have on file.";return;}
-    invitation=data;renderInvitation();
-    $("lookupCard").classList.add("hidden");$("successCard").classList.add("hidden");$("rsvpCard").classList.remove("hidden");
+    if(data?.ambiguous){
+      msg.textContent="We found more than one guest with that name. Try your last initial, or ask Dashia to update your full name on the guest list.";
+      return;
+    }
+    if(!data?.found){
+      msg.textContent="We couldn’t find that name yet. Check the spelling and last initial. If we only have your first name, try leaving the last initial blank.";
+      return;
+    }
+    invitation=data;
+    renderInvitation();
+    $("lookupCard").classList.add("hidden");
+    $("successCard").classList.add("hidden");
+    $("rsvpCard").classList.remove("hidden");
     $("rsvpCard").scrollIntoView({behavior:"smooth",block:"start"});
-  }catch(e){console.error(e);msg.textContent=e.message||"We couldn’t check the guest list right now.";}
-  finally{$("findInviteBtn").disabled=false;}
+  }catch(e){
+    console.error(e);
+    msg.textContent=e.message||"We couldn’t check the guest list right now.";
+  }finally{
+    $("findInviteBtn").disabled=false;
+  }
 }
 
 function makeChoice(target,attendance){
@@ -337,11 +416,17 @@ async function submitRsvp(){
     else{const input=row.querySelector(".plus-name input");const guest_name=input?.value.trim()||"";if(attendance==="yes"&&!guest_name)missing=true;plusResponses.push({id:row.dataset.id,attendance,guest_name});}
   });
   if(missing){msg.textContent="Please answer Yes or No for everyone shown. If a plus-one is attending, add their name.";return;}
+  const partyEmail=$("contactEmail").value.trim();
+  const partyPhone=$("contactPhone").value.trim();
+  if(!partyEmail && !partyPhone){
+    msg.textContent="Please add one email address or phone number for your party before submitting.";
+    return;
+  }
   $("submitRsvpBtn").disabled=true;msg.textContent="Saving your RSVP…";
   try{
     const {data,error}=await sb.rpc("submit_wedding_invitation_rsvp",{
       p_invitation_id:invitation.invitation_id,p_lookup_token:invitation.lookup_token,
-      p_contact_email:$("contactEmail").value.trim(),p_contact_phone:$("contactPhone").value.trim(),p_mailing_address:$("mailingAddress").value.trim(),
+      p_contact_email:partyEmail,p_contact_phone:partyPhone,p_mailing_address:$("mailingAddress").value.trim(),
       p_guest_responses:guestResponses,p_plus_one_responses:plusResponses,p_message:$("guestMessage").value.trim()
     });
     if(error)throw error;
@@ -402,7 +487,8 @@ function renderAdminList(items){
 }
 
 $("findInviteBtn").onclick=findInvitation;
-$("lookupContact").addEventListener("keydown",e=>{if(e.key==="Enter")findInvitation();});
+$("lookupFirstName").addEventListener("keydown",e=>{if(e.key==="Enter")findInvitation();});
+$("lookupLastInitial").addEventListener("keydown",e=>{if(e.key==="Enter")findInvitation();});
 $("submitRsvpBtn").onclick=submitRsvp;
 $("startOverBtn").onclick=resetPublic;
 $("editResponseBtn").onclick=()=>{$("successCard").classList.add("hidden");$("rsvpCard").classList.remove("hidden");renderInvitation();$("rsvpCard").scrollIntoView({behavior:"smooth"});};

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="tim-dashia-site-build" content="v25-our-story">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#efe4d3">
 <title>Our Story · Tim & Dashia</title>
@@ -202,6 +203,61 @@ body.story-editing [data-edit-key]:focus{outline:2px solid var(--maroon)}
   .btn{font-size:11px;padding:14px 17px}
 }
 </style>
+
+<style id="v25-maroon-buttons">
+/* v25 — cohesive maroon buttons across the wedding site */
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.btn,
+.solid-button,
+.primary,
+.small-btn,
+.ghost,
+.danger,
+.light,
+.redbtn,
+.admin-button,
+.editor-button,
+.editor-tools button,
+.confirm-link button,
+.registration-success-link button,
+.registration-success-actions button,
+.rule-editor-actions button,
+.score-protection-actions button {
+  background:#6b1f2a !important;
+  color:#fff !important;
+  border-color:#6b1f2a !important;
+}
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+.btn:hover,
+.solid-button:hover,
+.primary:hover,
+.small-btn:hover,
+.ghost:hover,
+.danger:hover,
+.light:hover,
+.redbtn:hover,
+.admin-button:hover,
+.editor-button:hover,
+.editor-tools button:hover {
+  background:#4f1720 !important;
+  color:#fff !important;
+  border-color:#4f1720 !important;
+}
+button:disabled,
+input[type="button"]:disabled,
+input[type="submit"]:disabled {
+  opacity:.55 !important;
+  cursor:not-allowed !important;
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <header class="site-header">
@@ -324,51 +380,147 @@ document.querySelectorAll(".nav-links a").forEach(a=>a.addEventListener("click",
 
 const STORY_STORAGE_KEY="tim_dashia_our_story_draft_v1";
 const ADMIN_HASH="18642fa8fb69ca94183ef39f93692a597872125a8b7d607afab643dfd89569a8";
+const SUPABASE_URL="https://uygotksjyqusbdoepzft.supabase.co";
+const SUPABASE_KEY="sb_publishable_7946Ght6J3pY2k9UcNbkhA_dDTwn89q";
+const storySb=window.supabase?.createClient(SUPABASE_URL,SUPABASE_KEY);
 const editableEls=[...document.querySelectorAll("[data-edit-key]")];
 const editBtn=document.getElementById("editStory");
 const saveBtn=document.getElementById("saveStory");
 const cancelBtn=document.getElementById("cancelStory");
 const statusEl=document.getElementById("editorStatus");
+let adminProof="";
+let sharedStoryExists=false;
 
 async function sha256(value){
   const data=new TextEncoder().encode(value);
   const digest=await crypto.subtle.digest("SHA-256",data);
   return [...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,"0")).join("");
 }
-function loadDraft(){
+
+function collectStory(){
+  const saved={};
+  editableEls.forEach(el=>saved[el.dataset.editKey]=el.innerHTML);
+  return saved;
+}
+
+function applyStory(saved){
+  if(!saved||typeof saved!=="object")return;
+  editableEls.forEach(el=>{
+    const key=el.dataset.editKey;
+    if(typeof saved[key]==="string")el.innerHTML=saved[key];
+  });
+}
+
+function loadLocalStory(){
   try{
     const saved=JSON.parse(localStorage.getItem(STORY_STORAGE_KEY)||"{}");
-    editableEls.forEach(el=>{
-      const key=el.dataset.editKey;
-      if(typeof saved[key]==="string")el.innerHTML=saved[key];
-    });
+    applyStory(saved);
   }catch(e){}
 }
+
+async function loadDraft(){
+  if(!storySb){
+    loadLocalStory();
+    return;
+  }
+  try{
+    const {data,error}=await storySb
+      .from("wedding_site_content")
+      .select("content")
+      .eq("page_key","our-story")
+      .maybeSingle();
+    if(error)throw error;
+    if(data?.content){
+      sharedStoryExists=true;
+      applyStory(data.content);
+      localStorage.setItem(STORY_STORAGE_KEY,JSON.stringify(data.content));
+    }else{
+      sharedStoryExists=false;
+      loadLocalStory();
+    }
+  }catch(e){
+    console.warn("Shared story unavailable; using this browser's copy.",e);
+    loadLocalStory();
+  }
+}
+
 function setEditing(on){
   document.body.classList.toggle("story-editing",on);
   editableEls.forEach(el=>el.contentEditable=on?"true":"false");
   editBtn.textContent=on?"Editing Story…":"Edit Story Draft";
   if(!on)editableEls.forEach(el=>el.blur());
 }
+
 editBtn.addEventListener("click",async()=>{
   if(document.body.classList.contains("story-editing"))return;
   const code=prompt("Enter the Admin code to edit the story draft:");
   if(code===null)return;
-  if(await sha256(code)!==ADMIN_HASH){alert("Incorrect admin code.");return;}
+  const hash=await sha256(code);
+  if(hash!==ADMIN_HASH){alert("Incorrect admin code.");return;}
+  adminProof=hash;
   setEditing(true);
-  statusEl.textContent="Draft editing is ON. Click text anywhere on the page to change it.";
+  statusEl.textContent=sharedStoryExists
+    ?"Editing is ON. Save Draft will update every device."
+    :"Editing is ON. Your browser draft is loaded; Save Draft will publish it to every device.";
 });
-saveBtn.addEventListener("click",()=>{
-  const saved={};
-  editableEls.forEach(el=>saved[el.dataset.editKey]=el.innerHTML);
+
+saveBtn.addEventListener("click",async()=>{
+  const saved=collectStory();
   localStorage.setItem(STORY_STORAGE_KEY,JSON.stringify(saved));
-  statusEl.textContent="Draft saved on this browser.";
+
+  if(!storySb){
+    statusEl.textContent="Draft saved on this browser only — Supabase could not load.";
+    return;
+  }
+
+  saveBtn.disabled=true;
+  statusEl.textContent="Publishing story…";
+  try{
+    const {error}=await storySb.rpc("save_wedding_site_content",{
+      p_page_key:"our-story",
+      p_content:saved,
+      p_admin_hash:adminProof
+    });
+    if(error)throw error;
+    sharedStoryExists=true;
+    statusEl.textContent="Story saved for everyone ✓ Your phone and other devices will use this version.";
+  }catch(e){
+    console.error(e);
+    statusEl.textContent="Saved on this browser, but the shared save failed. Run the v25 Supabase SQL and try again.";
+  }finally{
+    saveBtn.disabled=false;
+  }
 });
+
 cancelBtn.addEventListener("click",()=>{
   setEditing(false);
   statusEl.textContent="Editing closed. This page is still under construction.";
 });
-loadDraft();
+
+function startStorySync(){
+  if(!storySb)return;
+  storySb.channel("wedding-story-content")
+    .on("postgres_changes",{
+      event:"*",
+      schema:"public",
+      table:"wedding_site_content",
+      filter:"page_key=eq.our-story"
+    },payload=>{
+      if(payload.new?.content){
+        applyStory(payload.new.content);
+        localStorage.setItem(STORY_STORAGE_KEY,JSON.stringify(payload.new.content));
+        sharedStoryExists=true;
+      }
+    })
+    .subscribe();
+
+  window.addEventListener("focus",loadDraft);
+  document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState==="visible")loadDraft();
+  });
+}
+
+loadDraft().then(startStorySync);
 </script>
 </body>
 </html>

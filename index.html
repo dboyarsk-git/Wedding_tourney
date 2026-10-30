@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="tim-dashia-site-build" content="v25-index">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#efe4d3">
 <title>Tim & Dashia — Cover v9</title>
@@ -440,6 +441,61 @@ body.admin-editing [data-edit-key]{
 }
 
 </style>
+
+<style id="v25-maroon-buttons">
+/* v25 — cohesive maroon buttons across the wedding site */
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+.btn,
+.solid-button,
+.primary,
+.small-btn,
+.ghost,
+.danger,
+.light,
+.redbtn,
+.admin-button,
+.editor-button,
+.editor-tools button,
+.confirm-link button,
+.registration-success-link button,
+.registration-success-actions button,
+.rule-editor-actions button,
+.score-protection-actions button {
+  background:#6b1f2a !important;
+  color:#fff !important;
+  border-color:#6b1f2a !important;
+}
+button:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+.btn:hover,
+.solid-button:hover,
+.primary:hover,
+.small-btn:hover,
+.ghost:hover,
+.danger:hover,
+.light:hover,
+.redbtn:hover,
+.admin-button:hover,
+.editor-button:hover,
+.editor-tools button:hover {
+  background:#4f1720 !important;
+  color:#fff !important;
+  border-color:#4f1720 !important;
+}
+button:disabled,
+input[type="button"]:disabled,
+input[type="submit"]:disabled {
+  opacity:.55 !important;
+  cursor:not-allowed !important;
+}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -589,6 +645,10 @@ document.querySelectorAll(".nav-links a").forEach(a=>{
 <script>
 
 const ADMIN_STORAGE_KEY="timDashiaCoverEditsV3";
+const ADMIN_HASH="18642fa8fb69ca94183ef39f93692a597872125a8b7d607afab643dfd89569a8";
+const SUPABASE_URL="https://uygotksjyqusbdoepzft.supabase.co";
+const SUPABASE_KEY="sb_publishable_7946Ght6J3pY2k9UcNbkhA_dDTwn89q";
+const contentSb=window.supabase?.createClient(SUPABASE_URL,SUPABASE_KEY);
 const editableEls=[...document.querySelectorAll("[data-edit-key]")];
 const adminButton=document.getElementById("adminButton");
 const adminPanel=document.getElementById("adminPanel");
@@ -596,18 +656,65 @@ const saveEdits=document.getElementById("saveEdits");
 const resetEdits=document.getElementById("resetEdits");
 const closeAdmin=document.getElementById("closeAdmin");
 const adminStatus=document.getElementById("adminStatus");
+let adminProof="";
+let sharedContentExists=false;
 
 const defaultText={};
 editableEls.forEach(el=>{ defaultText[el.dataset.editKey]=el.innerHTML; });
 
-function loadEdits(){
+async function sha256(value){
+  const data=new TextEncoder().encode(value);
+  const digest=await crypto.subtle.digest("SHA-256",data);
+  return [...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+
+function collectHomepageContent(){
+  const saved={};
+  editableEls.forEach(el=>{ saved[el.dataset.editKey]=el.innerHTML; });
+  return saved;
+}
+
+function applyHomepageContent(saved){
+  if(!saved||typeof saved!=="object")return;
+  editableEls.forEach(el=>{
+    const key=el.dataset.editKey;
+    if(typeof saved[key]==="string")el.innerHTML=saved[key];
+  });
+}
+
+function loadLocalHomepage(){
   try{
     const saved=JSON.parse(localStorage.getItem(ADMIN_STORAGE_KEY)||"{}");
-    editableEls.forEach(el=>{
-      const key=el.dataset.editKey;
-      if(Object.prototype.hasOwnProperty.call(saved,key)) el.innerHTML=saved[key];
-    });
-  }catch(e){ console.warn("Could not load saved homepage edits",e); }
+    applyHomepageContent(saved);
+  }catch(e){
+    console.warn("Could not load saved homepage edits",e);
+  }
+}
+
+async function loadEdits(){
+  if(!contentSb){
+    loadLocalHomepage();
+    return;
+  }
+  try{
+    const {data,error}=await contentSb
+      .from("wedding_site_content")
+      .select("content")
+      .eq("page_key","homepage")
+      .maybeSingle();
+    if(error)throw error;
+    if(data?.content){
+      sharedContentExists=true;
+      applyHomepageContent(data.content);
+      localStorage.setItem(ADMIN_STORAGE_KEY,JSON.stringify(data.content));
+    }else{
+      sharedContentExists=false;
+      loadLocalHomepage();
+    }
+  }catch(e){
+    console.warn("Shared homepage content unavailable; using this browser's copy.",e);
+    loadLocalHomepage();
+  }
 }
 
 function setAdminMode(on){
@@ -618,32 +725,110 @@ function setAdminMode(on){
     el.spellcheck=on;
   });
   if(on){
-    adminStatus.textContent="Edit mode is on.";
+    adminStatus.textContent=sharedContentExists
+      ?"Edit mode is on. Saving will update every device."
+      :"Edit mode is on. Your current browser copy is loaded; Save Changes will publish it to every device.";
     adminPanel.scrollIntoView({behavior:"smooth",block:"center"});
   }
 }
 
-adminButton?.addEventListener("click",()=>setAdminMode(true));
+adminButton?.addEventListener("click",async()=>{
+  const code=prompt("Enter the Admin code to edit the homepage:");
+  if(code===null)return;
+  const hash=await sha256(code);
+  if(hash!==ADMIN_HASH){alert("Incorrect admin code.");return;}
+  adminProof=hash;
+  setAdminMode(true);
+});
 
 closeAdmin?.addEventListener("click",()=>{
   setAdminMode(false);
   adminStatus.textContent="";
 });
 
-saveEdits?.addEventListener("click",()=>{
-  const saved={};
-  editableEls.forEach(el=>{ saved[el.dataset.editKey]=el.innerHTML; });
+saveEdits?.addEventListener("click",async()=>{
+  const saved=collectHomepageContent();
   localStorage.setItem(ADMIN_STORAGE_KEY,JSON.stringify(saved));
-  adminStatus.textContent="Saved on this browser.";
+
+  if(!contentSb){
+    adminStatus.textContent="Saved on this browser only — Supabase could not load.";
+    return;
+  }
+
+  saveEdits.disabled=true;
+  adminStatus.textContent="Publishing changes…";
+  try{
+    const {error}=await contentSb.rpc("save_wedding_site_content",{
+      p_page_key:"homepage",
+      p_content:saved,
+      p_admin_hash:adminProof
+    });
+    if(error)throw error;
+    sharedContentExists=true;
+    adminStatus.textContent="Saved for everyone ✓ Your phone and other devices will use this version.";
+  }catch(e){
+    console.error(e);
+    adminStatus.textContent="Saved on this browser, but the shared save failed. Run the v25 Supabase SQL and try again.";
+  }finally{
+    saveEdits.disabled=false;
+  }
 });
 
-resetEdits?.addEventListener("click",()=>{
+resetEdits?.addEventListener("click",async()=>{
   editableEls.forEach(el=>{ el.innerHTML=defaultText[el.dataset.editKey]; });
   localStorage.removeItem(ADMIN_STORAGE_KEY);
-  adminStatus.textContent="Text reset to the original version.";
+
+  if(!contentSb){
+    adminStatus.textContent="Reset on this browser only.";
+    return;
+  }
+
+  resetEdits.disabled=true;
+  try{
+    const {error}=await contentSb.rpc("reset_wedding_site_content",{
+      p_page_key:"homepage",
+      p_admin_hash:adminProof
+    });
+    if(error)throw error;
+    sharedContentExists=false;
+    adminStatus.textContent="Shared homepage reset to the original version.";
+  }catch(e){
+    console.error(e);
+    adminStatus.textContent="The local text reset, but the shared reset failed.";
+  }finally{
+    resetEdits.disabled=false;
+  }
 });
 
-loadEdits();
+function startContentSync(){
+  if(!contentSb)return;
+  contentSb.channel("wedding-homepage-content")
+    .on("postgres_changes",{
+      event:"*",
+      schema:"public",
+      table:"wedding_site_content",
+      filter:"page_key=eq.homepage"
+    },payload=>{
+      if(payload.eventType==="DELETE"){
+        applyHomepageContent(defaultText);
+        sharedContentExists=false;
+        return;
+      }
+      if(payload.new?.content){
+        applyHomepageContent(payload.new.content);
+        localStorage.setItem(ADMIN_STORAGE_KEY,JSON.stringify(payload.new.content));
+        sharedContentExists=true;
+      }
+    })
+    .subscribe();
+
+  window.addEventListener("focus",loadEdits);
+  document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState==="visible")loadEdits();
+  });
+}
+
+loadEdits().then(startContentSync);
 
 
 

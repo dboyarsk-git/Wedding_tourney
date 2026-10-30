@@ -1,72 +1,139 @@
-TIM & DASHIA WEDDING + VOLLEYBALL TOURNEY — v17
-================================================
+TIM & DASHIA WEDDING + VOLLEYBALL SITE — v20
 
-WHAT IS ALREADY WIRED IN
-------------------------
-The tournament page is already connected to your Supabase project using your
-browser-safe Supabase Project URL + publishable key.
+WHAT CHANGED IN v20
+- RSVP is now invite-only instead of an open guest form.
+- Guests search using an invited full name + the matching email OR phone on their invitation.
+- Only the named guests on that invitation are shown.
+- Plus-ones only appear when Admin explicitly allows them.
+- Guests answer Yes/No person-by-person.
+- One household contact email/phone is maintained.
+- Guests can update their mailing address and leave a message.
+- RSVP responses can be reopened/edited later with the same lookup info.
+- The RSVP page includes a private Guest List Admin area using the same tournament Admin code.
+- RSVP body text/buttons remain large and phone-friendly.
 
-The website includes:
-- Live Supabase tournament data
-- Realtime cross-device updates + backup refresh syncing
-- Team registration
-- Admin team/payment/check-in controls
-- Pool schedule + standings
-- Bracket + scoring
-- Scoring locks / conflict protection when the protected backend is installed
-- Bracket auto-advance support
-- $100 per team / $25 per player
-- Larger mobile-readable text
-- Clean mobile bracket spacing
+IMPORTANT: EMAILS
+The RSVP itself works after the SQL below is installed, but confirmation EMAIL DELIVERY is not enabled yet.
+See RSVP_EMAIL_NEXT_STEP.txt. The database is already prepared for the email layer.
 
-GITHUB — WHAT TO UPLOAD
------------------------
-1. Open the WEBSITE_UPLOAD folder in this ZIP.
-2. Upload ALL files inside WEBSITE_UPLOAD directly to the ROOT of your
-   Wedding_tourney GitHub repository.
-3. Replace the old files when GitHub asks.
-4. Commit to main.
-5. GitHub Pages should stay set to: main / (root)
+============================================================
+A) GITHUB WEBSITE UPLOAD
+============================================================
+Upload ONLY the contents of WEBSITE_UPLOAD/ to the ROOT of the Wedding_tourney GitHub repo.
+Replace the existing files with these versions.
 
-DO NOT upload the SUPABASE_SETUP folder to GitHub.
-Those files are for Supabase Dashboard -> SQL Editor only.
+Do NOT upload SUPABASE_SETUP/ to GitHub.
 
-SUPABASE — IMPORTANT
---------------------
-If the site loads teams/data and Keep Score opens normally, you do NOT need to
-rerun the full backend SQL.
+Files in WEBSITE_UPLOAD:
+- index.html
+- our-story.html
+- details.html
+- rsvp.html
+- volleyball.html
+- .nojekyll
+- README_DEPLOY.txt
 
-If you see the message that protected scoring / v60 is not ready:
-- Run: 03_RUN_THIS_IN_SUPABASE_v60_BRACKET_AUTO_ADVANCE.sql
-- Then run: 05_WEDDING_TOURNEY_v17_SETTINGS.sql
-- Reload the website.
+============================================================
+B) RSVP SUPABASE SETUP
+============================================================
+For the new invite-only RSVP system, open Supabase -> SQL Editor and run:
 
-If the Supabase project is missing the base tournament tables/functions entirely,
-run these IN ORDER:
-1. 01_ONE_WAY_v54_MASTER_SUPABASE_RUN_THIS.sql
-2. 02_RUN_THIS_IN_SUPABASE_v58.sql
-3. 03_RUN_THIS_IN_SUPABASE_v60_BRACKET_AUTO_ADVANCE.sql
-4. 05_WEDDING_TOURNEY_v17_SETTINGS.sql
+SUPABASE_SETUP/04_WEDDING_RSVP_INVITE_ONLY_v20.sql
 
-WARNING: the v58 migration resets match SCORES because it changes the scoring
-format. It preserves registrations, teams, pool assignments, check-in/payment,
-captain info, prize settings, and editable rule settings.
+This is safe to run in the same Supabase project as the volleyball tournament.
+It creates NEW wedding RSVP tables/functions and does not reset tournament data.
 
-Optional ceremony RSVP database setup:
-- 04_RUN_THIS_IN_SUPABASE_WEDDING_RSVP.sql
+You do NOT need to rerun the tournament SQL files just to add RSVP v20 if the tournament is already working.
 
-SUPABASE SECURITY NOTE
-----------------------
-Only the browser-safe publishable key is embedded in volleyball.html.
-No Supabase service_role / secret key belongs in GitHub or in browser HTML.
+After running the RSVP SQL:
+1. Upload the new rsvp.html.
+2. Open RSVP on the live website.
+3. The banner should say "RSVP system connected ♡".
+4. Scroll to the bottom and choose "Guest List Admin".
+5. Enter the same Admin code used for the tournament.
+6. Add your first test invitation/household.
+7. Exit Admin and test "Find My Invitation" using that invited person's name + stored email/phone.
+
+============================================================
+C) GUEST LIST LOGIC
+============================================================
+Each invitation contains:
+- Household / invitation name
+- Primary contact name
+- Email and/or phone used for lookup
+- Mailing address
+- Named invited guests
+- Number of allowed plus-one spots
+
+PUBLIC GUESTS CANNOT BROWSE THE GUEST LIST.
+They only receive an invitation after matching BOTH:
+1. an exact invited name, and
+2. the email or phone stored for that invitation.
+
+Plus-one names are entered only if that plus-one is attending.
+
+============================================================
+D) OPTIONAL CSV PLANNING FILE
+============================================================
+RSVP_GUEST_LIST_TEMPLATE.csv is included as a planning sheet if you want to organize households before entering them through Admin.
+
+============================================================
+E) EMAIL CONFIRMATIONS
+============================================================
+See RSVP_EMAIL_NEXT_STEP.txt.
+Do not place private email-provider keys in the website files.
+
+V22 RSVP LOOKUP FIX + GUEST CORRECTIONS
+1. In Supabase -> SQL Editor, run SUPABASE_SETUP/06_WEDDING_RSVP_v22_LOOKUP_REPAIR_AND_GUEST_CORRECTIONS.sql.
+2. Upload WEBSITE_UPLOAD/rsvp.html to GitHub and replace the existing rsvp.html.
+3. Test Find My Invitation using an invited name plus any phone number listed for that invitation. Phone formatting does not matter.
+
+This migration also applies the latest guest grouping corrections while preserving existing RSVP attendance/status where possible.
 
 
-V18 IMPORTANT FIX
------------------
-The tournament page is connected to the WORKING tournament Supabase project:
-  https://uygotksjyqusbdoepzft.supabase.co
+V23 RSVP SIMPLIFIED LOOKUP
+1. Run SUPABASE_SETUP/07_WEDDING_RSVP_v23_FIRST_NAME_LAST_INITIAL.sql in Supabase SQL Editor.
+2. Upload WEBSITE_UPLOAD/rsvp.html to GitHub, replacing the existing rsvp.html.
+3. Guests now find invitations with First Name + Last Initial. Contact info is collected after lookup.
+4. At least one party email or phone number is required when the RSVP is submitted.
 
-This restores the live teams, schedule, standings, bracket, scoring, and cross-device sync that were visible before v17.
-The other Supabase project (kxivjgzwwabmdiisbzyy) is NOT used by volleyball.html because it is not the live tournament backend.
 
-If the live-data guard still appears after upload, hard-refresh the browser / clear the GitHub Pages cache and verify the v18 volleyball.html was uploaded.
+V24 GUEST NAME CORRECTION
+Run SUPABASE_SETUP/08_WEDDING_RSVP_v24_KARNIA_ANG_RENAME.sql to rename Karina & Lubamir to Karnia & Ang.
+
+
+V25 — CROSS-DEVICE WEDDING CONTENT + MAROON BUTTONS
+1. Run SUPABASE_SETUP/09_WEDDING_SITE_CONTENT_SYNC_v25.sql in the SAME Supabase project used by the tournament/RSVP.
+2. Upload the files from WEBSITE_UPLOAD to the GitHub repo root, replacing the old copies.
+3. On the computer that currently has your browser-saved Homepage/Our Story edits, open each page and press Save Changes / Save Draft ONCE.
+   That first save publishes your current browser copy into Supabase so phones and other devices receive it.
+4. Buttons across the site now use the same maroon treatment for visual consistency.
+
+
+V26 — MAROON BUTTON PATCH
+The homepage Learn More button now uses the same filled maroon style as RSVP Now and Register Team.
+If v25 is already installed, replacing WEBSITE_UPLOAD/index.html is enough for this visual fix.
+
+
+V28 — POOL SCORE SAVE CONFIRMATION FIX
+Only volleyball.html scoring behavior changed.
+The scorer now reads the saved row back from Supabase after every protected score write.
+A final pool match will not close until Final + Locked + the exact score are confirmed from Supabase.
+No SQL migration is required for the fix. 10_SCORE_SAVE_DIAGNOSTIC_v28.sql is optional/read-only.
+
+
+V29 — ONE COMPLETE CONSTRUCTION / CLEANUP PACKAGE
+Built on v28, including the confirmed-score scorer fix.
+- Homepage: construction doodles/tape throughout unfinished cards.
+- Our Story: caution tape on every photo placeholder and construction treatment from And Then There Was Us through First Date.
+- Details: construction markers are hidden from guests and appear only after Admin Work View is unlocked.
+- RSVP: Find My Invitation fields/button are balanced and centered.
+- Volleyball: construction only on Tournament Details; registration/teams/schedule/standings/bracket/scoring remain unchanged.
+- Run SUPABASE_SETUP/11_WEDDING_RSVP_v29_DISPLAY_CLEANUP.sql once for Friends That Are Basically Family + name capitalization.
+
+
+V30 — EDIT EXISTING GUEST NAMES
+1. Run SUPABASE_SETUP/12_WEDDING_RSVP_v30_EDIT_EXISTING_GUEST_NAMES.sql once.
+2. Upload WEBSITE_UPLOAD/rsvp.html (or all WEBSITE_UPLOAD files) to GitHub.
+3. Guest List Admin now shows each invited guest in an editable name field with Save Name.
+4. Correcting a name preserves that guest's existing RSVP attendance/status.

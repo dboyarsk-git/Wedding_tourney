@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="tim-dashia-site-build" content="v26-index">
+<meta name="tim-dashia-site-build" content="v29-index">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#efe4d3">
 <title>Tim & Dashia — Cover v9</title>
@@ -498,6 +498,36 @@ input[type="submit"]:disabled {
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style id="v29-construction-doodles">
+:root{--construction-yellow:#f2d66f;--construction-ink:#2f2924}
+.construction-tape-mark{
+  position:absolute;z-index:8;height:30px;width:170px;pointer-events:none;
+  border-top:2px solid var(--construction-ink);border-bottom:2px solid var(--construction-ink);
+  background:repeating-linear-gradient(135deg,var(--construction-yellow) 0 20px,transparent 20px 40px);
+  filter:drop-shadow(0 3px 2px rgba(58,43,34,.08));
+}
+.construction-cone-mark{position:absolute;z-index:8;width:62px;height:auto;pointer-events:none;overflow:visible}
+.construction-cone-mark .cone-line{fill:none;stroke:var(--construction-ink);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.construction-cone-mark .cone-fill{fill:var(--construction-yellow);stroke:var(--construction-ink);stroke-width:3.2;stroke-linejoin:round}
+.construction-cone-mark .cone-clear{fill:transparent;stroke:var(--construction-ink);stroke-width:3.2;stroke-linejoin:round}
+@media(max-width:600px){.construction-tape-mark{width:125px;height:24px}.construction-cone-mark{width:48px}}
+</style>
+
+
+<style id="v29-home-construction">
+/* v29: visual work markers — homepage is intentionally still in progress */
+.hero,.story-card,.details-card,.action-card{position:relative;overflow:visible!important}
+.home-hero-tape{top:18px;left:-30px;transform:rotate(-8deg)}
+.home-hero-cone{right:-14px;bottom:18px;transform:rotate(7deg)}
+.home-card-tape{top:-15px;left:50%;transform:translateX(-50%) rotate(-3deg)}
+.home-card-cone-left{left:-18px;bottom:-18px;transform:rotate(-8deg)}
+.home-card-cone-right{right:-18px;bottom:-18px;transform:rotate(8deg)}
+.home-divider{position:relative;height:58px;margin:34px auto 0;width:min(760px,88%)}
+.home-divider .construction-tape-mark{width:100%;left:0;top:14px;transform:rotate(-1deg)}
+@media(max-width:700px){.home-hero-cone{right:4px}.home-card-cone-left{left:-4px}.home-card-cone-right{right:-4px}}
+</style>
+
 </head>
 <body>
 
@@ -518,6 +548,14 @@ input[type="submit"]:disabled {
 
 <main>
   <section class="hero">
+    <div class="construction-tape-mark home-hero-tape" aria-hidden="true"></div>
+    <svg class="construction-cone-mark home-hero-cone" viewBox="0 0 72 92" aria-hidden="true">
+  <path class="cone-clear" d="M27 8h18l7 20H20L27 8Z"/>
+  <path class="cone-fill" d="M20 28h32l8 24H12l8-24Z"/>
+  <path class="cone-clear" d="M12 52h48l8 24H4l8-24Z"/>
+  <path class="cone-line" d="M3 76h66l-5 9H8l-5-9Z"/>
+  <path class="cone-line" d="M31 14h10M18 38h36M11 62h50"/>
+</svg>
     <div class="hero-copy">
       <div class="eyebrow">Our Wedding &amp;<br>Volleyball Tournament</div>
 
@@ -551,6 +589,14 @@ input[type="submit"]:disabled {
 
   <section class="mid-grid">
     <a class="story-card card-link" href="our-story.html">
+      <div class="construction-tape-mark home-card-tape" aria-hidden="true"></div>
+      <svg class="construction-cone-mark home-card-cone-left" viewBox="0 0 72 92" aria-hidden="true">
+  <path class="cone-clear" d="M27 8h18l7 20H20L27 8Z"/>
+  <path class="cone-fill" d="M20 28h32l8 24H12l8-24Z"/>
+  <path class="cone-clear" d="M12 52h48l8 24H4l8-24Z"/>
+  <path class="cone-line" d="M3 76h66l-5 9H8l-5-9Z"/>
+  <path class="cone-line" d="M31 14h10M18 38h36M11 62h50"/>
+</svg>
       <div class="story-photo"></div>
       <div class="story-copy">
         <div class="script-heading" data-edit-key="story_title">Our Story</div>
@@ -562,6 +608,14 @@ input[type="submit"]:disabled {
     </a>
 
     <a class="details-card card-link" href="details.html">
+      <div class="construction-tape-mark home-card-tape" aria-hidden="true"></div>
+      <svg class="construction-cone-mark home-card-cone-right" viewBox="0 0 72 92" aria-hidden="true">
+  <path class="cone-clear" d="M27 8h18l7 20H20L27 8Z"/>
+  <path class="cone-fill" d="M20 28h32l8 24H12l8-24Z"/>
+  <path class="cone-clear" d="M12 52h48l8 24H4l8-24Z"/>
+  <path class="cone-line" d="M3 76h66l-5 9H8l-5-9Z"/>
+  <path class="cone-line" d="M31 14h10M18 38h36M11 62h50"/>
+</svg>
       <div class="script-heading" data-edit-key="details_title">Details</div>
       <div class="heart">♡</div>
 
@@ -596,6 +650,14 @@ input[type="submit"]:disabled {
 
   <section class="action-grid">
     <a class="action-card card-link" href="rsvp.html">
+      <div class="construction-tape-mark home-card-tape" aria-hidden="true"></div>
+      <svg class="construction-cone-mark home-card-cone-left" viewBox="0 0 72 92" aria-hidden="true">
+  <path class="cone-clear" d="M27 8h18l7 20H20L27 8Z"/>
+  <path class="cone-fill" d="M20 28h32l8 24H12l8-24Z"/>
+  <path class="cone-clear" d="M12 52h48l8 24H4l8-24Z"/>
+  <path class="cone-line" d="M3 76h66l-5 9H8l-5-9Z"/>
+  <path class="cone-line" d="M31 14h10M18 38h36M11 62h50"/>
+</svg>
       <div class="action-icon">✉</div>
       <div class="script-heading" data-edit-key="rsvp_title">RSVP</div>
       <div class="type-kicker" data-edit-key="rsvp_kicker">For the Ceremony</div>
@@ -604,6 +666,14 @@ input[type="submit"]:disabled {
     </a>
 
     <a class="action-card card-link" href="volleyball.html">
+      <div class="construction-tape-mark home-card-tape" aria-hidden="true"></div>
+      <svg class="construction-cone-mark home-card-cone-right" viewBox="0 0 72 92" aria-hidden="true">
+  <path class="cone-clear" d="M27 8h18l7 20H20L27 8Z"/>
+  <path class="cone-fill" d="M20 28h32l8 24H12l8-24Z"/>
+  <path class="cone-clear" d="M12 52h48l8 24H4l8-24Z"/>
+  <path class="cone-line" d="M3 76h66l-5 9H8l-5-9Z"/>
+  <path class="cone-line" d="M31 14h10M18 38h36M11 62h50"/>
+</svg>
       <div class="action-icon">◉</div>
       <div class="script-heading smaller" data-edit-key="vball_title">Volleyball Tournament</div>
       <div class="type-kicker" data-edit-key="vball_kicker">RSVP Your Team</div>
@@ -611,6 +681,8 @@ input[type="submit"]:disabled {
       <span class="solid-button" data-edit-key="vball_button">Register Team →</span>
     </a>
   </section>
+
+  <div class="home-divider" aria-hidden="true"><div class="construction-tape-mark"></div></div>
 
   <section class="closing">
     <div class="heart-rule">

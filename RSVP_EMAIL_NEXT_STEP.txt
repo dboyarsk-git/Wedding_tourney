@@ -1,0 +1,19 @@
+TIM & DASHIA — RSVP EMAIL STATUS
+
+The v20 RSVP page SAVES the RSVP to Supabase and marks its confirmation email status as "pending".
+
+It does NOT send an email yet.
+
+That is intentional: email delivery requires a server-side Supabase Edge Function + email provider (for example Resend). Do not put a private email API key in rsvp.html or GitHub.
+
+NEXT EMAIL STEP:
+1. Create/deploy a Supabase Edge Function for RSVP confirmations.
+2. Store the email provider API key as a Supabase secret.
+3. Have the function read the matched invitation and send the summary.
+4. Mark confirmation_email_status = sent only after successful delivery.
+
+The RSVP database schema is already prepared with:
+- confirmation_email_status
+- confirmation_email_sent_at
+
+So the email layer can be added without redesigning the RSVP form.

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="tim-dashia-site-build" content="v25-our-story">
+<meta name="tim-dashia-site-build" content="v29-our-story">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#efe4d3">
 <title>Our Story · Tim & Dashia</title>
@@ -210,6 +210,7 @@ button,
 input[type="button"],
 input[type="submit"],
 input[type="reset"],
+.outline-button,
 .btn,
 .solid-button,
 .primary,
@@ -234,6 +235,7 @@ button:hover,
 input[type="button"]:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover,
+.outline-button:hover,
 .btn:hover,
 .solid-button:hover,
 .primary:hover,
@@ -258,6 +260,47 @@ input[type="submit"]:disabled {
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style id="v29-construction-doodles">
+:root{--construction-yellow:#f2d66f;--construction-ink:#2f2924}
+.construction-tape-mark{
+  position:absolute;z-index:8;height:30px;width:170px;pointer-events:none;
+  border-top:2px solid var(--construction-ink);border-bottom:2px solid var(--construction-ink);
+  background:repeating-linear-gradient(135deg,var(--construction-yellow) 0 20px,transparent 20px 40px);
+  filter:drop-shadow(0 3px 2px rgba(58,43,34,.08));
+}
+.construction-cone-mark{position:absolute;z-index:8;width:62px;height:auto;pointer-events:none;overflow:visible}
+.construction-cone-mark .cone-line{fill:none;stroke:var(--construction-ink);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.construction-cone-mark .cone-fill{fill:var(--construction-yellow);stroke:var(--construction-ink);stroke-width:3.2;stroke-linejoin:round}
+.construction-cone-mark .cone-clear{fill:transparent;stroke:var(--construction-ink);stroke-width:3.2;stroke-linejoin:round}
+@media(max-width:600px){.construction-tape-mark{width:125px;height:24px}.construction-cone-mark{width:48px}}
+</style>
+
+
+<style id="v29-story-construction">
+/* Every unfinished photo gets a pastel-yellow/transparent construction strip. */
+.photo-strip .polaroid{position:relative;overflow:visible}
+.photo-strip .polaroid:before{
+  content:"";position:absolute;z-index:5;top:-14px;left:50%;width:125px;height:27px;
+  transform:translateX(-50%) rotate(-4deg);pointer-events:none;
+  border-top:2px solid var(--construction-ink);border-bottom:2px solid var(--construction-ink);
+  background:repeating-linear-gradient(135deg,var(--construction-yellow) 0 18px,transparent 18px 36px);
+}
+.photo-strip .polaroid:nth-child(2):before{transform:translateX(-50%) rotate(3deg)}
+.photo-strip .polaroid:nth-child(3):before{transform:translateX(-50%) rotate(-2deg)}
+.builder-section{position:relative;padding:32px 0 34px;overflow:visible}
+.story-zone-top{top:5px;left:-12px;transform:rotate(-4deg);width:220px}
+.story-zone-bottom{bottom:3px;right:-8px;transform:rotate(3deg);width:260px}
+.story-zone-cone{right:6px;top:30px;transform:rotate(8deg)}
+.story-builder{overflow:visible}
+.story-builder:after{
+  content:"WORK IN PROGRESS";position:absolute;right:34px;bottom:18px;padding:7px 10px;
+  border:1.5px solid var(--construction-ink);background:rgba(242,214,111,.32);
+  font:700 10px var(--type);letter-spacing:.11em;color:var(--construction-ink);transform:rotate(-2deg);
+}
+@media(max-width:600px){.story-zone-top{left:0}.story-zone-bottom{right:0}.story-builder:after{right:18px;bottom:12px;font-size:8px}}
+</style>
+
 </head>
 <body>
 <header class="site-header">
@@ -327,6 +370,15 @@ input[type="submit"]:disabled {
   </section>
 
   <section class="builder-section">
+    <div class="construction-tape-mark story-zone-top" aria-hidden="true"></div>
+    <div class="construction-tape-mark story-zone-bottom" aria-hidden="true"></div>
+    <svg class="construction-cone-mark story-zone-cone" viewBox="0 0 72 92" aria-hidden="true">
+  <path class="cone-clear" d="M27 8h18l7 20H20L27 8Z"/>
+  <path class="cone-fill" d="M20 28h32l8 24H12l8-24Z"/>
+  <path class="cone-clear" d="M12 52h48l8 24H4l8-24Z"/>
+  <path class="cone-line" d="M3 76h66l-5 9H8l-5-9Z"/>
+  <path class="cone-line" d="M31 14h10M18 38h36M11 62h50"/>
+</svg>
     <div class="story-builder">
       <div class="builder-top">
         <div class="type-kicker">Still writing this part...</div>

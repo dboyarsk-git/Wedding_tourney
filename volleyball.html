@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="tim-dashia-site-build" content="v28-volleyball">
+<meta name="tim-dashia-site-build" content="v29-volleyball">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f2eee5">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1759,6 +1759,47 @@ input[type="submit"]:disabled {
 }
 </style>
 
+
+<style id="v29-construction-doodles">
+:root{--construction-yellow:#f2d66f;--construction-ink:#2f2924}
+.construction-tape-mark{
+  position:absolute;z-index:8;height:30px;width:170px;pointer-events:none;
+  border-top:2px solid var(--construction-ink);border-bottom:2px solid var(--construction-ink);
+  background:repeating-linear-gradient(135deg,var(--construction-yellow) 0 20px,transparent 20px 40px);
+  filter:drop-shadow(0 3px 2px rgba(58,43,34,.08));
+}
+.construction-cone-mark{position:absolute;z-index:8;width:62px;height:auto;pointer-events:none;overflow:visible}
+.construction-cone-mark .cone-line{fill:none;stroke:var(--construction-ink);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.construction-cone-mark .cone-fill{fill:var(--construction-yellow);stroke:var(--construction-ink);stroke-width:3.2;stroke-linejoin:round}
+.construction-cone-mark .cone-clear{fill:transparent;stroke:var(--construction-ink);stroke-width:3.2;stroke-linejoin:round}
+@media(max-width:600px){.construction-tape-mark{width:125px;height:24px}.construction-cone-mark{width:48px}}
+</style>
+
+
+<style id="v29-volleyball-details-construction">
+/* Construction is scoped ONLY to the Tournament Details view. No scoring/registration views are touched. */
+#view-home{position:relative;padding-top:24px;overflow:visible}
+#view-home .vball-details-top{top:0;left:-12px;transform:rotate(-4deg);width:245px}
+#view-home .vball-details-cone{right:4px;top:2px;transform:rotate(8deg)}
+#view-home .tournament-overview-card,#view-home .tournament-details-panel,#view-home .rule-card{position:relative;overflow:visible}
+#view-home .tournament-details-panel:after{
+  content:"";position:absolute;right:-24px;bottom:22px;width:220px;height:28px;z-index:3;
+  border-top:2px solid var(--construction-ink);border-bottom:2px solid var(--construction-ink);
+  background:repeating-linear-gradient(135deg,var(--construction-yellow) 0 19px,transparent 19px 38px);transform:rotate(4deg);pointer-events:none;
+}
+#view-home .rule-card:nth-child(odd):after{
+  content:"";position:absolute;z-index:2;top:-8px;right:16px;width:92px;height:18px;
+  border-top:1.5px solid var(--construction-ink);border-bottom:1.5px solid var(--construction-ink);
+  background:repeating-linear-gradient(135deg,var(--construction-yellow) 0 13px,transparent 13px 26px);transform:rotate(3deg);pointer-events:none;
+}
+#view-home .rule-card:nth-child(even):after{
+  content:"";position:absolute;z-index:2;top:-8px;left:16px;width:92px;height:18px;
+  border-top:1.5px solid var(--construction-ink);border-bottom:1.5px solid var(--construction-ink);
+  background:repeating-linear-gradient(135deg,var(--construction-yellow) 0 13px,transparent 13px 26px);transform:rotate(-3deg);pointer-events:none;
+}
+@media(max-width:650px){#view-home .vball-details-top{left:4px;width:170px}#view-home .vball-details-cone{right:6px}}
+</style>
+
 </head>
 <body>
 
@@ -1806,6 +1847,14 @@ input[type="submit"]:disabled {
 
 <main>
 <section id="view-home" class="view">
+<div class="construction-tape-mark vball-details-top" aria-hidden="true"></div>
+<svg class="construction-cone-mark vball-details-cone" viewBox="0 0 72 92" aria-hidden="true">
+  <path class="cone-clear" d="M27 8h18l7 20H20L27 8Z"/>
+  <path class="cone-fill" d="M20 28h32l8 24H12l8-24Z"/>
+  <path class="cone-clear" d="M12 52h48l8 24H4l8-24Z"/>
+  <path class="cone-line" d="M3 76h66l-5 9H8l-5-9Z"/>
+  <path class="cone-line" d="M31 14h10M18 38h36M11 62h50"/>
+</svg>
 <section class="tournament-overview-card">
 <div class="script-heading">Tournament Details</div>
 <div class="heart">♡</div>

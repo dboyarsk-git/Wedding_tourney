@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="tim-dashia-site-build" content="v25-rsvp">
+<meta name="tim-dashia-site-build" content="v30-rsvp">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#efe4d3">
 <title>RSVP · Tim & Dashia</title>
@@ -95,6 +95,52 @@ textarea{min-height:105px;resize:vertical}
 .admin-panel{margin-top:20px;border:1px dashed rgba(107,31,42,.45);background:rgba(244,234,219,.8);padding:28px}
 .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.admin-grid .full{grid-column:1/-1}
 .admin-list{display:grid;gap:12px;margin-top:22px}.admin-card{padding:16px;border:1px solid var(--line);background:#fffaf2}.admin-card-head{display:flex;justify-content:space-between;gap:15px;align-items:flex-start}.admin-house{font:600 23px var(--serif)}.admin-meta{font-size:15px;color:#69584b}.admin-status-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.pill{display:inline-block;padding:5px 8px;border:1px solid var(--line);font:700 10px var(--type);letter-spacing:.05em;text-transform:uppercase;background:#f6eee3}.pill.yes{background:#e0ece4;border-color:#a8c1af}.pill.no{background:#f3dfdc;border-color:#d8aca7}.pill.pending{background:#eee5d7}
+
+.admin-guest-editor{
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px dashed rgba(170,149,125,.65);
+}
+.admin-guest-editor-title{
+  margin-bottom:8px;
+  font:700 10px var(--type);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#6b1f2a;
+}
+.admin-guest-edit-row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto auto;
+  gap:8px;
+  align-items:center;
+  margin:8px 0;
+}
+.admin-guest-edit-row .input{
+  min-height:42px;
+  padding:8px 10px;
+  font-size:17px;
+}
+.admin-guest-attendance{
+  min-width:74px;
+  font-size:13px;
+  color:#756456;
+  text-transform:capitalize;
+}
+.admin-guest-save{
+  white-space:nowrap;
+  min-height:42px;
+  padding:8px 12px;
+}
+@media(max-width:600px){
+  .admin-guest-edit-row{
+    grid-template-columns:1fr auto;
+  }
+  .admin-guest-attendance{
+    grid-column:1/-1;
+    order:3;
+  }
+}
+
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}.stat{padding:14px;border:1px solid var(--line);background:#fffaf2;text-align:center}.stat strong{display:block;font:600 31px var(--serif)}.stat span{display:block;font:700 10px var(--type);letter-spacing:.07em;text-transform:uppercase}
 
 .modal{position:fixed;inset:0;background:rgba(35,26,21,.62);display:none;place-items:center;padding:20px;z-index:100}.modal.open{display:grid}.modal-card{width:min(430px,100%);background:var(--paper);padding:26px;border:1px solid var(--line);box-shadow:var(--shadow)}.modal-card h3{font:500 38px var(--script);color:var(--maroon);margin:0 0 8px}.modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:15px}
@@ -115,6 +161,7 @@ button,
 input[type="button"],
 input[type="submit"],
 input[type="reset"],
+.outline-button,
 .btn,
 .solid-button,
 .primary,
@@ -139,6 +186,7 @@ button:hover,
 input[type="button"]:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover,
+.outline-button:hover,
 .btn:hover,
 .solid-button:hover,
 .primary:hover,
@@ -160,6 +208,17 @@ input[type="submit"]:disabled {
   opacity:.55 !important;
   cursor:not-allowed !important;
 }
+</style>
+
+
+<style id="v29-rsvp-balance">
+#lookupCard .lookup-grid{align-items:start;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+#lookupCard .lookup-grid .field{grid-template-rows:auto 1fr}
+#lookupCard .lookup-grid .input{height:72px;font-size:22px}
+#lookupCard .lookup-note{grid-column:1/-1;text-align:center;margin-top:2px}
+#lookupCard .lookup-actions{justify-content:center}
+#lookupCard #lookupMessage{text-align:center}
+@media(max-width:800px){#lookupCard .lookup-grid{grid-template-columns:1fr}#lookupCard .lookup-note{grid-column:auto}}
 </style>
 
 </head>
@@ -193,7 +252,7 @@ input[type="submit"]:disabled {
     <div class="step-label">Step One</div>
     <div class="section-title">Find your invitation</div>
     <p class="section-copy">Enter your <b>first name</b> and <b>last initial</b>. If we only have your first name on the guest list, you can leave the last initial blank.</p>
-    <div class="form-grid">
+    <div class="form-grid lookup-grid">
       <div class="field">
         <label for="lookupFirstName">First Name</label>
         <input class="input" id="lookupFirstName" autocomplete="given-name" placeholder="Example: Arina">
@@ -201,11 +260,11 @@ input[type="submit"]:disabled {
       <div class="field">
         <label for="lookupLastInitial">Last Initial</label>
         <input class="input" id="lookupLastInitial" maxlength="1" inputmode="text" autocomplete="family-name" placeholder="Example: B">
-        <div class="help">Leave blank only if we do not have your last name yet.</div>
       </div>
+      <div class="help lookup-note">Leave the last initial blank only if we do not have your last name yet.</div>
     </div>
     <div id="lookupMessage" class="help" style="margin-top:12px"></div>
-    <div class="actions"><button class="btn" id="findInviteBtn">Find My Invitation →</button></div>
+    <div class="actions lookup-actions"><button class="btn" id="findInviteBtn">Find My Invitation →</button></div>
   </section>
 
   <section id="rsvpCard" class="paper-card taped hidden">
@@ -270,7 +329,7 @@ input[type="submit"]:disabled {
   <section id="adminPanel" class="admin-panel hidden">
     <div class="step-label">Private Admin</div>
     <div class="section-title">Wedding guest list</div>
-    <p class="section-copy">Add each household/invitation once. Named guests are the only people who can be found publicly; plus-ones appear only when you allow them.</p>
+    <p class="section-copy">Add each household/invitation once. You can also correct the spelling or capitalization of any existing guest name below without deleting their RSVP.</p>
 
     <div id="adminStats" class="stats"></div>
 
@@ -475,15 +534,127 @@ $("adminAddBtn").onclick=async()=>{
 function renderAdminList(items){
   const list=$("adminList");list.innerHTML="";
   let invited=0,attending=0,declined=0,responded=0;
-  items.forEach(i=>{const people=[...(i.guests||[]),...(i.plus_ones||[])];invited+=people.length;if(i.rsvp_submitted_at)responded++;people.forEach(p=>{if(p.attendance==="yes")attending++;if(p.attendance==="no")declined++;});
-    const card=document.createElement("div");card.className="admin-card";
-    const guestText=(i.guests||[]).map(g=>`${escapeHtml(g.full_name)} — ${escapeHtml(g.attendance)}`).join("<br>");
-    const plusText=(i.plus_ones||[]).map(p=>`Plus-One ${p.slot_number}: ${escapeHtml(p.guest_name||"unnamed")} — ${escapeHtml(p.attendance)}`).join("<br>");
-    card.innerHTML=`<div class="admin-card-head"><div><div class="admin-house">${escapeHtml(i.household_name)}</div><div class="admin-meta">${escapeHtml(i.primary_contact_name)} • ${escapeHtml(i.contact_email||i.contact_phone||"")}<br>${escapeHtml(i.confirmation_code||"")}</div></div><button class="btn danger" data-delete="${i.id}" type="button">Delete</button></div><div class="admin-status-pills"><span class="pill ${i.rsvp_submitted_at?'yes':'pending'}">${i.rsvp_submitted_at?'RSVP received':'Awaiting RSVP'}</span><span class="pill">${i.plus_ones_allowed||0} plus-one${Number(i.plus_ones_allowed||0)===1?'':'s'}</span></div><div class="admin-meta" style="margin-top:10px">${guestText}${plusText?`<br>${plusText}`:""}</div>`;
+
+  items.forEach(i=>{
+    const people=[...(i.guests||[]),...(i.plus_ones||[])];
+    invited+=people.length;
+    if(i.rsvp_submitted_at)responded++;
+    people.forEach(p=>{
+      if(p.attendance==="yes")attending++;
+      if(p.attendance==="no")declined++;
+    });
+
+    const card=document.createElement("div");
+    card.className="admin-card";
+
+    const plusText=(i.plus_ones||[])
+      .map(p=>`Plus-One ${p.slot_number}: ${escapeHtml(p.guest_name||"unnamed")} — ${escapeHtml(p.attendance)}`)
+      .join("<br>");
+
+    const guestEditors=(i.guests||[]).map(g=>`
+      <div class="admin-guest-edit-row">
+        <input
+          class="input"
+          type="text"
+          value="${escapeHtml(g.full_name)}"
+          data-guest-name-input="${g.id}"
+          aria-label="Edit ${escapeHtml(g.full_name)}"
+        >
+        <span class="admin-guest-attendance">${escapeHtml(g.attendance||"pending")}</span>
+        <button
+          class="btn admin-guest-save"
+          type="button"
+          data-save-guest-name="${g.id}"
+        >Save Name</button>
+      </div>
+    `).join("");
+
+    card.innerHTML=`
+      <div class="admin-card-head">
+        <div>
+          <div class="admin-house">${escapeHtml(i.household_name)}</div>
+          <div class="admin-meta">
+            ${escapeHtml(i.primary_contact_name)}
+            ${i.contact_email||i.contact_phone ? ` • ${escapeHtml(i.contact_email||i.contact_phone)}` : ""}
+            <br>${escapeHtml(i.confirmation_code||"")}
+          </div>
+        </div>
+        <button class="btn danger" data-delete="${i.id}" type="button">Delete</button>
+      </div>
+
+      <div class="admin-status-pills">
+        <span class="pill ${i.rsvp_submitted_at?'yes':'pending'}">
+          ${i.rsvp_submitted_at?'RSVP received':'Awaiting RSVP'}
+        </span>
+        <span class="pill">
+          ${i.plus_ones_allowed||0} plus-one${Number(i.plus_ones_allowed||0)===1?'':'s'}
+        </span>
+      </div>
+
+      <div class="admin-guest-editor">
+        <div class="admin-guest-editor-title">Edit Invited Names</div>
+        ${guestEditors || '<div class="admin-meta">No named guests on this invitation.</div>'}
+      </div>
+
+      ${plusText?`<div class="admin-meta" style="margin-top:12px">${plusText}</div>`:""}
+    `;
+
     list.appendChild(card);
   });
-  $("adminStats").innerHTML=`<div class="stat"><strong>${items.length}</strong><span>Invitations</span></div><div class="stat"><strong>${invited}</strong><span>Guest Spots</span></div><div class="stat"><strong>${attending}</strong><span>Attending</span></div><div class="stat"><strong>${responded}</strong><span>RSVPs In</span></div>`;
-  list.querySelectorAll("[data-delete]").forEach(btn=>btn.onclick=async()=>{if(!confirm("Delete this entire invitation and its RSVP data?"))return;const {error}=await sb.rpc("admin_delete_wedding_invitation",{p_code:adminCode,p_invitation_id:btn.dataset.delete});if(error){alert(error.message);return;}await refreshAdmin();});
+
+  $("adminStats").innerHTML=`
+    <div class="stat"><strong>${items.length}</strong><span>Invitations</span></div>
+    <div class="stat"><strong>${invited}</strong><span>Guest Spots</span></div>
+    <div class="stat"><strong>${attending}</strong><span>Attending</span></div>
+    <div class="stat"><strong>${responded}</strong><span>RSVPs In</span></div>
+  `;
+
+  list.querySelectorAll("[data-save-guest-name]").forEach(btn=>{
+    btn.onclick=async()=>{
+      if(!adminCode)return;
+      const guestId=btn.dataset.saveGuestName;
+      const input=list.querySelector(`[data-guest-name-input="${guestId}"]`);
+      const newName=(input?.value||"").trim();
+
+      if(newName.length<2){
+        alert("Enter the corrected guest name first.");
+        return;
+      }
+
+      const original=btn.textContent;
+      btn.disabled=true;
+      btn.textContent="Saving…";
+
+      try{
+        const {data,error}=await sb.rpc("admin_update_wedding_guest_name",{
+          p_code:adminCode,
+          p_guest_id:guestId,
+          p_full_name:newName
+        });
+        if(error)throw error;
+
+        $("adminMessage").textContent=`Name updated to ${data?.full_name||newName} ✓`;
+        await refreshAdmin();
+      }catch(e){
+        alert(e.message||"Could not update this guest name.");
+        btn.disabled=false;
+        btn.textContent=original;
+      }
+    };
+  });
+
+  list.querySelectorAll("[data-delete]").forEach(btn=>btn.onclick=async()=>{
+    if(!confirm("Delete this entire invitation and its RSVP data?"))return;
+    const {error}=await sb.rpc("admin_delete_wedding_invitation",{
+      p_code:adminCode,
+      p_invitation_id:btn.dataset.delete
+    });
+    if(error){
+      alert(error.message);
+      return;
+    }
+    await refreshAdmin();
+  });
 }
 
 $("findInviteBtn").onclick=findInvitation;

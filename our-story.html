@@ -2,30 +2,373 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#efe4d3">
 <title>Our Story · Tim & Dashia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root{--cream:#efe4d3;--paper:#f7efe4;--ink:#3a2b22;--green:#6b1f2a;--maroon:#6b1f2a;--type:"Courier Prime","Courier New",monospace;--serif:"Cormorant Garamond",serif;--script:"Caveat",cursive}
+:root{
+  --cream:#efe4d3;
+  --cream2:#f8f0e4;
+  --paper:#f6ecdd;
+  --paper2:#eadcc8;
+  --ink:#3a2b22;
+  --line:#aa957d;
+  --maroon:#6b1f2a;
+  --maroon-dark:#4f1720;
+  --type:"Courier Prime","Courier New",monospace;
+  --serif:"Cormorant Garamond",Georgia,serif;
+  --script:"Caveat",cursive;
+  --shadow:0 18px 55px rgba(62,42,27,.11);
+}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;display:grid;place-items:center;background:linear-gradient(180deg,#f8f0e4,#efe4d3);color:var(--ink);padding:24px}
-.card{width:min(720px,94vw);padding:54px 32px;text-align:center;background:rgba(247,239,228,.9);border:1px solid rgba(58,43,34,.14);box-shadow:0 20px 60px rgba(62,42,27,.12)}
-.kicker{font:700 11px var(--type);letter-spacing:.13em;text-transform:uppercase}
-h1{font:500 clamp(58px,9vw,92px)/.9 var(--serif);margin:10px 0}
-.script{font:500 37px var(--script);color:var(--green)}
-p{font:400 15px/1.7 var(--type);margin:20px auto;max-width:520px}
-a{display:inline-block;margin-top:15px;padding:12px 18px;background:var(--green);color:#fff;text-decoration:none;font:700 10px var(--type);letter-spacing:.1em;text-transform:uppercase}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--ink);
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 15% 5%,rgba(255,255,255,.55),transparent 29%),
+    linear-gradient(180deg,var(--cream2) 0%,var(--cream) 100%);
+  font-family:var(--serif);
+  font-size:19px;
+  line-height:1.55;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;opacity:.10;z-index:-1;
+  background-image:repeating-linear-gradient(0deg,rgba(70,48,34,.06) 0 1px,transparent 1px 4px);
+}
+a{color:inherit}
+.site-header{
+  position:sticky;top:0;z-index:50;
+  background:rgba(248,240,228,.96);backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(58,43,34,.09);
+}
+.nav-shell{
+  width:min(1200px,93vw);margin:auto;min-height:70px;
+  display:flex;align-items:center;gap:18px;
+}
+.monogram{font:500 27px var(--serif);letter-spacing:.27em;text-decoration:none;white-space:nowrap}
+.nav-line{height:1px;background:var(--line);flex:1;max-width:330px}
+.nav-links{margin-left:auto;display:flex;align-items:center;gap:28px}
+.nav-links a{
+  font:700 11px var(--type);letter-spacing:.11em;text-transform:uppercase;text-decoration:none;
+  padding:8px 0;border-bottom:1px solid transparent;
+}
+.nav-links a:hover,.nav-links a.active{border-bottom-color:var(--ink)}
+.menu-button{
+  display:none;margin-left:auto;border:1px solid var(--line);background:transparent;
+  padding:10px 14px;font:700 11px var(--type);letter-spacing:.1em;color:var(--ink);
+}
+main{width:min(1180px,94vw);margin:0 auto;padding:42px 0 100px}
+.hero{
+  position:relative;text-align:center;padding:66px 30px 62px;
+  border:1px solid rgba(58,43,34,.14);background:rgba(247,239,228,.82);box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.hero:before,.hero:after{
+  content:"";position:absolute;width:135px;height:34px;top:-12px;
+  background:rgba(195,157,113,.40);border:1px solid rgba(58,43,34,.06);
+}
+.hero:before{left:5%;transform:rotate(-5deg)}
+.hero:after{right:5%;transform:rotate(5deg)}
+.eyebrow,.type-kicker{
+  font:700 13px/1.5 var(--type);letter-spacing:.14em;text-transform:uppercase;
+}
+.hero h1{
+  margin:10px 0 7px;font:500 clamp(68px,10vw,125px)/.8 var(--serif);letter-spacing:-.04em;
+}
+.hero-script{font:500 clamp(34px,5vw,55px)/1 var(--script);color:var(--maroon);margin-top:16px}
+.hero-lede{
+  max-width:790px;margin:28px auto 0;font:500 clamp(23px,2.7vw,32px)/1.42 var(--serif);
+}
+.heart-rule{display:flex;align-items:center;justify-content:center;gap:15px;margin:28px auto 0}
+.heart-rule i{height:1px;width:78px;background:var(--line)}
+.heart-rule b{font:500 34px var(--script);color:var(--maroon)}
+.construction-note{
+  display:inline-flex;align-items:center;gap:10px;margin-top:28px;padding:10px 16px;
+  border:1px dashed rgba(107,31,42,.45);background:#f2e1de;color:var(--maroon);
+  font:700 12px var(--type);letter-spacing:.1em;text-transform:uppercase;
+}
+.construction-dot{width:10px;height:10px;border-radius:50%;background:var(--maroon)}
+.section{margin-top:34px}
+.paper{
+  position:relative;background:rgba(247,239,228,.92);border:1px solid rgba(58,43,34,.14);
+  box-shadow:var(--shadow);padding:50px 46px;
+}
+.section-heading{text-align:center;margin-bottom:34px}
+.section-heading h2{margin:0;font:500 clamp(48px,6vw,72px)/.95 var(--script);color:var(--maroon)}
+.section-heading p{max-width:720px;margin:13px auto 0;font-size:21px;line-height:1.5}
+.memory-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.memory-card{
+  position:relative;background:#fbf4e9;border:1px solid rgba(58,43,34,.14);padding:37px 32px 32px;
+  min-height:370px;
+}
+.memory-card:before{
+  content:"";position:absolute;top:-13px;left:50%;transform:translateX(-50%) rotate(-2deg);
+  width:108px;height:27px;background:rgba(195,157,113,.44);
+}
+.memory-number{font:700 11px var(--type);letter-spacing:.14em;text-transform:uppercase;color:var(--maroon)}
+.memory-card h3{margin:13px 0 14px;font:500 39px/1 var(--script);color:var(--ink)}
+.memory-card p{margin:0;font-size:20px;line-height:1.55}
+.memory-card .tiny-heart{font:500 29px var(--script);color:var(--maroon);margin-top:20px}
+.photo-strip{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:18px;margin-top:30px;align-items:center}
+.polaroid{
+  background:#f9f1e6;border:1px solid rgba(58,43,34,.12);padding:11px 11px 42px;box-shadow:0 14px 35px rgba(62,42,27,.10);
+}
+.polaroid:nth-child(1){transform:rotate(-2.5deg)}
+.polaroid:nth-child(2){transform:rotate(1deg)}
+.polaroid:nth-child(3){transform:rotate(2.4deg)}
+.photo-placeholder{
+  min-height:205px;display:grid;place-items:center;text-align:center;padding:20px;
+  background:linear-gradient(135deg,#d4c7b6,#b5a794);color:#fff9f0;
+  font:700 11px/1.6 var(--type);letter-spacing:.12em;text-transform:uppercase;
+}
+.polaroid-caption{margin-top:10px;text-align:center;font:500 25px/1 var(--script);color:var(--maroon)}
+.bridge-note{
+  width:min(760px,94%);margin:38px auto 0;text-align:center;padding:26px 26px 24px;
+  background:#e8d8c2;border:1px solid rgba(58,43,34,.12);transform:rotate(-1deg);
+  font:500 31px/1.18 var(--script);color:var(--maroon);
+}
+.builder-section{margin-top:34px}
+.story-builder{
+  position:relative;min-height:520px;background:#fbf4e9;border:1px solid rgba(58,43,34,.16);
+  padding:52px 54px;box-shadow:var(--shadow);
+}
+.story-builder:before{
+  content:"";position:absolute;top:-14px;left:50%;transform:translateX(-50%) rotate(1deg);
+  width:135px;height:30px;background:rgba(195,157,113,.48);
+}
+.builder-top{text-align:center;border-bottom:1px solid var(--line);padding-bottom:28px;margin-bottom:32px}
+.builder-top h2{margin:0;font:500 clamp(48px,6vw,72px)/.95 var(--script);color:var(--maroon)}
+.builder-top .type-kicker{margin-top:11px}
+.editable-story{max-width:900px;margin:0 auto;font-size:21px;line-height:1.65}
+.editable-story h3{font:500 38px/1.1 var(--script);color:var(--maroon);margin:28px 0 10px}
+.editable-story p{margin:0 0 20px}
+.placeholder-copy{color:#7c6c5f;font-style:italic}
+.story-prompt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:36px}
+.prompt-card{border-top:1px solid var(--line);padding:18px 12px 0;text-align:center}
+.prompt-card b{display:block;font:700 11px var(--type);letter-spacing:.1em;text-transform:uppercase;color:var(--maroon)}
+.prompt-card span{display:block;margin-top:8px;font-size:17px;line-height:1.35}
+.closing{text-align:center;padding:64px 10px 0}
+.closing-script{font:500 clamp(38px,5vw,57px)/1 var(--script);color:var(--maroon)}
+.closing p{font-size:20px;max-width:700px;margin:15px auto}
+.button-row{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:25px}
+.btn{display:inline-block;padding:13px 20px;text-decoration:none;border:1px solid var(--maroon);font:700 11px var(--type);letter-spacing:.1em;text-transform:uppercase}
+.btn.solid{background:var(--maroon);color:white}
+.btn.outline{color:var(--maroon);background:transparent}
+
+/* under-construction story editor */
+.editor-shell{margin:36px auto 0;max-width:760px;text-align:center;padding-top:25px;border-top:1px solid rgba(58,43,34,.13)}
+.editor-button{border:1px solid var(--maroon);background:transparent;color:var(--maroon);padding:11px 17px;font:700 10px var(--type);letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.editor-button:hover{background:var(--maroon);color:#fff}
+.editor-tools{display:none;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+body.story-editing .editor-tools{display:flex}
+.editor-tools button{border:1px solid var(--ink);background:var(--ink);color:#fff;padding:9px 13px;font:700 9px var(--type);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.editor-tools button:last-child{background:transparent;color:var(--maroon);border-color:var(--maroon)}
+.editor-status{min-height:20px;margin-top:10px;font:700 10px var(--type);color:var(--maroon)}
+body.story-editing [data-edit-key]{outline:1px dashed var(--maroon);outline-offset:5px;background:rgba(107,31,42,.035);cursor:text}
+body.story-editing [data-edit-key]:focus{outline:2px solid var(--maroon)}
+
+@media(max-width:900px){
+  .nav-line{display:none}.menu-button{display:block}
+  .nav-links{display:none;position:absolute;top:66px;left:4vw;right:4vw;background:#f8f0e4;border:1px solid var(--line);padding:18px;flex-direction:column;align-items:flex-start;gap:15px;box-shadow:var(--shadow)}
+  .nav-links.open{display:flex}
+  .memory-grid{grid-template-columns:1fr}
+  .photo-strip{grid-template-columns:1fr 1fr}
+  .photo-strip .polaroid:nth-child(3){grid-column:1/-1;width:60%;justify-self:center}
+  .story-prompt-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  body{font-size:18px}
+  main{width:min(94vw,760px);padding-top:24px}
+  .hero{padding:50px 20px 45px}
+  .hero h1{font-size:70px}
+  .hero-lede{font-size:24px}
+  .eyebrow,.type-kicker{font-size:12px}
+  .paper{padding:36px 20px}
+  .section-heading p{font-size:19px}
+  .memory-card{padding:34px 23px 27px;min-height:0}
+  .memory-card p{font-size:19px}
+  .photo-strip{grid-template-columns:1fr;gap:25px}
+  .photo-strip .polaroid:nth-child(3){grid-column:auto;width:auto}
+  .polaroid{transform:none!important}
+  .photo-placeholder{min-height:240px}
+  .story-builder{padding:42px 22px}
+  .editable-story{font-size:19px}
+  .bridge-note{font-size:27px}
+  .btn{font-size:11px;padding:14px 17px}
+}
 </style>
 </head>
 <body>
-<div class="card">
-  <div class="kicker">Tim & Dashia</div>
-  <h1>Our Story</h1>
-  <div class="script">Coming soon ♡</div>
-  <p>This page is intentionally blank for now while we get the main cover page exactly right.</p>
-  <a href="index.html">← Back Home</a>
-</div>
+<header class="site-header">
+  <div class="nav-shell">
+    <a class="monogram" href="index.html">T | D</a>
+    <div class="nav-line"></div>
+    <button class="menu-button" id="menuButton" type="button">MENU</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a class="active" href="our-story.html">Our Story</a>
+      <a href="details.html">Details</a>
+      <a href="rsvp.html">RSVP</a>
+      <a href="volleyball.html">Volleyball Tournament</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow" data-edit-key="hero_kicker">Before we found each other...</div>
+    <h1 data-edit-key="hero_title">Our Story</h1>
+    <div class="hero-script" data-edit-key="hero_script">Volleyball led us here ♡</div>
+    <div class="hero-lede" data-edit-key="hero_lede">Before we found each other, we were just playing volleyball. And somehow, volleyball led us to each other.</div>
+    <div class="heart-rule"><i></i><b>♡</b><i></i></div>
+    <div class="construction-note"><span class="construction-dot"></span> Our story page is still under construction</div>
+  </section>
+
+  <section class="section paper">
+    <div class="section-heading">
+      <div class="type-kicker" data-edit-key="begin_kicker">The first little moments</div>
+      <h2 data-edit-key="begin_title">Where It All Began</h2>
+      <p data-edit-key="begin_intro">It started at CC, somewhere between volleyball games and the random moments in between. At the time, neither of these felt like the beginning of a love story. Looking back, they kind of were.</p>
+    </div>
+
+    <div class="memory-grid">
+      <article class="memory-card">
+        <div class="memory-number">Memory No. 01</div>
+        <h3 data-edit-key="longboard_title">The Longboard Lesson</h3>
+        <p data-edit-key="longboard_body">One of the first moments I remember was Tim asking me if I knew how to longboard. I told him I did, but after breaking my wrist I was scared to get back on one. He let me hold onto his arm to balance and patiently retaught me how to longboard. At the time, it was just a little moment. Looking back, it feels like one of the first pieces of our story.</p>
+        <div class="tiny-heart">♡</div>
+      </article>
+
+      <article class="memory-card">
+        <div class="memory-number">Memory No. 02</div>
+        <h3 data-edit-key="roofball_title">Roof Ball</h3>
+        <p data-edit-key="roofball_body">Another day at CC, I somehow convinced Tim to play a completely made-up game I called Roof Ball. It was ridiculous, fun, and very us before there was even an “us.” Somehow, those random volleyball-day moments kept giving us reasons to spend a little more time together.</p>
+        <div class="tiny-heart">♡</div>
+      </article>
+    </div>
+
+    <div class="photo-strip">
+      <div class="polaroid">
+        <div class="photo-placeholder">ADD A VOLLEYBALL / CC PHOTO HERE</div>
+        <div class="polaroid-caption">before “us”</div>
+      </div>
+      <div class="polaroid">
+        <div class="photo-placeholder">ADD A FAVORITE EARLY PHOTO HERE</div>
+        <div class="polaroid-caption">where it started ♡</div>
+      </div>
+      <div class="polaroid">
+        <div class="photo-placeholder">ADD A FUN / RANDOM MEMORY HERE</div>
+        <div class="polaroid-caption">the little moments</div>
+      </div>
+    </div>
+
+    <div class="bridge-note" data-edit-key="bridge_note">Two small moments. Neither one felt important yet. But volleyball kept putting us in the same place, at the same time. ♡</div>
+  </section>
+
+  <section class="builder-section">
+    <div class="story-builder">
+      <div class="builder-top">
+        <div class="type-kicker">Still writing this part...</div>
+        <h2 data-edit-key="continue_title">And Then There Was Us</h2>
+      </div>
+
+      <div class="editable-story" data-edit-key="continue_body">
+        <h3>What happened next...</h3>
+        <p class="placeholder-copy">This is the big story-building section. Add what happened after those first volleyball memories: when you started talking more, the first time it felt different, your first date, the moment you realized this might actually be something, or whatever chapter comes next.</p>
+
+        <h3>The moments that made us, us...</h3>
+        <p class="placeholder-copy">Keep adding here. This can grow into multiple paragraphs and we can split it into more scrapbook cards later once the story gets longer.</p>
+
+        <h3>Eventually...</h3>
+        <p class="placeholder-copy">This space is already styled for the next chapter — dating, adventures, the proposal, and everything that brings the story to the wedding.</p>
+      </div>
+
+      <div class="story-prompt-grid">
+        <div class="prompt-card"><b>Next Chapter</b><span>When did you two start talking or hanging out outside of volleyball?</span></div>
+        <div class="prompt-card"><b>The Shift</b><span>Was there a moment when it stopped feeling like “just friends”?</span></div>
+        <div class="prompt-card"><b>First Date</b><span>Where did you go, what happened, and what do you still remember?</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="closing-script" data-edit-key="closing_title">The rest is still being written...</div>
+    <p data-edit-key="closing_body">For now, this is just the beginning of the page — exactly like this was just the beginning of us.</p>
+    <div class="heart-rule"><i></i><b>♡</b><i></i></div>
+    <div class="button-row">
+      <a class="btn outline" href="index.html">← Back Home</a>
+      <a class="btn solid" href="volleyball.html">Volleyball Tournament →</a>
+    </div>
+
+    <div class="editor-shell">
+      <button class="editor-button" id="editStory" type="button">Edit Story Draft</button>
+      <div class="editor-tools" id="editorTools">
+        <button type="button" id="saveStory">Save Draft</button>
+        <button type="button" id="cancelStory">Done Editing</button>
+      </div>
+      <div class="editor-status" id="editorStatus"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+const menuButton=document.getElementById("menuButton");
+const navLinks=document.getElementById("navLinks");
+menuButton?.addEventListener("click",()=>navLinks?.classList.toggle("open"));
+document.querySelectorAll(".nav-links a").forEach(a=>a.addEventListener("click",()=>navLinks?.classList.remove("open")));
+
+const STORY_STORAGE_KEY="tim_dashia_our_story_draft_v1";
+const ADMIN_HASH="18642fa8fb69ca94183ef39f93692a597872125a8b7d607afab643dfd89569a8";
+const editableEls=[...document.querySelectorAll("[data-edit-key]")];
+const editBtn=document.getElementById("editStory");
+const saveBtn=document.getElementById("saveStory");
+const cancelBtn=document.getElementById("cancelStory");
+const statusEl=document.getElementById("editorStatus");
+
+async function sha256(value){
+  const data=new TextEncoder().encode(value);
+  const digest=await crypto.subtle.digest("SHA-256",data);
+  return [...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+function loadDraft(){
+  try{
+    const saved=JSON.parse(localStorage.getItem(STORY_STORAGE_KEY)||"{}");
+    editableEls.forEach(el=>{
+      const key=el.dataset.editKey;
+      if(typeof saved[key]==="string")el.innerHTML=saved[key];
+    });
+  }catch(e){}
+}
+function setEditing(on){
+  document.body.classList.toggle("story-editing",on);
+  editableEls.forEach(el=>el.contentEditable=on?"true":"false");
+  editBtn.textContent=on?"Editing Story…":"Edit Story Draft";
+  if(!on)editableEls.forEach(el=>el.blur());
+}
+editBtn.addEventListener("click",async()=>{
+  if(document.body.classList.contains("story-editing"))return;
+  const code=prompt("Enter the Admin code to edit the story draft:");
+  if(code===null)return;
+  if(await sha256(code)!==ADMIN_HASH){alert("Incorrect admin code.");return;}
+  setEditing(true);
+  statusEl.textContent="Draft editing is ON. Click text anywhere on the page to change it.";
+});
+saveBtn.addEventListener("click",()=>{
+  const saved={};
+  editableEls.forEach(el=>saved[el.dataset.editKey]=el.innerHTML);
+  localStorage.setItem(STORY_STORAGE_KEY,JSON.stringify(saved));
+  statusEl.textContent="Draft saved on this browser.";
+});
+cancelBtn.addEventListener("click",()=>{
+  setEditing(false);
+  statusEl.textContent="Editing closed. This page is still under construction.";
+});
+loadDraft();
+</script>
 </body>
 </html>

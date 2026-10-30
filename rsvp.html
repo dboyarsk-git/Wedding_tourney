@@ -2,30 +2,413 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#efe4d3">
 <title>RSVP · Tim & Dashia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--cream:#efe4d3;--paper:#f7efe4;--ink:#3a2b22;--green:#6b1f2a;--maroon:#6b1f2a;--type:"Courier Prime","Courier New",monospace;--serif:"Cormorant Garamond",serif;--script:"Caveat",cursive}
+:root{
+  --cream:#efe4d3;--cream2:#f8f0e4;--paper:#f7efe4;--paper2:#e9dcc9;
+  --ink:#3a2b22;--line:#aa957d;--maroon:#6b1f2a;--maroon-dark:#4f1720;
+  --good:#4f745f;--bad:#9a423d;--shadow:0 18px 55px rgba(62,42,27,.11);
+  --type:"Courier Prime","Courier New",monospace;
+  --serif:"Cormorant Garamond",Georgia,serif;
+  --script:"Caveat",cursive;
+}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;display:grid;place-items:center;background:linear-gradient(180deg,#f8f0e4,#efe4d3);color:var(--ink);padding:24px}
-.card{width:min(720px,94vw);padding:54px 32px;text-align:center;background:rgba(247,239,228,.9);border:1px solid rgba(58,43,34,.14);box-shadow:0 20px 60px rgba(62,42,27,.12)}
-.kicker{font:700 11px var(--type);letter-spacing:.13em;text-transform:uppercase}
-h1{font:500 clamp(58px,9vw,92px)/.9 var(--serif);margin:10px 0}
-.script{font:500 37px var(--script);color:var(--green)}
-p{font:400 15px/1.7 var(--type);margin:20px auto;max-width:520px}
-a{display:inline-block;margin-top:15px;padding:12px 18px;background:var(--green);color:#fff;text-decoration:none;font:700 10px var(--type);letter-spacing:.1em;text-transform:uppercase}
+html{scroll-behavior:smooth}
+body{
+  margin:0;color:var(--ink);min-height:100vh;
+  background:radial-gradient(circle at 15% 5%,rgba(255,255,255,.52),transparent 28%),linear-gradient(180deg,var(--cream2),var(--cream));
+  font-family:var(--serif);font-size:19px;line-height:1.5;
+}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.10;background-image:repeating-linear-gradient(0deg,rgba(70,48,34,.06) 0 1px,transparent 1px 4px);z-index:-1}
+a{color:inherit}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.55;cursor:not-allowed}
+.site-header{position:sticky;top:0;z-index:40;background:rgba(248,240,228,.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(58,43,34,.08)}
+.nav-shell{width:min(1200px,93vw);margin:auto;min-height:70px;display:flex;align-items:center;gap:18px}
+.monogram{font:500 27px var(--serif);letter-spacing:.27em;text-decoration:none;white-space:nowrap}
+.nav-line{height:1px;background:var(--line);flex:1;max-width:330px}
+.nav-links{margin-left:auto;display:flex;align-items:center;gap:28px}
+.nav-links a{font:700 11px var(--type);letter-spacing:.10em;text-transform:uppercase;text-decoration:none;padding:8px 0;border-bottom:1px solid transparent}
+.nav-links a:hover,.nav-links a.active{border-bottom-color:var(--ink)}
+.menu-button{display:none;margin-left:auto;border:1px solid var(--line);background:transparent;padding:9px 13px;font:700 12px var(--type);letter-spacing:.08em}
+
+.page{width:min(980px,94vw);margin:0 auto;padding:54px 0 90px}
+.hero-card,.paper-card{
+  position:relative;background:rgba(247,239,228,.94);border:1px solid rgba(58,43,34,.14);box-shadow:var(--shadow);
+}
+.hero-card{padding:58px 34px 48px;text-align:center;overflow:hidden}
+.hero-card:before,.paper-card.taped:before{content:"";position:absolute;top:-13px;left:50%;transform:translateX(-50%) rotate(-2deg);width:110px;height:28px;background:rgba(195,157,113,.45)}
+.kicker{font:700 12px var(--type);letter-spacing:.13em;text-transform:uppercase}
+h1{font:500 clamp(64px,9vw,104px)/.86 var(--serif);margin:12px 0 6px;letter-spacing:-.035em}
+.script{font:500 clamp(34px,5vw,48px)/1 var(--script);color:var(--maroon);margin-top:10px}
+.hero-copy{max-width:650px;margin:21px auto 0;font-size:22px;line-height:1.48}
+.heart-rule{display:flex;justify-content:center;align-items:center;gap:15px;margin-top:27px}.heart-rule i{height:1px;width:76px;background:var(--line)}.heart-rule b{font:500 34px var(--script);color:var(--maroon)}
+
+.status-banner{margin-top:18px;padding:13px 16px;border:1px dashed rgba(107,31,42,.35);background:rgba(255,255,255,.35);font:700 13px/1.5 var(--type);letter-spacing:.02em;text-align:center}
+.status-banner.good{border-color:rgba(79,116,95,.4);color:#385744}.status-banner.bad{border-color:rgba(154,66,61,.45);color:#7b302d;background:#f3dfdc}
+
+.paper-card{margin-top:26px;padding:38px 34px}
+.step-label{font:700 12px var(--type);letter-spacing:.12em;text-transform:uppercase;color:var(--maroon)}
+.section-title{font:500 clamp(42px,5vw,58px)/1 var(--script);margin:5px 0 8px;color:var(--maroon)}
+.section-copy{font-size:20px;max-width:690px;margin:0 0 24px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{display:grid;gap:7px}.field.full{grid-column:1/-1}
+.field label,.small-label{font:700 12px var(--type);letter-spacing:.08em;text-transform:uppercase}
+.input,textarea,select{width:100%;border:1px solid rgba(58,43,34,.25);background:#fffaf2;color:var(--ink);padding:13px 14px;border-radius:0;min-height:48px}
+textarea{min-height:105px;resize:vertical}
+.help{font-size:16px;line-height:1.4;color:#69584b}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.btn{border:1px solid var(--maroon);padding:12px 18px;background:var(--maroon);color:white;font:700 12px var(--type);letter-spacing:.08em;text-transform:uppercase;min-height:46px}
+.btn:hover{background:var(--maroon-dark);border-color:var(--maroon-dark)}
+.btn.secondary{background:transparent;color:var(--maroon)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.danger{background:#8b3935;border-color:#8b3935}
+.hidden{display:none!important}
+
+.invite-found{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:22px}
+.household{font:500 36px/1 var(--script);color:var(--maroon)}
+.confirmation-code{font:700 11px var(--type);letter-spacing:.08em;text-transform:uppercase}
+.guest-list{display:grid;gap:14px;margin-top:15px}
+.guest-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center;padding:16px 0;border-bottom:1px solid rgba(170,149,125,.55)}
+.guest-name{font-size:24px;font-weight:600}
+.choice{display:flex;gap:8px}
+.choice button{min-width:72px;border:1px solid var(--line);background:#fffaf2;padding:10px 12px;font:700 12px var(--type);letter-spacing:.05em;text-transform:uppercase}
+.choice button.selected.yes{background:var(--good);border-color:var(--good);color:white}.choice button.selected.no{background:var(--bad);border-color:var(--bad);color:white}
+.plus-name{grid-column:1/-1;margin-top:-5px}
+.contact-update{margin-top:26px;padding-top:24px;border-top:1px solid var(--line)}
+.checkbox-row{display:flex;align-items:center;gap:9px;font-size:18px}.checkbox-row input{width:18px;height:18px}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.summary-box{padding:18px;border:1px solid var(--line);background:rgba(255,255,255,.28)}
+.summary-box h3{margin:0 0 10px;font:500 30px var(--script);color:var(--maroon)}
+.summary-box ul{margin:0;padding-left:20px}
+
+.admin-toggle-wrap{text-align:center;margin-top:32px}
+.admin-toggle{border:0;background:transparent;color:#7d6a5b;font:700 10px var(--type);letter-spacing:.11em;text-transform:uppercase;text-decoration:underline;text-underline-offset:4px}
+.admin-panel{margin-top:20px;border:1px dashed rgba(107,31,42,.45);background:rgba(244,234,219,.8);padding:28px}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.admin-grid .full{grid-column:1/-1}
+.admin-list{display:grid;gap:12px;margin-top:22px}.admin-card{padding:16px;border:1px solid var(--line);background:#fffaf2}.admin-card-head{display:flex;justify-content:space-between;gap:15px;align-items:flex-start}.admin-house{font:600 23px var(--serif)}.admin-meta{font-size:15px;color:#69584b}.admin-status-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.pill{display:inline-block;padding:5px 8px;border:1px solid var(--line);font:700 10px var(--type);letter-spacing:.05em;text-transform:uppercase;background:#f6eee3}.pill.yes{background:#e0ece4;border-color:#a8c1af}.pill.no{background:#f3dfdc;border-color:#d8aca7}.pill.pending{background:#eee5d7}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}.stat{padding:14px;border:1px solid var(--line);background:#fffaf2;text-align:center}.stat strong{display:block;font:600 31px var(--serif)}.stat span{display:block;font:700 10px var(--type);letter-spacing:.07em;text-transform:uppercase}
+
+.modal{position:fixed;inset:0;background:rgba(35,26,21,.62);display:none;place-items:center;padding:20px;z-index:100}.modal.open{display:grid}.modal-card{width:min(430px,100%);background:var(--paper);padding:26px;border:1px solid var(--line);box-shadow:var(--shadow)}.modal-card h3{font:500 38px var(--script);color:var(--maroon);margin:0 0 8px}.modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:15px}
+
+@media(max-width:800px){
+  .nav-line{display:none}.menu-button{display:block}.nav-links{display:none;position:absolute;top:66px;left:4vw;right:4vw;background:#f8f0e4;border:1px solid var(--line);padding:18px;flex-direction:column;align-items:flex-start;gap:15px}.nav-links.open{display:flex}
+  .form-grid,.admin-grid,.summary-grid{grid-template-columns:1fr}.field.full,.admin-grid .full{grid-column:auto}
+  .stats{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  body{font-size:19px}.page{padding-top:30px;width:min(95vw,980px)}.hero-card{padding:45px 22px 38px}.hero-copy{font-size:21px}.paper-card{padding:30px 20px}.section-copy{font-size:19px}.guest-row{grid-template-columns:1fr;gap:10px}.choice{width:100%}.choice button{flex:1;min-height:48px;font-size:13px}.input,textarea,select{font-size:18px}.btn{font-size:13px}.invite-found{flex-direction:column}.admin-card-head{flex-direction:column}.stats{grid-template-columns:1fr 1fr}.nav-links a{font-size:13px}
+}
 </style>
 </head>
 <body>
-<div class="card">
-  <div class="kicker">Tim & Dashia</div>
-  <h1>RSVP</h1>
-  <div class="script">Coming soon ♡</div>
-  <p>This page is intentionally blank for now while we get the main cover page exactly right.</p>
-  <a href="index.html">← Back Home</a>
+<header class="site-header">
+  <div class="nav-shell">
+    <a class="monogram" href="index.html">T | D</a>
+    <div class="nav-line"></div>
+    <button class="menu-button" id="menuButton" type="button">MENU</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="our-story.html">Our Story</a>
+      <a href="details.html">Details</a>
+      <a class="active" href="rsvp.html">RSVP</a>
+      <a href="volleyball.html">Volleyball Tournament</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+  <section class="hero-card">
+    <div class="kicker">Tim &amp; Dashia</div>
+    <h1>RSVP</h1>
+    <div class="script">We saved you a seat ♡</div>
+    <p class="hero-copy">Enter your name and the email or phone number connected to your invitation. We’ll pull up only the people included on your invitation.</p>
+    <div class="heart-rule"><i></i><b>♡</b><i></i></div>
+    <div id="backendStatus" class="status-banner">Checking RSVP system…</div>
+  </section>
+
+  <section id="lookupCard" class="paper-card taped">
+    <div class="step-label">Step One</div>
+    <div class="section-title">Find your invitation</div>
+    <p class="section-copy">Use the name exactly as it appears on your invitation, plus the email address or phone number we have for your household.</p>
+    <div class="form-grid">
+      <div class="field">
+        <label for="lookupName">First &amp; Last Name</label>
+        <input class="input" id="lookupName" autocomplete="name" placeholder="Example: John Smith">
+      </div>
+      <div class="field">
+        <label for="lookupContact">Email or Phone</label>
+        <input class="input" id="lookupContact" autocomplete="email" placeholder="Email or phone number">
+      </div>
+    </div>
+    <div id="lookupMessage" class="help" style="margin-top:12px"></div>
+    <div class="actions"><button class="btn" id="findInviteBtn">Find My Invitation →</button></div>
+  </section>
+
+  <section id="rsvpCard" class="paper-card taped hidden">
+    <div class="step-label">Step Two</div>
+    <div class="invite-found">
+      <div>
+        <div class="section-title" style="margin-bottom:5px">We found you ♡</div>
+        <div class="household" id="householdName"></div>
+      </div>
+      <div class="confirmation-code" id="existingCode"></div>
+    </div>
+
+    <p class="section-copy">Please answer <b>Yes</b> or <b>No</b> for each person below. If your invitation includes a plus-one, you’ll see that spot here too.</p>
+    <div id="guestRows" class="guest-list"></div>
+
+    <div class="contact-update">
+      <div class="section-title" style="font-size:38px">Contact &amp; mailing info</div>
+      <p class="section-copy" style="margin-bottom:18px">We’ll keep one primary contact for the whole invitation. You can also update your mailing address if anything has changed.</p>
+      <div class="form-grid">
+        <div class="field">
+          <label for="contactEmail">Best Email</label>
+          <input class="input" id="contactEmail" type="email" autocomplete="email">
+        </div>
+        <div class="field">
+          <label for="contactPhone">Best Phone</label>
+          <input class="input" id="contactPhone" type="tel" autocomplete="tel">
+        </div>
+        <div class="field full">
+          <label for="mailingAddress">Mailing Address</label>
+          <textarea id="mailingAddress" placeholder="Street, city, state, ZIP"></textarea>
+          <div class="help">Optional to change. If the address we already have is correct, you can leave it as-is.</div>
+        </div>
+        <div class="field full">
+          <label for="guestMessage">Message for Tim &amp; Dashia <span style="text-transform:none;font-weight:400">(optional)</span></label>
+          <textarea id="guestMessage" placeholder="Leave us a note ♡"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div id="rsvpMessage" class="help" style="margin-top:14px"></div>
+    <div class="actions">
+      <button class="btn" id="submitRsvpBtn">Submit RSVP ♡</button>
+      <button class="btn secondary" id="startOverBtn" type="button">Start Over</button>
+    </div>
+  </section>
+
+  <section id="successCard" class="paper-card taped hidden">
+    <div class="step-label">All Done</div>
+    <div class="section-title">You’re all set ♡</div>
+    <p class="section-copy">Your RSVP has been saved. You can come back later using the same name and contact information if you need to update your response.</p>
+    <div class="summary-grid">
+      <div class="summary-box"><h3>Attending</h3><ul id="attendingList"></ul></div>
+      <div class="summary-box"><h3>Unable to attend</h3><ul id="declinedList"></ul></div>
+    </div>
+    <div class="status-banner good" id="successCode" style="margin-top:20px"></div>
+    <div class="actions"><button class="btn secondary" id="editResponseBtn">Edit My Response</button></div>
+  </section>
+
+  <div class="admin-toggle-wrap"><button class="admin-toggle" id="adminOpenBtn">Guest List Admin</button></div>
+
+  <section id="adminPanel" class="admin-panel hidden">
+    <div class="step-label">Private Admin</div>
+    <div class="section-title">Wedding guest list</div>
+    <p class="section-copy">Add each household/invitation once. Named guests are the only people who can be found publicly; plus-ones appear only when you allow them.</p>
+
+    <div id="adminStats" class="stats"></div>
+
+    <div class="admin-grid">
+      <div class="field"><label for="adminHousehold">Invitation / Household Name</label><input class="input" id="adminHousehold" placeholder="Smith Family"></div>
+      <div class="field"><label for="adminPrimary">Primary Contact Name</label><input class="input" id="adminPrimary" placeholder="John Smith"></div>
+      <div class="field"><label for="adminEmail">Email</label><input class="input" id="adminEmail" type="email"></div>
+      <div class="field"><label for="adminPhone">Phone</label><input class="input" id="adminPhone" type="tel"></div>
+      <div class="field full"><label for="adminAddress">Mailing Address</label><textarea id="adminAddress"></textarea></div>
+      <div class="field"><label for="adminPlus">Plus-Ones Allowed</label><select id="adminPlus"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></div>
+      <div class="field full"><label for="adminGuests">Invited Guest Names — one per line</label><textarea id="adminGuests" placeholder="John Smith&#10;Sarah Smith&#10;Emily Smith"></textarea></div>
+    </div>
+    <div id="adminMessage" class="help" style="margin-top:12px"></div>
+    <div class="actions"><button class="btn" id="adminAddBtn">Add Invitation</button><button class="btn ghost" id="adminRefreshBtn">Refresh List</button><button class="btn ghost" id="adminExitBtn">Exit Admin</button></div>
+    <div id="adminList" class="admin-list"></div>
+  </section>
+</main>
+
+<div class="modal" id="adminModal">
+  <div class="modal-card">
+    <h3>Guest List Admin</h3>
+    <p>Enter the same Admin code you use for the tournament.</p>
+    <input class="input" id="adminCode" type="password" autocomplete="off" placeholder="Admin code">
+    <div class="modal-actions"><button class="btn ghost" id="adminCancelBtn">Cancel</button><button class="btn" id="adminLoginBtn">Enter</button></div>
+  </div>
 </div>
+
+<script>
+(() => {
+"use strict";
+const SUPABASE_URL="https://uygotksjyqusbdoepzft.supabase.co";
+const SUPABASE_KEY="sb_publishable_7946Ght6J3pY2k9UcNbkhA_dDTwn89q";
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const $=id=>document.getElementById(id);
+let invitation=null;
+let adminCode="";
+
+const menuButton=$("menuButton"), navLinks=$("navLinks");
+menuButton?.addEventListener("click",()=>navLinks?.classList.toggle("open"));
+document.querySelectorAll(".nav-links a").forEach(a=>a.addEventListener("click",()=>navLinks?.classList.remove("open")));
+
+function setBackendStatus(type,text){
+  const el=$("backendStatus");
+  el.className="status-banner"+(type?` ${type}`:"");
+  el.textContent=text;
+}
+async function checkBackend(){
+  try{
+    const {data,error}=await sb.rpc("wedding_rsvp_backend_status");
+    if(error)throw error;
+    if(data?.ready) setBackendStatus("good","RSVP system connected ♡");
+    else setBackendStatus("bad","RSVP system is still under construction. Admin setup is not complete yet.");
+  }catch(e){
+    setBackendStatus("bad","RSVP system is still under construction. Run the v20 RSVP Supabase setup before opening RSVPs.");
+  }
+}
+
+function resetPublic(){
+  invitation=null;
+  $("lookupName").value="";$("lookupContact").value="";$("lookupMessage").textContent="";
+  $("rsvpCard").classList.add("hidden");$("successCard").classList.add("hidden");$("lookupCard").classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+async function findInvitation(){
+  const name=$("lookupName").value.trim(), contact=$("lookupContact").value.trim();
+  const msg=$("lookupMessage");
+  if(name.length<2||contact.length<3){msg.textContent="Enter your full name and the email or phone number connected to your invitation.";return;}
+  $("findInviteBtn").disabled=true;msg.textContent="Looking for your invitation…";
+  try{
+    const {data,error}=await sb.rpc("find_wedding_invitation",{p_name:name,p_contact:contact});
+    if(error)throw error;
+    if(!data?.found){msg.textContent="We couldn’t match that invitation. Check the spelling and try the email or phone number we may have on file.";return;}
+    invitation=data;renderInvitation();
+    $("lookupCard").classList.add("hidden");$("successCard").classList.add("hidden");$("rsvpCard").classList.remove("hidden");
+    $("rsvpCard").scrollIntoView({behavior:"smooth",block:"start"});
+  }catch(e){console.error(e);msg.textContent=e.message||"We couldn’t check the guest list right now.";}
+  finally{$("findInviteBtn").disabled=false;}
+}
+
+function makeChoice(target,attendance){
+  target.dataset.attendance=attendance;
+  target.querySelectorAll("button[data-choice]").forEach(btn=>{
+    const selected=btn.dataset.choice===attendance;
+    btn.classList.toggle("selected",selected);btn.classList.toggle("yes",selected&&attendance==="yes");btn.classList.toggle("no",selected&&attendance==="no");
+  });
+  const input=target.querySelector(".plus-name input");
+  if(input){target.querySelector(".plus-name").classList.toggle("hidden",attendance!=="yes");if(attendance!=="yes")input.value="";}
+}
+
+function choiceButtons(row,current){
+  const wrap=document.createElement("div");wrap.className="choice";
+  ["yes","no"].forEach(value=>{const b=document.createElement("button");b.type="button";b.dataset.choice=value;b.textContent=value==="yes"?"Yes ♡":"No";b.addEventListener("click",()=>makeChoice(row,value));wrap.appendChild(b);});
+  row.appendChild(wrap);if(current==="yes"||current==="no")makeChoice(row,current);
+}
+
+function renderInvitation(){
+  $("householdName").textContent=invitation.household_name||"Your Invitation";
+  $("existingCode").textContent=invitation.already_submitted?`Existing RSVP • ${invitation.confirmation_code||""}`:"";
+  $("contactEmail").value=invitation.contact_email||"";$("contactPhone").value=invitation.contact_phone||"";$("mailingAddress").value=invitation.mailing_address||"";$("guestMessage").value=invitation.message||"";
+  const box=$("guestRows");box.innerHTML="";
+  (invitation.guests||[]).forEach(g=>{
+    const row=document.createElement("div");row.className="guest-row";row.dataset.kind="guest";row.dataset.id=g.id;row.dataset.attendance=g.attendance||"pending";
+    const name=document.createElement("div");name.className="guest-name";name.textContent=g.full_name;row.appendChild(name);choiceButtons(row,g.attendance);box.appendChild(row);
+  });
+  (invitation.plus_ones||[]).forEach(p=>{
+    const row=document.createElement("div");row.className="guest-row";row.dataset.kind="plus";row.dataset.id=p.id;row.dataset.attendance=p.attendance||"pending";
+    const name=document.createElement("div");name.className="guest-name";name.textContent=`Guest / Plus-One ${p.slot_number||""}`;row.appendChild(name);choiceButtons(row,p.attendance);
+    const field=document.createElement("div");field.className="plus-name field"+(p.attendance==="yes"?"":" hidden");field.innerHTML=`<label>Guest Name</label><input class="input" value="${escapeHtml(p.guest_name||"")}" placeholder="First & Last Name">`;row.appendChild(field);box.appendChild(row);
+  });
+}
+function escapeHtml(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");}
+
+async function submitRsvp(){
+  if(!invitation)return;
+  const msg=$("rsvpMessage");const guestResponses=[],plusResponses=[];let missing=false;
+  document.querySelectorAll("#guestRows .guest-row").forEach(row=>{
+    const attendance=row.dataset.attendance;
+    if(attendance!=="yes"&&attendance!=="no")missing=true;
+    if(row.dataset.kind==="guest")guestResponses.push({id:row.dataset.id,attendance});
+    else{const input=row.querySelector(".plus-name input");const guest_name=input?.value.trim()||"";if(attendance==="yes"&&!guest_name)missing=true;plusResponses.push({id:row.dataset.id,attendance,guest_name});}
+  });
+  if(missing){msg.textContent="Please answer Yes or No for everyone shown. If a plus-one is attending, add their name.";return;}
+  $("submitRsvpBtn").disabled=true;msg.textContent="Saving your RSVP…";
+  try{
+    const {data,error}=await sb.rpc("submit_wedding_invitation_rsvp",{
+      p_invitation_id:invitation.invitation_id,p_lookup_token:invitation.lookup_token,
+      p_contact_email:$("contactEmail").value.trim(),p_contact_phone:$("contactPhone").value.trim(),p_mailing_address:$("mailingAddress").value.trim(),
+      p_guest_responses:guestResponses,p_plus_one_responses:plusResponses,p_message:$("guestMessage").value.trim()
+    });
+    if(error)throw error;
+    invitation.guests=(invitation.guests||[]).map(g=>({...g,attendance:guestResponses.find(x=>x.id===g.id)?.attendance||g.attendance}));
+    invitation.plus_ones=(invitation.plus_ones||[]).map(p=>{const x=plusResponses.find(y=>y.id===p.id);return {...p,attendance:x?.attendance||p.attendance,guest_name:x?.guest_name||""};});
+    invitation.already_submitted=true;invitation.confirmation_code=data?.confirmation_code||invitation.confirmation_code;
+    renderSuccess();$("rsvpCard").classList.add("hidden");$("successCard").classList.remove("hidden");$("successCard").scrollIntoView({behavior:"smooth",block:"start"});
+  }catch(e){console.error(e);msg.textContent=e.message||"Your RSVP could not be saved. Please try again.";}
+  finally{$("submitRsvpBtn").disabled=false;}
+}
+
+function renderSuccess(){
+  const yes=[],no=[];
+  (invitation.guests||[]).forEach(g=>(g.attendance==="yes"?yes:no).push(g.full_name));
+  (invitation.plus_ones||[]).forEach(p=>{if(p.attendance==="yes")yes.push(p.guest_name||"Guest");else no.push(`Plus-One ${p.slot_number||""}`);});
+  $("attendingList").innerHTML=yes.length?yes.map(n=>`<li>${escapeHtml(n)}</li>`).join(""):"<li>None</li>";
+  $("declinedList").innerHTML=no.length?no.map(n=>`<li>${escapeHtml(n)}</li>`).join(""):"<li>None</li>";
+  $("successCode").textContent=`Confirmation: ${invitation.confirmation_code||"Saved"}`;
+}
+
+// ---------------- Admin ----------------
+$("adminOpenBtn").onclick=()=>{$("adminCode").value="";$("adminModal").classList.add("open")};
+$("adminCancelBtn").onclick=()=>$("adminModal").classList.remove("open");
+$("adminCode").addEventListener("keydown",e=>{if(e.key==="Enter")adminLogin();});
+async function adminLogin(){
+  const code=$("adminCode").value;$("adminLoginBtn").disabled=true;
+  try{const {data,error}=await sb.rpc("admin_list_wedding_invitations",{p_code:code});if(error)throw error;adminCode=code;$("adminModal").classList.remove("open");$("adminPanel").classList.remove("hidden");renderAdminList(data||[]);$("adminPanel").scrollIntoView({behavior:"smooth"});}
+  catch(e){alert("Incorrect Admin code or RSVP backend not installed yet.");}
+  finally{$("adminLoginBtn").disabled=false;}
+}
+$("adminLoginBtn").onclick=adminLogin;
+$("adminExitBtn").onclick=()=>{adminCode="";$("adminPanel").classList.add("hidden")};
+$("adminRefreshBtn").onclick=refreshAdmin;
+async function refreshAdmin(){if(!adminCode)return;const {data,error}=await sb.rpc("admin_list_wedding_invitations",{p_code:adminCode});if(error){$("adminMessage").textContent=error.message;return;}renderAdminList(data||[]);}
+
+$("adminAddBtn").onclick=async()=>{
+  if(!adminCode)return;
+  const names=$("adminGuests").value.split(/\n+/).map(s=>s.trim()).filter(Boolean);
+  const args={p_code:adminCode,p_household_name:$("adminHousehold").value.trim(),p_primary_contact_name:$("adminPrimary").value.trim(),p_contact_email:$("adminEmail").value.trim(),p_contact_phone:$("adminPhone").value.trim(),p_mailing_address:$("adminAddress").value.trim(),p_plus_ones_allowed:Number($("adminPlus").value||0),p_guest_names:names};
+  $("adminAddBtn").disabled=true;$("adminMessage").textContent="Adding invitation…";
+  try{const {data,error}=await sb.rpc("admin_create_wedding_invitation",args);if(error)throw error;$("adminMessage").textContent=`Added! Confirmation code: ${data?.confirmation_code||"created"}`;["adminHousehold","adminPrimary","adminEmail","adminPhone","adminAddress","adminGuests"].forEach(id=>$(id).value="");$("adminPlus").value="0";await refreshAdmin();}
+  catch(e){$("adminMessage").textContent=e.message||"Could not add invitation.";}
+  finally{$("adminAddBtn").disabled=false;}
+};
+
+function renderAdminList(items){
+  const list=$("adminList");list.innerHTML="";
+  let invited=0,attending=0,declined=0,responded=0;
+  items.forEach(i=>{const people=[...(i.guests||[]),...(i.plus_ones||[])];invited+=people.length;if(i.rsvp_submitted_at)responded++;people.forEach(p=>{if(p.attendance==="yes")attending++;if(p.attendance==="no")declined++;});
+    const card=document.createElement("div");card.className="admin-card";
+    const guestText=(i.guests||[]).map(g=>`${escapeHtml(g.full_name)} — ${escapeHtml(g.attendance)}`).join("<br>");
+    const plusText=(i.plus_ones||[]).map(p=>`Plus-One ${p.slot_number}: ${escapeHtml(p.guest_name||"unnamed")} — ${escapeHtml(p.attendance)}`).join("<br>");
+    card.innerHTML=`<div class="admin-card-head"><div><div class="admin-house">${escapeHtml(i.household_name)}</div><div class="admin-meta">${escapeHtml(i.primary_contact_name)} • ${escapeHtml(i.contact_email||i.contact_phone||"")}<br>${escapeHtml(i.confirmation_code||"")}</div></div><button class="btn danger" data-delete="${i.id}" type="button">Delete</button></div><div class="admin-status-pills"><span class="pill ${i.rsvp_submitted_at?'yes':'pending'}">${i.rsvp_submitted_at?'RSVP received':'Awaiting RSVP'}</span><span class="pill">${i.plus_ones_allowed||0} plus-one${Number(i.plus_ones_allowed||0)===1?'':'s'}</span></div><div class="admin-meta" style="margin-top:10px">${guestText}${plusText?`<br>${plusText}`:""}</div>`;
+    list.appendChild(card);
+  });
+  $("adminStats").innerHTML=`<div class="stat"><strong>${items.length}</strong><span>Invitations</span></div><div class="stat"><strong>${invited}</strong><span>Guest Spots</span></div><div class="stat"><strong>${attending}</strong><span>Attending</span></div><div class="stat"><strong>${responded}</strong><span>RSVPs In</span></div>`;
+  list.querySelectorAll("[data-delete]").forEach(btn=>btn.onclick=async()=>{if(!confirm("Delete this entire invitation and its RSVP data?"))return;const {error}=await sb.rpc("admin_delete_wedding_invitation",{p_code:adminCode,p_invitation_id:btn.dataset.delete});if(error){alert(error.message);return;}await refreshAdmin();});
+}
+
+$("findInviteBtn").onclick=findInvitation;
+$("lookupContact").addEventListener("keydown",e=>{if(e.key==="Enter")findInvitation();});
+$("submitRsvpBtn").onclick=submitRsvp;
+$("startOverBtn").onclick=resetPublic;
+$("editResponseBtn").onclick=()=>{$("successCard").classList.add("hidden");$("rsvpCard").classList.remove("hidden");renderInvitation();$("rsvpCard").scrollIntoView({behavior:"smooth"});};
+
+checkBackend();
+})();
+</script>
 </body>
 </html>

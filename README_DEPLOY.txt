@@ -1,25 +1,15 @@
-TIM & DASHIA WEDDING SITE v12 — TRUE HOMEPAGE MATCH
+TIM & DASHIA WEDDING TOURNEY v17
 
-The volleyball page has been structurally redesigned to match the main homepage:
+Upload every file in this folder directly to the ROOT of Wedding_tourney.
 
-- Exact T | D wedding header and navigation
-- Same cream paper background / texture
-- Same centered paper-card composition
-- Same Caveat script title scale
-- Same Courier Prime typewriter labels/body
-- Same maroon accent treatment
-- Same taped-paper visual language
-- Tournament stats now look like the homepage Details card
-- Prize/rules cards now look like wedding stationery, not a dashboard
-- Technical LIVE BUILD / DB SQL badge hidden from public view
-- Live sync still works quietly
-- Old ONE WAY prize text is suppressed publicly if stale DB data remains
+Current build includes:
+- Wedding homepage with bottom heart only
+- Mobile-readable tournament typography/navigation
+- Clean mobile bracket spacing
+- $100/team ($25/player)
+- Supabase live data connection
+- Realtime + backup cross-device refresh sync
+- Tournament registration, admin, schedule, standings, bracket, scoring
 
-PRESERVED:
-The v60 tournament engine, Supabase, registration, Admin, team data,
-schedule, standings, bracket, score locks, full-screen scorer,
-pool scoring and bracket auto-advance.
-
-DEPLOY:
-Upload all files in this ZIP directly to the ROOT of Wedding_tourney.
-GitHub Pages: main / (root)
+For Supabase database setup/repair, use the separate SUPABASE_SETUP folder
+from the full v17 ZIP. Do not upload the SQL files to GitHub Pages.

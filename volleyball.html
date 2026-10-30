@@ -15,7 +15,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <title>Tim & Dashia — Our Big Day Volleyball 4s</title>
-<meta name="wedding-tournament-build" content="v13-readable-homepage-theme-v60-engine">
+<meta name="wedding-tournament-build" content="v17-wedding-supabase-mobile-sync-100-team-fee">
 <meta name="oneway-build" content="v60">
 <script>
 /* ONE WAY v42:
@@ -1806,7 +1806,7 @@ body.admin-mode #paymentCard.payment-disabled-public{
 </div>
 
 <div id="paymentPublicContent" style="margin-top:12px">
-<div class="payment-line"><b>Team Fee:</b> <span id="paymentTeamFeePublic">$60</span></div>
+<div class="payment-line"><b>Team Fee:</b> <span id="paymentTeamFeePublic">$100</span></div>
 <div class="payment-line"><b>Zelle:</b> <span id="paymentZellePublic">TBD</span></div>
 <div class="payment-line" id="paymentCashPublic">Cash can be paid at tournament check-in.</div>
 <div class="payment-line muted" id="paymentNotePublic">Captain is responsible for the full team payment.</div>
@@ -1822,7 +1822,7 @@ body.admin-mode #paymentCard.payment-disabled-public{
 <div class="payment-admin-grid">
 <label>
       Team fee
-      <input class="team-input" id="adminPaymentTeamFee" type="number" inputmode="numeric" min="0" step="1" placeholder="60">
+      <input class="team-input" id="adminPaymentTeamFee" type="number" inputmode="numeric" min="0" step="1" placeholder="100">
 </label>
 <label>
       Zelle phone number or email
@@ -1852,7 +1852,7 @@ body.admin-mode #paymentCard.payment-disabled-public{
 </div>
 <ul class="rule-list">
 <li>Registration is capped at <b>16 teams</b>.</li>
-<li><b>$15 per player / $60 per team.</b></li>
+<li><b>$100 per team / $25 per player.</b></li>
 <li><b>No player may compete unless they are registered, paid, and checked in.</b></li>
 <li><b>🏆 First Place Prize:</b> TBD — final prize details will be announced once confirmed with the event coordinator.</li>
 <li>4 players per team with a maximum of 16 teams.</li>
@@ -2093,7 +2093,7 @@ Love · Volleyball · Good Times<br>
     </p>
 
     <div class="registration-payment-box" id="registrationPaymentBox">
-      <h3>💵 Team Payment — <span id="registrationPaymentFee">$60</span></h3>
+      <h3>💵 Team Payment — <span id="registrationPaymentFee">$100</span></h3>
       <div class="payment-line"><b>The captain is responsible for submitting the full team payment.</b></div>
       <div class="payment-line"><b>Zelle:</b> <span id="registrationPaymentZelle">TBD</span></div>
       <div class="payment-line" id="registrationPaymentCash">Cash can be paid at tournament check-in.</div>
@@ -2188,8 +2188,8 @@ Love · Volleyball · Good Times<br>
 (() => {
 "use strict";
 
-const SUPABASE_URL = "https://uygotksjyqusbdoepzft.supabase.co";
-const SUPABASE_KEY = "sb_publishable_7946Ght6J3pY2k9UcNbkhA_dDTwn89q";
+const SUPABASE_URL = "https://kxivjgzwwabmdiisbzyy.supabase.co";
+const SUPABASE_KEY = "sb_publishable_EYR-p1KdlkC9MeKiswXVGg_NYiA2T0X";
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const ADMIN_HASH="18642fa8fb69ca94183ef39f93692a597872125a8b7d607afab643dfd89569a8";
@@ -2203,7 +2203,7 @@ let state={
   registrations:[],
   registrationPlayers:[],
   publicCaptains:[],
-  settings:{registrationOpen:true,poolsFinalized:false,poolCount:0,teamCount:0,prizeAmount:null,secondPrizeAmount:null,prizeText:"TBD",secondPrizeText:"TBD",ruleSections:{},paymentEnabled:false,paymentTeamFee:60,paymentZelle:"",paymentCashText:"Cash can be paid at tournament check-in.",paymentNote:"Captain is responsible for the full team payment."},
+  settings:{registrationOpen:true,poolsFinalized:false,poolCount:0,teamCount:0,prizeAmount:null,secondPrizeAmount:null,prizeText:"TBD",secondPrizeText:"TBD",ruleSections:{},paymentEnabled:false,paymentTeamFee:100,paymentZelle:"",paymentCashText:"Cash can be paid at tournament check-in.",paymentNote:"Captain is responsible for the full team payment."},
   poolCandidates:[],
   poolPreview:[],
   poolPreviewFormat:null,
@@ -2221,6 +2221,10 @@ let scoreSaving=false;
 let scorePendingSave=null;
 let scoreHeartbeatTimer=null;
 let scoreTournamentFrozen=false;
+let realtimeChannel=null;
+let crossDeviceSyncTimer=null;
+let crossDeviceSyncBusy=false;
+const CROSS_DEVICE_SYNC_MS=5000;
 const $=id=>document.getElementById(id);
 
 let mobileNavLastY=0;
@@ -2372,7 +2376,7 @@ function mapTeam(r){return {id:r.id,name:r.name||"",pool:r.pool,court:r.court,pa
 function mapPool(r){return {id:r.id,type:"pool",round:r.round,time:r.time_label,court:r.court,pool:r.pool,teamA:r.team_a,teamB:r.team_b,scoreA:Number(r.score_a||0),scoreB:Number(r.score_b||0),final:!!r.final,locked:!!r.locked,refTeam:r.ref_team??null,scoreRevision:Number(r.score_revision||0)}}
 function mapBracket(r){return {id:r.id,type:"bracket",round:r.round_name,time:r.time_label,court:r.court,keyA:r.key_a,keyB:r.key_b,fromA:r.from_a,fromB:r.from_b,sets:Array.isArray(r.sets)?r.sets:[],currentA:Number(r.current_a||0),currentB:Number(r.current_b||0),final:!!r.final,locked:!!r.locked,refTeam:r.ref_team??null,scoreRevision:Number(r.score_revision||0)}}
 function mapRegistration(r){return {id:r.id,teamName:r.team_name,status:r.status,reservedSlot:r.reserved_slot,createdAt:r.created_at,confirmedAt:r.confirmed_at,paid:!!r.paid,checkedIn:!!r.checked_in}}
-function mapSettings(r){return {registrationOpen:r?.registration_open!==false,poolsFinalized:!!r?.pools_finalized,poolCount:Number(r?.pool_count||0),teamCount:Number(r?.team_count||0),finalizedAt:r?.finalized_at||null,prizeAmount:r?.prize_amount==null?null:Number(r.prize_amount),secondPrizeAmount:r?.second_prize_amount==null?null:Number(r.second_prize_amount),prizeText:String(r?.prize_text??"TBD").trim()||"TBD",secondPrizeText:String(r?.second_prize_text??"TBD").trim()||"TBD",ruleSections:(r?.rule_sections&&typeof r.rule_sections==="object")?r.rule_sections:{},paymentEnabled:r?.payment_enabled!==false,paymentTeamFee:Number(r?.payment_team_fee??60),paymentZelle:r?.payment_zelle||"",paymentCashText:r?.payment_cash_text||"Cash can be paid at tournament check-in.",paymentNote:r?.payment_note||"Captain is responsible for the full team payment."}}
+function mapSettings(r){return {registrationOpen:r?.registration_open!==false,poolsFinalized:!!r?.pools_finalized,poolCount:Number(r?.pool_count||0),teamCount:Number(r?.team_count||0),finalizedAt:r?.finalized_at||null,prizeAmount:r?.prize_amount==null?null:Number(r.prize_amount),secondPrizeAmount:r?.second_prize_amount==null?null:Number(r.second_prize_amount),prizeText:String(r?.prize_text??"TBD").trim()||"TBD",secondPrizeText:String(r?.second_prize_text??"TBD").trim()||"TBD",ruleSections:(r?.rule_sections&&typeof r.rule_sections==="object")?r.rule_sections:{},paymentEnabled:r?.payment_enabled!==false,paymentTeamFee:(Number(r?.payment_team_fee??100)===60?100:Number(r?.payment_team_fee??100)),paymentZelle:r?.payment_zelle||"",paymentCashText:r?.payment_cash_text||"Cash can be paid at tournament check-in.",paymentNote:r?.payment_note||"Captain is responsible for the full team payment."}}
 function mapRegPlayer(r){return {id:r.id,registrationId:r.registration_id,playerNumber:r.player_number,fullName:r.full_name,confirmed:r.confirmed,confirmedAt:r.confirmed_at}}
 function mapPublicCaptain(r){return {teamId:Number(r.team_id),registrationId:r.registration_id,teamName:r.team_name,captainName:String(r.captain_name||"").trim()}}
 
@@ -2949,10 +2953,10 @@ async function checkScoreBackend(){
     state.scoreBackendMessage="";
     return true;
   }catch(error){
-    console.error("Score backend health check:",error);
-    state.scoreBackendState="error";
+    console.warn("Protected score backend unavailable; using live fallback scoring:",error);
+    state.scoreBackendState="fallback";
     state.scoreBackendMessage=
-      "Live tournament data is connected, but bracket auto-advance is not on v60. Run the v60 Bracket Auto-Advance SQL in Supabase, then reload.";
+      "Protected score locking is unavailable, so the site is using live fallback scoring with cross-device sync.";
     return false;
   }
 }
@@ -3057,8 +3061,128 @@ async function loadAll(){
     console.error("Confirmation link load:",error);
   }
 }
+function liveStateDigest(settings,teams,poolMatches,bracketMatches,registrations){
+  return JSON.stringify({settings,teams,poolMatches,bracketMatches,registrations});
+}
+
+async function syncFromServer({reason="poll",force=false}={}){
+  if(crossDeviceSyncBusy)return false;
+  if(state.liveDataState!=="ready" && !force)return false;
+
+  // Never overwrite a score that this phone is actively trying to save.
+  if((scoreSaving||scorePendingSave) && !force)return false;
+
+  crossDeviceSyncBusy=true;
+
+  try{
+    const [s,t,p,b,r]=await promiseTimeout(
+      Promise.all([
+        sb.from("tournament_settings").select("*").eq("id",1).maybeSingle(),
+        sb.from("teams").select("*").order("id"),
+        sb.from("pool_matches").select("*").order("round").order("court"),
+        sb.from("bracket_matches").select("*"),
+        sb.from("team_registrations")
+          .select("id,team_name,status,reserved_slot,created_at,confirmed_at,paid,checked_in")
+          .order("created_at")
+      ]),
+      8000,
+      "Cross-device tournament sync"
+    );
+
+    const error=[s.error,t.error,p.error,b.error,r.error].find(Boolean);
+    if(error)throw error;
+    if(!s.data)throw new Error("Tournament settings are unavailable.");
+
+    const nextSettings=mapSettings(s.data);
+    const nextTeams=(t.data||[]).map(mapTeam);
+    const nextPools=(p.data||[]).map(mapPool);
+    const order={SF1:1,SF2:2,FINAL:3};
+    const nextBracket=(b.data||[])
+      .map(mapBracket)
+      .sort((x,y)=>(order[x.id]||99)-(order[y.id]||99));
+    const nextRegistrations=(r.data||[]).map(mapRegistration);
+
+    const currentDigest=liveStateDigest(
+      state.settings,
+      state.teams,
+      state.poolMatches,
+      state.bracketMatches,
+      state.registrations
+    );
+    const nextDigest=liveStateDigest(
+      nextSettings,
+      nextTeams,
+      nextPools,
+      nextBracket,
+      nextRegistrations
+    );
+
+    if(force || currentDigest!==nextDigest){
+      const wasFinalized=!!state.settings?.poolsFinalized;
+
+      state.settings=nextSettings;
+      state.teams=nextTeams;
+      state.poolMatches=nextPools;
+      state.bracketMatches=nextBracket;
+      state.registrations=nextRegistrations;
+      state.registrationPlayers=[];
+
+      if(
+        activeScore &&
+        $("scoreOverlay")?.classList.contains("open") &&
+        wasFinalized &&
+        !nextSettings.poolsFinalized
+      ){
+        freezeActiveScoreForPoolChange();
+      }
+
+      await refreshPublicCaptains();
+      renderAll();
+    }
+
+    if(reason!=="poll"){
+      setSync("live","Live sync connected • auto-updating");
+    }
+    return true;
+  }catch(error){
+    console.warn("Cross-device sync retry:",error);
+    if(reason!=="poll")setSync("error","Live sync retrying…");
+    return false;
+  }finally{
+    crossDeviceSyncBusy=false;
+  }
+}
+
+function startCrossDeviceSync(){
+  if(crossDeviceSyncTimer)clearInterval(crossDeviceSyncTimer);
+
+  crossDeviceSyncTimer=setInterval(()=>{
+    if(!document.hidden){
+      syncFromServer({reason:"poll"});
+    }
+  },CROSS_DEVICE_SYNC_MS);
+
+  document.addEventListener("visibilitychange",()=>{
+    if(!document.hidden){
+      syncFromServer({reason:"resume",force:true});
+    }
+  });
+
+  window.addEventListener("focus",()=>{
+    syncFromServer({reason:"focus",force:true});
+  });
+
+  window.addEventListener("pageshow",()=>{
+    syncFromServer({reason:"pageshow",force:true});
+  });
+}
+
 function subscribeRealtime(){
-  sb.channel("oneway-live")
+  if(realtimeChannel){
+    try{sb.removeChannel(realtimeChannel);}catch(e){}
+  }
+
+  realtimeChannel=sb.channel("wedding-tourney-live")
   .on("postgres_changes",{event:"*",schema:"public",table:"teams"},payload=>{
     if(payload.eventType==="DELETE"){
       const id=payload.old?.id;
@@ -3137,12 +3261,17 @@ function subscribeRealtime(){
   })
   .subscribe(status=>{
     if(status==="SUBSCRIBED"){
-      setSync("live","Live sync connected");
-      loadAll();
+      setSync("live","Live sync connected • auto-updating");
+      syncFromServer({reason:"realtime",force:true});
     }else if(["CHANNEL_ERROR","TIMED_OUT","CLOSED"].includes(status)){
-      setSync("error","Realtime reconnecting…");
+      // Realtime can be suspended by iOS/background tabs. The polling path
+      // remains active and will re-hydrate every open device.
+      setSync("error","Realtime reconnecting • backup sync active");
+      syncFromServer({reason:"reconnect",force:true});
     }
   });
+
+  startCrossDeviceSync();
 }
 
 async function refreshRegistrations(){
@@ -3317,6 +3446,14 @@ function hideUnsavedScore(){
 }
 
 async function acquireScoreLock(type,id,{silent=false}={}){
+  if(state.scoreBackendState==="fallback"){
+    if(activeScore && activeScore.type===type && activeScore.id===id){
+      activeScore.lockToken="fallback-live-sync";
+      activeScore.hasLock=true;
+    }
+    return true;
+  }
+
   const token=scoreLockToken();
 
   try{
@@ -3379,6 +3516,7 @@ async function acquireScoreLock(type,id,{silent=false}={}){
 }
 
 async function releaseScoreLock(){
+  if(state.scoreBackendState==="fallback")return;
   if(!activeScore?.hasLock||!activeScore?.lockToken)return;
 
   const releasing={...activeScore};
@@ -3404,6 +3542,7 @@ function stopScoreHeartbeat(){
 function startScoreHeartbeat(){
   stopScoreHeartbeat();
 
+  if(state.scoreBackendState==="fallback")return;
   if(!activeScore?.hasLock)return;
 
   scoreHeartbeatTimer=setInterval(async()=>{
@@ -3455,6 +3594,68 @@ async function persistScoreState(m,previousState=null,pending=null){
   const payload=pending?.payload||scorePayload(m);
 
   setScoreSaving(true,"Saving…");
+
+  // Fallback mode keeps the tournament usable if the optional protected
+  // score-lock RPC bundle has not been installed yet. Writes still go to
+  // Supabase and therefore propagate to every device through Realtime + poll sync.
+  if(state.scoreBackendState==="fallback"){
+    try{
+      const table=m.type==="pool"?"pool_matches":"bracket_matches";
+      const patch=m.type==="pool"
+        ?{
+            score_a:Number(payload.score_a||0),
+            score_b:Number(payload.score_b||0),
+            final:!!payload.final,
+            locked:!!payload.locked,
+            score_revision:expectedRevision+1
+          }
+        :{
+            sets:Array.isArray(payload.sets)?payload.sets:[],
+            current_a:Number(payload.current_a||0),
+            current_b:Number(payload.current_b||0),
+            final:!!payload.final,
+            locked:!!payload.locked,
+            score_revision:expectedRevision+1
+          };
+
+      const q=await sb.from(table)
+        .update(patch)
+        .eq("id",m.id)
+        .eq("score_revision",expectedRevision)
+        .select("*")
+        .maybeSingle();
+
+      if(q.error)throw q.error;
+      if(!q.data)throw new Error("SCORE_REVISION_CONFLICT");
+
+      const next=m.type==="pool"?mapPool(q.data):mapBracket(q.data);
+      replaceScoreMatch(m.type,m.id,next);
+      if(activeScore?.type===m.type&&activeScore?.id===m.id){
+        m=scoreMatch()||next;
+      }
+
+      hideUnsavedScore();
+      setSync("live","Live sync connected • auto-updating");
+      return true;
+    }catch(error){
+      console.error("Fallback live score save:",error);
+      scorePendingSave={
+        type:m.type,
+        id:m.id,
+        operationId,
+        expectedRevision,
+        payload,
+        previousState:previousState?JSON.parse(JSON.stringify(previousState)):null
+      };
+      showUnsavedScore(
+        String(error?.message||"").includes("SCORE_REVISION_CONFLICT")
+          ?"Another device changed this score first. Use Reload Server Score before continuing."
+          :"This score is still shown on this phone, but Supabase did not confirm the save. Retry before continuing."
+      );
+      setSync("error","Score save needs retry");
+      return false;
+    }
+  }
 
   try{
     let {data,error}=await sb.rpc("score_save_match_state",{
@@ -4225,9 +4426,9 @@ function renderSchedule(){
     scoringNotice.innerHTML=
       '<strong>Checking live scoring…</strong> Verifying the protected score-lock system.';
   }else{
-    scoringNotice.className="scoring-readiness locked";
+    scoringNotice.className="scoring-readiness ready";
     scoringNotice.innerHTML=
-      '<strong>⚠ Live scoring needs backend repair.</strong> Tournament data is connected, but the protected scoring functions are not ready. Run the <b>v60 Bracket Auto-Advance SQL</b> in Supabase and reload.';
+      '<strong>✓ Live fallback scoring is active.</strong> Scores still save to the shared tournament database and auto-update on every device. For best results, use only one scorekeeper per match.';
   }
 
   root.appendChild(scoringNotice);
@@ -4269,9 +4470,9 @@ function renderSchedule(){
       btn.className="score-btn";
       btn.textContent=m.final?"View Score":"Keep Score";
 
-      if(!m.final && state.scoreBackendState!=="ready"){
+      if(!m.final && state.scoreBackendState==="checking"){
         btn.disabled=true;
-        btn.title="Protected scoring backend is not ready yet.";
+        btn.title="Checking live scoring…";
       }else{
         btn.onclick=()=>openScore("pool",m.id);
       }
@@ -4510,6 +4711,7 @@ function renderBracket(){
       card.appendChild(createRefRow(m,true));
 
       const foot=document.createElement("div");
+      foot.className="match-actions";
       foot.style.cssText=
         "padding:10px 12px;display:flex;justify-content:space-between;align-items:center;gap:8px";
 
@@ -5369,8 +5571,8 @@ function renderRuleSections(){
         :`$${perPlayer.toFixed(2)}`;
 
       items=items.map(item=>{
-        if(/\$\s*15\s*per player\s*\/\s*\$\s*60\s*per team/i.test(item)){
-          return `${perPlayerText} per player / $${fee} per team.`;
+        if(/\$\s*(?:15|25)\s*per player\s*\/\s*\$\s*(?:60|100)\s*per team/i.test(item)){
+          return `$${fee} per team / ${perPlayerText} per player.`;
         }
         return item;
       });
@@ -5521,7 +5723,7 @@ async function restoreRuleDefault(){
 
 function renderPaymentInfo(){
   const enabled=state.settings?.paymentEnabled!==false;
-  const fee=Math.max(0,Number(state.settings?.paymentTeamFee??60));
+  const fee=Math.max(0,Number(state.settings?.paymentTeamFee??100));
   const zelle=String(state.settings?.paymentZelle||"").trim();
   const cash=String(state.settings?.paymentCashText||"Cash can be paid at tournament check-in.").trim();
   const note=String(state.settings?.paymentNote||"Captain is responsible for the full team payment.").trim();
@@ -5570,7 +5772,7 @@ function renderPaymentInfo(){
     if(enabled){
       const perPlayer=fee/4;
       const perPlayerText=Number.isInteger(perPlayer)?`$${perPlayer}`:`$${perPlayer.toFixed(2)}`;
-      teamCapText.textContent=`${perPlayerText}/player • $${fee}/team`;
+      teamCapText.textContent=`$${fee}/team • ${perPlayerText}/player`;
     }else{
       teamCapText.textContent="FREE ENTRY • 4 players/team";
     }
@@ -5917,11 +6119,8 @@ async function openScore(type,id){
     return;
   }
 
-  if(state.scoreBackendState!=="ready"){
-    alert(
-      "Tournament data is connected, but protected scoring is not ready yet. Run the v60 tournament engine Bracket Auto-Advance SQL in Supabase, then reload this page."
-    );
-    return;
+  if(state.scoreBackendState==="checking"){
+    await checkScoreBackend();
   }
 
   const candidate=
@@ -6162,6 +6361,50 @@ async function autoAdvanceBracketSet(m){
   )return false;
 
   if(!isSetComplete(m))return false;
+
+  if(state.scoreBackendState==="fallback"){
+    const before=JSON.parse(JSON.stringify(m));
+    const completedSetNumber=(m.sets?.length||0)+1;
+    const completed={a:Number(m.currentA||0),b:Number(m.currentB||0)};
+    m.sets=[...(m.sets||[]),completed];
+    m.currentA=0;
+    m.currentB=0;
+
+    const wins=bracketSetWins(m);
+    if(wins.a>=2||wins.b>=2){
+      m.final=true;
+      m.locked=true;
+    }
+
+    setScoreSaving(true,`Locking Set ${completedSetNumber}…`);
+    const ok=await persistScoreState(m,before);
+    if(!ok)return false;
+
+    undoStack=[];
+    renderAll();
+    refreshScoreOverlay();
+
+    if(m.final){
+      setScoreSaving(false,"MATCH FINAL — LOCKED");
+      stopScoreHeartbeat();
+      await releaseScoreLock();
+      if(activeScore){
+        activeScore.hasLock=false;
+        activeScore.viewOnly=true;
+      }
+      $("scoreDeviceLock")?.classList.add("hidden");
+      await closeScore();
+      await syncFromServer({reason:"score-final",force:true});
+      renderAll();
+      return true;
+    }
+
+    const nextSet=(m.sets?.length||0)+1;
+    const nextTarget=nextSet===3?15:25;
+    setScoreSaving(false,`SET ${completedSetNumber} LOCKED • SET ${nextSet} TO ${nextTarget}`);
+    refreshScoreOverlay();
+    return true;
+  }
 
   const completedSetNumber=(m.sets?.length||0)+1;
   const operationId=scoreOperationId();
@@ -7708,13 +7951,13 @@ table,
 
 /* Mobile readability */
 @media(max-width:700px){
-  body{font-size:17px}
-  .tournament-cover-copy{font-size:19px!important}
-  .tournament-cover-verse{font-size:18px!important}
+  body{font-size:18px}
+  .tournament-cover-copy{font-size:20px!important}
+  .tournament-cover-verse{font-size:19px!important}
   .rule-card p,
   .rule-card li,
   .payment-line{
-    font-size:17px!important;
+    font-size:18px!important;
   }
   .tournament-details-panel,
   .panel{
@@ -7723,7 +7966,287 @@ table,
   .rule-card{
     padding:24px 20px!important;
   }
-  td{font-size:15px!important}
+  td{font-size:17px!important}
+}
+
+/* ================================================================
+   v14 ACCESSIBILITY + PHONE NAV PASS
+   Larger small text and a wrapped mobile navigation grid.
+   ================================================================ */
+
+/* Keep important editorial/UI text readable without zooming. */
+.wedding-nav-links a,
+.wedding-menu-button{
+  font-size:13px!important;
+}
+.nav button,
+.nav .admin{
+  font-size:13px!important;
+  line-height:1.25!important;
+}
+.type-kicker,
+.tournament-cover-kicker{
+  font-size:14px!important;
+  line-height:1.5!important;
+}
+.label,
+.form-field label,
+th,
+.match-head,
+.pool-badge,
+.sync,
+.pill{
+  font-size:13px!important;
+  line-height:1.35!important;
+}
+.primary,
+.score-btn,
+.small-btn,
+.ghost,
+button{
+  font-size:13px!important;
+  line-height:1.25!important;
+}
+.tournament-overview-card .label{
+  font-size:13px!important;
+}
+.tournament-overview-card .muted{
+  font-size:17px!important;
+  line-height:1.35!important;
+}
+
+@media(max-width:900px){
+  .wedding-menu-button{
+    min-height:44px;
+    padding:10px 14px!important;
+    font-size:14px!important;
+  }
+  .wedding-nav-links a{
+    width:100%;
+    padding:10px 0!important;
+    font-size:15px!important;
+  }
+
+  /* No horizontal scrolling/off-screen Admin button on phones. */
+  .nav{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
+    overflow:visible!important;
+    padding:10px!important;
+  }
+  .nav button{
+    width:100%!important;
+    min-width:0!important;
+    min-height:48px!important;
+    padding:10px 8px!important;
+    white-space:normal!important;
+    text-align:center!important;
+    font-size:15px!important;
+    line-height:1.2!important;
+    border:1px solid rgba(58,43,34,.14)!important;
+  }
+  .nav button.active{
+    border-color:var(--maroon)!important;
+  }
+  .nav .admin{
+    grid-column:1 / -1!important;
+    margin-left:0!important;
+    min-height:48px!important;
+    font-size:15px!important;
+  }
+
+  .type-kicker,
+  .tournament-cover-kicker{
+    font-size:15px!important;
+  }
+  .label,
+  .form-field label,
+  th,
+  .match-head,
+  .pool-badge,
+  .sync,
+  .pill{
+    font-size:14px!important;
+  }
+  .primary,
+  .score-btn,
+  .small-btn,
+  .ghost,
+  button{
+    font-size:14px!important;
+  }
+}
+
+@media(max-width:520px){
+  .shell{
+    width:min(100% - 22px,1200px)!important;
+  }
+  .tournament-cover-card{
+    padding-left:18px!important;
+    padding-right:18px!important;
+  }
+  .tournament-cover-title{
+    font-size:46px!important;
+  }
+  .script-heading,
+  .wedding-section-title h2,
+  .section-title h2,
+  .panel > h2{
+    font-size:42px!important;
+  }
+}
+
+
+/* ================================================================
+   v16 MOBILE BRACKET SPACING PASS
+   Keep every match-card section evenly padded and easy to scan.
+   ================================================================ */
+@media(max-width:700px){
+  #view-bracket .bracket-grid{
+    gap:34px!important;
+  }
+
+  #view-bracket .round{
+    gap:20px!important;
+  }
+
+  #view-bracket .round > h3{
+    margin:10px 0 4px!important;
+    font-size:32px!important;
+    line-height:1.1!important;
+  }
+
+  #view-bracket .match-card{
+    overflow:hidden!important;
+    margin:0!important;
+  }
+
+  #view-bracket .match-head{
+    min-height:58px!important;
+    padding:15px 18px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:14px!important;
+    font-size:14px!important;
+    line-height:1.3!important;
+  }
+
+  #view-bracket .match-team{
+    min-height:112px!important;
+    padding:20px 18px!important;
+    display:flex!important;
+    align-items:flex-start!important;
+    justify-content:space-between!important;
+    gap:18px!important;
+  }
+
+  #view-bracket .match-team strong{
+    display:block!important;
+    flex:1 1 auto!important;
+    min-width:0!important;
+    font-size:21px!important;
+    line-height:1.25!important;
+    font-weight:500!important;
+  }
+
+  #view-bracket .match-team > span:last-child{
+    flex:0 0 auto!important;
+    padding-top:2px!important;
+    font-size:20px!important;
+    line-height:1.25!important;
+  }
+
+  #view-bracket .team-captain-public{
+    margin-top:8px!important;
+    font-size:17px!important;
+    line-height:1.35!important;
+    font-weight:500!important;
+  }
+
+  #view-bracket .ref-row{
+    margin:0!important;
+    padding:18px!important;
+    min-height:88px!important;
+    border-top:1px dashed #e5ddd4!important;
+    display:grid!important;
+    grid-template-columns:auto minmax(0,1fr)!important;
+    column-gap:10px!important;
+    row-gap:5px!important;
+    align-items:start!important;
+    font-size:18px!important;
+    line-height:1.35!important;
+  }
+
+  #view-bracket .ref-row > span:first-child{
+    padding-top:1px!important;
+  }
+
+  #view-bracket .ref-row > strong{
+    display:block!important;
+    min-width:0!important;
+    font-size:18px!important;
+    line-height:1.35!important;
+    font-weight:500!important;
+  }
+
+  #view-bracket .ref-row .team-captain-public{
+    margin-top:7px!important;
+  }
+
+  #view-bracket .ref-select{
+    width:100%!important;
+    min-width:0!important;
+    padding:10px 11px!important;
+    font-size:17px!important;
+  }
+
+  #view-bracket .match-actions{
+    min-height:78px!important;
+    padding:16px 18px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:14px!important;
+    border-top:1px solid rgba(58,43,34,.08)!important;
+  }
+
+  #view-bracket .match-actions .pill{
+    min-height:44px!important;
+    padding:11px 14px!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+
+  #view-bracket .match-actions .score-btn{
+    min-height:48px!important;
+    min-width:150px!important;
+    padding:12px 18px!important;
+  }
+}
+
+@media(max-width:430px){
+  #view-bracket .match-head{
+    padding:14px 15px!important;
+    gap:10px!important;
+    font-size:13px!important;
+  }
+
+  #view-bracket .match-team,
+  #view-bracket .ref-row{
+    padding-left:15px!important;
+    padding-right:15px!important;
+  }
+
+  #view-bracket .match-actions{
+    padding:15px!important;
+  }
+
+  #view-bracket .match-actions .score-btn{
+    min-width:142px!important;
+  }
 }
 
 </style>

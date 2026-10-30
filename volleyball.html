@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="tim-dashia-site-build" content="v25-volleyball">
+<meta name="tim-dashia-site-build" content="v28-volleyball">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f2eee5">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -1710,6 +1710,7 @@ button,
 input[type="button"],
 input[type="submit"],
 input[type="reset"],
+.outline-button,
 .btn,
 .solid-button,
 .primary,
@@ -1734,6 +1735,7 @@ button:hover,
 input[type="button"]:hover,
 input[type="submit"]:hover,
 input[type="reset"]:hover,
+.outline-button:hover,
 .btn:hover,
 .solid-button:hover,
 .primary:hover,
@@ -3741,9 +3743,67 @@ async function persistScoreState(m,previousState=null,pending=null){
 
     if(error)throw error;
 
-    m.scoreRevision=Number(data?.score_revision ?? expectedRevision+1);
+    // v28: NEVER trust a score save only because the RPC returned "ok".
+    // Read the actual database row back before the scorer is allowed to move on.
+    // This prevents the scorekeeper from showing "finished" while the public
+    // Pool Schedule still has the old score.
+    const verifyTable=m.type==="pool"?"pool_matches":"bracket_matches";
+    const verifyQuery=await sb
+      .from(verifyTable)
+      .select("*")
+      .eq("id",m.id)
+      .maybeSingle();
+
+    if(verifyQuery.error)throw verifyQuery.error;
+    if(!verifyQuery.data)throw new Error("SCORE_SAVE_NOT_CONFIRMED");
+
+    const verified=m.type==="pool"
+      ?mapPool(verifyQuery.data)
+      :mapBracket(verifyQuery.data);
+
+    // Make sure the exact state we attempted to save is what Supabase now has.
+    if(m.type==="pool"){
+      const expectedA=Number(payload.score_a||0);
+      const expectedB=Number(payload.score_b||0);
+      const expectedFinal=!!payload.final;
+      const expectedLocked=!!payload.locked;
+
+      if(
+        verified.scoreA!==expectedA ||
+        verified.scoreB!==expectedB ||
+        verified.final!==expectedFinal ||
+        verified.locked!==expectedLocked
+      ){
+        throw new Error("SCORE_SAVE_NOT_CONFIRMED");
+      }
+    }else{
+      const expectedA=Number(payload.current_a||0);
+      const expectedB=Number(payload.current_b||0);
+      const expectedFinal=!!payload.final;
+      const expectedLocked=!!payload.locked;
+
+      if(
+        verified.currentA!==expectedA ||
+        verified.currentB!==expectedB ||
+        verified.final!==expectedFinal ||
+        verified.locked!==expectedLocked
+      ){
+        throw new Error("SCORE_SAVE_NOT_CONFIRMED");
+      }
+    }
+
+    replaceScoreMatch(m.type,m.id,verified);
+
+    // Keep the currently open scorer pointing at the now-confirmed server row.
+    m=scoreMatch()||verified;
+
     hideUnsavedScore();
-    setSync("live","Live sync connected");
+    setSync("live","Live sync connected • score confirmed");
+
+    if(m.type==="pool" && m.final){
+      setScoreSaving(false,`FINAL SAVED ✓  ${m.scoreA}–${m.scoreB}`);
+    }
+
     return true;
   }catch(error){
     console.error("Protected score save:",error);
@@ -3766,12 +3826,16 @@ async function persistScoreState(m,previousState=null,pending=null){
       return false;
     }
 
+    const notConfirmed=String(error?.message||"").includes("SCORE_SAVE_NOT_CONFIRMED");
+
     showUnsavedScore(
       lockLost
         ?"This phone no longer owns the match lock. Retry will attempt to reclaim it only if no other phone has taken the match."
         :conflict
           ?"The server score changed unexpectedly. Use Reload Server Score before continuing."
-          :"The last change is still shown on this phone, but the server did not confirm it. Retry before continuing."
+          :notConfirmed
+            ?"The scorer reached the new score, but Supabase did not return the same saved score. Do not leave this match yet — tap Retry Save."
+            :"The last change is still shown on this phone, but the server did not confirm it. Retry before continuing."
     );
 
     setSync("error","Score save needs retry");
@@ -3807,6 +3871,15 @@ async function retryPendingScoreSave(){
   refreshScoreOverlay();
 
   if(m.type==="pool" && m.final){
+    const confirmed=scoreMatch();
+
+    if(!confirmed?.final || !confirmed?.locked){
+      showUnsavedScore(
+        "Supabase still has not confirmed this final pool score. Keep this scorer open and retry."
+      );
+      return;
+    }
+
     stopScoreHeartbeat();
     await releaseScoreLock();
 
@@ -3816,7 +3889,8 @@ async function retryPendingScoreSave(){
     }
 
     $("scoreDeviceLock")?.classList.add("hidden");
-    setScoreSaving(false,"FINAL — match locked");
+    setScoreSaving(false,`FINAL SAVED ✓  ${confirmed.scoreA}–${confirmed.scoreB}`);
+    renderAll();
     await closeScore();
     renderAll();
     return;
@@ -6379,8 +6453,33 @@ async function increment(side,delta){
 
   if(!ok)return;
 
-  // Pool: final point locks the match and exits scoring.
+  // Pool: final point locks the match and exits scoring ONLY after the
+  // exact final score has been read back from Supabase.
   if(m.type==="pool" && m.final){
+    const confirmed=scoreMatch();
+
+    if(
+      !confirmed ||
+      !confirmed.final ||
+      !confirmed.locked ||
+      Number(confirmed.scoreA)!==Number(m.scoreA) ||
+      Number(confirmed.scoreB)!==Number(m.scoreB)
+    ){
+      scorePendingSave={
+        type:m.type,
+        id:m.id,
+        operationId:scoreOperationId(),
+        expectedRevision:Number(m.scoreRevision||0),
+        payload:scorePayload(m),
+        previousState:before
+      };
+      showUnsavedScore(
+        "The final point is visible on this phone, but the saved Pool Schedule score was not confirmed. Tap Retry Save before leaving this match."
+      );
+      setSync("error","Final score not confirmed");
+      return;
+    }
+
     stopScoreHeartbeat();
     await releaseScoreLock();
 
@@ -6390,10 +6489,16 @@ async function increment(side,delta){
     }
 
     $("scoreDeviceLock")?.classList.add("hidden");
-    setScoreSaving(false,"FINAL — match locked");
+    setScoreSaving(false,`FINAL SAVED ✓  ${confirmed.scoreA}–${confirmed.scoreB}`);
 
+    // Re-render the Pool Schedule/Standings from the confirmed server row
+    // before closing the score overlay.
     renderAll();
+
+    // Give the UI one frame to paint the confirmed result, then close.
+    await new Promise(resolve=>requestAnimationFrame(()=>resolve()));
     await closeScore();
+    renderAll();
     return;
   }
 

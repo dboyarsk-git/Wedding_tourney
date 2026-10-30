@@ -1,0 +1,72 @@
+TIM & DASHIA WEDDING + VOLLEYBALL TOURNEY — v17
+================================================
+
+WHAT IS ALREADY WIRED IN
+------------------------
+The tournament page is already connected to your Supabase project using your
+browser-safe Supabase Project URL + publishable key.
+
+The website includes:
+- Live Supabase tournament data
+- Realtime cross-device updates + backup refresh syncing
+- Team registration
+- Admin team/payment/check-in controls
+- Pool schedule + standings
+- Bracket + scoring
+- Scoring locks / conflict protection when the protected backend is installed
+- Bracket auto-advance support
+- $100 per team / $25 per player
+- Larger mobile-readable text
+- Clean mobile bracket spacing
+
+GITHUB — WHAT TO UPLOAD
+-----------------------
+1. Open the WEBSITE_UPLOAD folder in this ZIP.
+2. Upload ALL files inside WEBSITE_UPLOAD directly to the ROOT of your
+   Wedding_tourney GitHub repository.
+3. Replace the old files when GitHub asks.
+4. Commit to main.
+5. GitHub Pages should stay set to: main / (root)
+
+DO NOT upload the SUPABASE_SETUP folder to GitHub.
+Those files are for Supabase Dashboard -> SQL Editor only.
+
+SUPABASE — IMPORTANT
+--------------------
+If the site loads teams/data and Keep Score opens normally, you do NOT need to
+rerun the full backend SQL.
+
+If you see the message that protected scoring / v60 is not ready:
+- Run: 03_RUN_THIS_IN_SUPABASE_v60_BRACKET_AUTO_ADVANCE.sql
+- Then run: 05_WEDDING_TOURNEY_v17_SETTINGS.sql
+- Reload the website.
+
+If the Supabase project is missing the base tournament tables/functions entirely,
+run these IN ORDER:
+1. 01_ONE_WAY_v54_MASTER_SUPABASE_RUN_THIS.sql
+2. 02_RUN_THIS_IN_SUPABASE_v58.sql
+3. 03_RUN_THIS_IN_SUPABASE_v60_BRACKET_AUTO_ADVANCE.sql
+4. 05_WEDDING_TOURNEY_v17_SETTINGS.sql
+
+WARNING: the v58 migration resets match SCORES because it changes the scoring
+format. It preserves registrations, teams, pool assignments, check-in/payment,
+captain info, prize settings, and editable rule settings.
+
+Optional ceremony RSVP database setup:
+- 04_RUN_THIS_IN_SUPABASE_WEDDING_RSVP.sql
+
+SUPABASE SECURITY NOTE
+----------------------
+Only the browser-safe publishable key is embedded in volleyball.html.
+No Supabase service_role / secret key belongs in GitHub or in browser HTML.
+
+
+V18 IMPORTANT FIX
+-----------------
+The tournament page is connected to the WORKING tournament Supabase project:
+  https://uygotksjyqusbdoepzft.supabase.co
+
+This restores the live teams, schedule, standings, bracket, scoring, and cross-device sync that were visible before v17.
+The other Supabase project (kxivjgzwwabmdiisbzyy) is NOT used by volleyball.html because it is not the live tournament backend.
+
+If the live-data guard still appears after upload, hard-refresh the browser / clear the GitHub Pages cache and verify the v18 volleyball.html was uploaded.

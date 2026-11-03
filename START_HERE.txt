@@ -137,3 +137,15 @@ V30 — EDIT EXISTING GUEST NAMES
 2. Upload WEBSITE_UPLOAD/rsvp.html (or all WEBSITE_UPLOAD files) to GitHub.
 3. Guest List Admin now shows each invited guest in an editable name field with Save Name.
 4. Correcting a name preserves that guest's existing RSVP attendance/status.
+
+
+V31 — AUTOMATED RSVP CONFIRMATION EMAILS
+Read EMAIL_SETUP_IPAD.txt.
+Upload WEBSITE_UPLOAD to GitHub, run SQL 13, create the send-rsvp-confirmation Edge Function, and add Resend/Amazon secrets.
+The invitation image is included at WEBSITE_UPLOAD/assets/tim-dashia-invitation.jpg.
+RSVP data saves before email sending, so an email-provider failure cannot erase the RSVP.
+
+
+V32 — AMAZON REGISTRY LINK ADDED
+Registry URL: https://www.amazon.com/wedding/share/Tim_Dashia
+The confirmation email's View Amazon Registry button now points to this link by default.

@@ -1,0 +1,77 @@
+TIM & DASHIA — RSVP CONFIRMATION EMAIL SETUP (v31)
+
+WHAT THIS DOES
+- RSVP saves to Supabase first.
+- If the party entered an email, the website calls a Supabase Edge Function.
+- The Edge Function sends a confirmation through Resend.
+- The email includes:
+  • your invitation image
+  • attending / declined names
+  • confirmation code
+  • View Amazon Registry button
+  • View / Update RSVP button
+
+IMPORTANT
+The RSVP itself is NOT lost if email sending fails.
+
+A. WEBSITE
+Upload everything inside WEBSITE_UPLOAD to the ROOT of your GitHub Wedding_tourney repo.
+Make sure this new image exists after deployment:
+https://dboyarsk-git.github.io/Wedding_tourney/assets/tim-dashia-invitation.jpg
+
+B. SQL
+In Supabase > SQL Editor, run:
+13_WEDDING_RSVP_v31_EMAIL_SUPPORT.sql
+
+If First Name + Last Initial lookup is still missing, also run:
+14_WEDDING_RSVP_NAME_LOOKUP_REPAIR.sql
+
+C. RESEND ACCOUNT
+1. Create/sign into a Resend account.
+2. Create an API key.
+3. For real guest emails, verify a domain you own.
+   Resend's onboarding address is fine for initial testing, but production sending
+   to arbitrary wedding guests needs a verified sender domain.
+
+D. SUPABASE EDGE FUNCTION — IPAD / BROWSER METHOD
+1. In Supabase Dashboard, open Edge Functions.
+2. Choose Deploy a new function > Via Editor.
+3. Name it exactly:
+   send-rsvp-confirmation
+4. Replace the starter code with the contents of:
+   EDGE_FUNCTIONS/send-rsvp-confirmation/index.ts
+5. Turn OFF JWT verification for this function.
+   The function verifies each invitation using its private lookup token.
+6. Deploy the function.
+
+E. EDGE FUNCTION SECRETS
+In Supabase > Edge Functions > Secrets, add:
+
+RESEND_API_KEY
+  Your Resend API key.
+
+RSVP_FROM_EMAIL
+  Example after domain verification:
+  Tim & Dashia <rsvp@yourdomain.com>
+
+AMAZON_REGISTRY_URL
+  https://www.amazon.com/wedding/share/Tim_Dashia
+
+RSVP_PAGE_URL
+  https://dboyarsk-git.github.io/Wedding_tourney/rsvp.html
+
+INVITATION_IMAGE_URL
+  https://dboyarsk-git.github.io/Wedding_tourney/assets/tim-dashia-invitation.jpg
+
+You can change the Amazon Registry URL later in Secrets without changing the website code.
+
+F. TEST
+1. RSVP using an invitation that has your own email address.
+2. Submit the RSVP.
+3. The confirmation page should say:
+   Confirmation email sent to [email] ✓
+4. Check Resend's dashboard if it does not arrive.
+
+NOTE ABOUT PHONE-ONLY RSVPs
+The RSVP form still allows a phone number instead of email.
+If no email is entered, the RSVP saves normally but no email can be sent.

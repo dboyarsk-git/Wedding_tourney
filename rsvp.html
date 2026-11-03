@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="tim-dashia-site-build" content="v30-rsvp">
+<meta name="tim-dashia-site-build" content="v33-rsvp">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#efe4d3">
 <title>RSVP · Tim & Dashia</title>
@@ -282,7 +282,7 @@ input[type="submit"]:disabled {
 
     <div class="contact-update">
       <div class="section-title" style="font-size:38px">Contact &amp; mailing info</div>
-      <p class="section-copy" style="margin-bottom:18px">Add <b>one email address or phone number</b> for your whole party so we can contact you about the wedding. You can enter both if you want.</p>
+      <p class="section-copy" style="margin-bottom:18px">After your invitation is found, add <b>one email address or phone number</b> for your party. This contact information is <b>not used to find your invitation</b>. If you enter an email, we can send your RSVP confirmation there.</p>
       <div class="form-grid">
         <div class="field">
           <label for="contactEmail">Party Email</label>
@@ -492,18 +492,60 @@ async function submitRsvp(){
     invitation.guests=(invitation.guests||[]).map(g=>({...g,attendance:guestResponses.find(x=>x.id===g.id)?.attendance||g.attendance}));
     invitation.plus_ones=(invitation.plus_ones||[]).map(p=>{const x=plusResponses.find(y=>y.id===p.id);return {...p,attendance:x?.attendance||p.attendance,guest_name:x?.guest_name||""};});
     invitation.already_submitted=true;invitation.confirmation_code=data?.confirmation_code||invitation.confirmation_code;
-    renderSuccess();$("rsvpCard").classList.add("hidden");$("successCard").classList.remove("hidden");$("successCard").scrollIntoView({behavior:"smooth",block:"start"});
+
+    let emailResult={sent:false,skipped:false};
+    if(partyEmail){
+      msg.textContent="RSVP saved ✓ Sending your confirmation email…";
+      try{
+        const {data:mailData,error:mailError}=await sb.functions.invoke("send-rsvp-confirmation",{
+          body:{
+            invitation_id:invitation.invitation_id,
+            lookup_token:invitation.lookup_token
+          }
+        });
+        if(mailError)throw mailError;
+        emailResult={
+          sent:!!mailData?.sent,
+          skipped:!!mailData?.skipped,
+          email:mailData?.email||partyEmail,
+          reason:mailData?.reason||""
+        };
+      }catch(mailError){
+        console.warn("RSVP confirmation email failed:",mailError);
+        emailResult={sent:false,email:partyEmail,reason:"send_failed"};
+      }
+    }else{
+      emailResult={sent:false,skipped:true,reason:"no_email"};
+    }
+
+    renderSuccess(emailResult);
+    $("rsvpCard").classList.add("hidden");
+    $("successCard").classList.remove("hidden");
+    $("successCard").scrollIntoView({behavior:"smooth",block:"start"});
   }catch(e){console.error(e);msg.textContent=e.message||"Your RSVP could not be saved. Please try again.";}
   finally{$("submitRsvpBtn").disabled=false;}
 }
 
-function renderSuccess(){
+function renderSuccess(emailResult={}){
   const yes=[],no=[];
   (invitation.guests||[]).forEach(g=>(g.attendance==="yes"?yes:no).push(g.full_name));
   (invitation.plus_ones||[]).forEach(p=>{if(p.attendance==="yes")yes.push(p.guest_name||"Guest");else no.push(`Plus-One ${p.slot_number||""}`);});
   $("attendingList").innerHTML=yes.length?yes.map(n=>`<li>${escapeHtml(n)}</li>`).join(""):"<li>None</li>";
   $("declinedList").innerHTML=no.length?no.map(n=>`<li>${escapeHtml(n)}</li>`).join(""):"<li>None</li>";
   $("successCode").textContent=`Confirmation: ${invitation.confirmation_code||"Saved"}`;
+
+  const emailStatus=$("confirmationEmailStatus");
+  if(emailStatus){
+    if(emailResult.sent){
+      emailStatus.textContent=`Confirmation email sent to ${emailResult.email||"your party email"} ✓`;
+    }else if(emailResult.reason==="no_email"){
+      emailStatus.textContent="Your RSVP is saved. No email confirmation was sent because no email address was entered.";
+    }else if(emailResult.skipped){
+      emailStatus.textContent="Your RSVP is saved. A confirmation email was already sent for this RSVP.";
+    }else{
+      emailStatus.textContent="Your RSVP is saved ✓ The confirmation email could not be sent right now, but your RSVP is not lost.";
+    }
+  }
 }
 
 // ---------------- Admin ----------------

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="tim-dashia-site-build" content="v33-rsvp">
+<meta name="tim-dashia-site-build" content="v36-rsvp">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#efe4d3">
 <title>RSVP · Tim & Dashia</title>
@@ -221,6 +221,54 @@ input[type="submit"]:disabled {
 @media(max-width:800px){#lookupCard .lookup-grid{grid-template-columns:1fr}#lookupCard .lookup-note{grid-column:auto}}
 </style>
 
+
+<style id="v36-rsvp-controls-admin">
+/* v36 — RSVP selected state: page background + maroon rim */
+.choice{display:flex;gap:10px;width:auto}
+.choice button{
+  min-width:82px !important;
+  min-height:48px !important;
+  background:var(--maroon) !important;
+  color:#fff !important;
+  border:2px solid var(--maroon) !important;
+  box-shadow:none !important;
+  transition:background .15s ease,color .15s ease,box-shadow .15s ease,transform .08s ease;
+}
+.choice button:active{transform:translateY(1px)}
+.choice button.selected,
+.choice button.selected.yes,
+.choice button.selected.no{
+  background:var(--cream2) !important;
+  color:var(--maroon) !important;
+  border-color:var(--maroon) !important;
+  box-shadow:inset 0 0 0 1px var(--maroon) !important;
+}
+.choice button.selected::before{content:"✓ ";font-weight:700}
+
+.admin-house-edit{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;margin-bottom:7px}
+.admin-house-edit .input{font:600 22px var(--serif);padding:7px 9px;min-height:42px}
+.admin-card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.admin-guest-edit-row{grid-template-columns:minmax(0,1fr) auto auto auto !important}
+.admin-person-plus{
+  width:42px !important;min-width:42px !important;height:42px !important;min-height:42px !important;
+  padding:0 !important;border-radius:50% !important;font-size:21px !important;line-height:1 !important;
+}
+.admin-remove-person{padding:8px 10px !important;min-height:42px !important}
+.admin-attached-plus{margin:5px 0 10px 14px;padding:8px 10px;border-left:2px solid rgba(107,31,42,.42);background:rgba(239,228,211,.55);font-size:14px}
+.admin-attached-plus-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:4px 0}
+.admin-add-guest{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;margin-top:14px;padding-top:12px;border-top:1px dashed rgba(170,149,125,.65)}
+.admin-card-note{font-size:14px;color:#756456;margin-top:8px}
+.admin-reset{background:var(--cream2) !important;color:var(--maroon) !important;border-color:var(--maroon) !important}
+@media(max-width:600px){
+  .choice{width:100%}.choice button{flex:1 !important;min-width:0 !important}
+  .admin-guest-edit-row{grid-template-columns:minmax(0,1fr) auto auto !important}
+  .admin-guest-save{grid-column:1/-1;width:100%}
+  .admin-guest-attendance{grid-column:1/-1 !important;order:5 !important}
+  .admin-house-edit,.admin-add-guest{grid-template-columns:1fr}
+  .admin-house-edit button,.admin-add-guest button{width:100%}
+}
+</style>
+
 </head>
 <body>
 <header class="site-header">
@@ -315,7 +363,7 @@ input[type="submit"]:disabled {
   <section id="successCard" class="paper-card taped hidden">
     <div class="step-label">All Done</div>
     <div class="section-title">You’re all set ♡</div>
-    <p class="section-copy">Your RSVP has been saved. You can come back later using the same name and contact information if you need to update your response.</p>
+    <p class="section-copy">Your RSVP has been saved. You can come back later using the same first name and last initial if you need to update your response.</p>
     <div class="summary-grid">
       <div class="summary-box"><h3>Attending</h3><ul id="attendingList"></ul></div>
       <div class="summary-box"><h3>Unable to attend</h3><ul id="declinedList"></ul></div>
@@ -329,19 +377,17 @@ input[type="submit"]:disabled {
   <section id="adminPanel" class="admin-panel hidden">
     <div class="step-label">Private Admin</div>
     <div class="section-title">Wedding guest list</div>
-    <p class="section-copy">Add each household/invitation once. You can also correct the spelling or capitalization of any existing guest name below without deleting their RSVP.</p>
+    <p class="section-copy">Add each household/invitation once. Edit individual names, add or remove guests, attach a plus-one to a specific person, or reset a household for testing without deleting the invitation.</p>
 
     <div id="adminStats" class="stats"></div>
 
     <div class="admin-grid">
       <div class="field"><label for="adminHousehold">Invitation / Household Name</label><input class="input" id="adminHousehold" placeholder="Smith Family"></div>
       <div class="field"><label for="adminPrimary">Primary Contact Name</label><input class="input" id="adminPrimary" placeholder="John Smith"></div>
-      <div class="field"><label for="adminEmail">Email</label><input class="input" id="adminEmail" type="email"></div>
-      <div class="field"><label for="adminPhone">Phone</label><input class="input" id="adminPhone" type="tel"></div>
-      <div class="field full"><label for="adminAddress">Mailing Address</label><textarea id="adminAddress"></textarea></div>
-      <div class="field"><label for="adminPlus">Plus-Ones Allowed</label><select id="adminPlus"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></div>
+      <div class="field full"><label for="adminAddress">Mailing Address <span style="text-transform:none;font-weight:400">(optional)</span></label><textarea id="adminAddress"></textarea></div>
       <div class="field full"><label for="adminGuests">Invited Guest Names — one per line</label><textarea id="adminGuests" placeholder="John Smith&#10;Sarah Smith&#10;Emily Smith"></textarea></div>
     </div>
+    <div class="help" style="margin-top:10px">No phone or email is needed to create an invitation. Guests find their invitation with First Name + Last Initial. Add a plus-one later with the small <b>+</b> beside that specific guest.</div>
     <div id="adminMessage" class="help" style="margin-top:12px"></div>
     <div class="actions"><button class="btn" id="adminAddBtn">Add Invitation</button><button class="btn ghost" id="adminRefreshBtn">Refresh List</button><button class="btn ghost" id="adminExitBtn">Exit Admin</button></div>
     <div id="adminList" class="admin-list"></div>
@@ -436,7 +482,10 @@ function makeChoice(target,attendance){
   target.dataset.attendance=attendance;
   target.querySelectorAll("button[data-choice]").forEach(btn=>{
     const selected=btn.dataset.choice===attendance;
-    btn.classList.toggle("selected",selected);btn.classList.toggle("yes",selected&&attendance==="yes");btn.classList.toggle("no",selected&&attendance==="no");
+    btn.classList.toggle("selected",selected);
+    btn.classList.toggle("yes",selected&&attendance==="yes");
+    btn.classList.toggle("no",selected&&attendance==="no");
+    btn.setAttribute("aria-pressed",selected?"true":"false");
   });
   const input=target.querySelector(".plus-name input");
   if(input){target.querySelector(".plus-name").classList.toggle("hidden",attendance!=="yes");if(attendance!=="yes")input.value="";}
@@ -444,24 +493,61 @@ function makeChoice(target,attendance){
 
 function choiceButtons(row,current){
   const wrap=document.createElement("div");wrap.className="choice";
-  ["yes","no"].forEach(value=>{const b=document.createElement("button");b.type="button";b.dataset.choice=value;b.textContent=value==="yes"?"Yes ♡":"No";b.addEventListener("click",()=>makeChoice(row,value));wrap.appendChild(b);});
-  row.appendChild(wrap);if(current==="yes"||current==="no")makeChoice(row,current);
+  ["yes","no"].forEach(value=>{
+    const b=document.createElement("button");
+    b.type="button";
+    b.dataset.choice=value;
+    b.setAttribute("aria-pressed","false");
+    b.textContent=value==="yes"?"Yes ♡":"No";
+    b.addEventListener("click",()=>makeChoice(row,value));
+    wrap.appendChild(b);
+  });
+  row.appendChild(wrap);
+  if(current==="yes"||current==="no")makeChoice(row,current);
 }
 
 function renderInvitation(){
   $("householdName").textContent=invitation.household_name||"Your Invitation";
   $("existingCode").textContent=invitation.already_submitted?`Existing RSVP • ${invitation.confirmation_code||""}`:"";
-  $("contactEmail").value=invitation.contact_email||"";$("contactPhone").value=invitation.contact_phone||"";$("mailingAddress").value=invitation.mailing_address||"";$("guestMessage").value=invitation.message||"";
+  $("contactEmail").value=invitation.contact_email||"";
+  $("contactPhone").value=invitation.contact_phone||"";
+  $("mailingAddress").value=invitation.mailing_address||"";
+  $("guestMessage").value=invitation.message||"";
   const box=$("guestRows");box.innerHTML="";
+  const plusOnes=[...(invitation.plus_ones||[])];
+
+  function appendPlusOne(p,hostName=""){
+    const row=document.createElement("div");
+    row.className="guest-row";
+    row.dataset.kind="plus";
+    row.dataset.id=p.id;
+    row.dataset.attendance=p.attendance||"pending";
+    const name=document.createElement("div");
+    name.className="guest-name";
+    name.textContent=hostName?`Plus-One for ${hostName}`:`Guest / Plus-One ${p.slot_number||""}`;
+    row.appendChild(name);
+    choiceButtons(row,p.attendance);
+    const field=document.createElement("div");
+    field.className="plus-name field"+(p.attendance==="yes"?"":" hidden");
+    field.innerHTML=`<label>Guest Name</label><input class="input" value="${escapeHtml(p.guest_name||"")}" placeholder="First & Last Name">`;
+    row.appendChild(field);
+    box.appendChild(row);
+  }
+
   (invitation.guests||[]).forEach(g=>{
-    const row=document.createElement("div");row.className="guest-row";row.dataset.kind="guest";row.dataset.id=g.id;row.dataset.attendance=g.attendance||"pending";
-    const name=document.createElement("div");name.className="guest-name";name.textContent=g.full_name;row.appendChild(name);choiceButtons(row,g.attendance);box.appendChild(row);
+    const row=document.createElement("div");
+    row.className="guest-row";
+    row.dataset.kind="guest";
+    row.dataset.id=g.id;
+    row.dataset.attendance=g.attendance||"pending";
+    const name=document.createElement("div");name.className="guest-name";name.textContent=g.full_name;
+    row.appendChild(name);
+    choiceButtons(row,g.attendance);
+    box.appendChild(row);
+    plusOnes.filter(p=>p.host_guest_id===g.id).forEach(p=>appendPlusOne(p,g.full_name));
   });
-  (invitation.plus_ones||[]).forEach(p=>{
-    const row=document.createElement("div");row.className="guest-row";row.dataset.kind="plus";row.dataset.id=p.id;row.dataset.attendance=p.attendance||"pending";
-    const name=document.createElement("div");name.className="guest-name";name.textContent=`Guest / Plus-One ${p.slot_number||""}`;row.appendChild(name);choiceButtons(row,p.attendance);
-    const field=document.createElement("div");field.className="plus-name field"+(p.attendance==="yes"?"":" hidden");field.innerHTML=`<label>Guest Name</label><input class="input" value="${escapeHtml(p.guest_name||"")}" placeholder="First & Last Name">`;row.appendChild(field);box.appendChild(row);
-  });
+
+  plusOnes.filter(p=>!p.host_guest_id).forEach(p=>appendPlusOne(p,p.host_guest_name||""));
 }
 function escapeHtml(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");}
 
@@ -566,11 +652,26 @@ async function refreshAdmin(){if(!adminCode)return;const {data,error}=await sb.r
 $("adminAddBtn").onclick=async()=>{
   if(!adminCode)return;
   const names=$("adminGuests").value.split(/\n+/).map(s=>s.trim()).filter(Boolean);
-  const args={p_code:adminCode,p_household_name:$("adminHousehold").value.trim(),p_primary_contact_name:$("adminPrimary").value.trim(),p_contact_email:$("adminEmail").value.trim(),p_contact_phone:$("adminPhone").value.trim(),p_mailing_address:$("adminAddress").value.trim(),p_plus_ones_allowed:Number($("adminPlus").value||0),p_guest_names:names};
-  $("adminAddBtn").disabled=true;$("adminMessage").textContent="Adding invitation…";
-  try{const {data,error}=await sb.rpc("admin_create_wedding_invitation",args);if(error)throw error;$("adminMessage").textContent=`Added! Confirmation code: ${data?.confirmation_code||"created"}`;["adminHousehold","adminPrimary","adminEmail","adminPhone","adminAddress","adminGuests"].forEach(id=>$(id).value="");$("adminPlus").value="0";await refreshAdmin();}
-  catch(e){$("adminMessage").textContent=e.message||"Could not add invitation.";}
-  finally{$("adminAddBtn").disabled=false;}
+  const args={
+    p_code:adminCode,
+    p_household_name:$("adminHousehold").value.trim(),
+    p_primary_contact_name:$("adminPrimary").value.trim(),
+    p_mailing_address:$("adminAddress").value.trim(),
+    p_guest_names:names
+  };
+  $("adminAddBtn").disabled=true;
+  $("adminMessage").textContent="Adding invitation…";
+  try{
+    const {data,error}=await sb.rpc("admin_create_wedding_invitation_simple",args);
+    if(error)throw error;
+    $("adminMessage").textContent=`Added! Confirmation code: ${data?.confirmation_code||"created"}`;
+    ["adminHousehold","adminPrimary","adminAddress","adminGuests"].forEach(id=>$(id).value="");
+    await refreshAdmin();
+  }catch(e){
+    $("adminMessage").textContent=e.message||"Could not add invitation.";
+  }finally{
+    $("adminAddBtn").disabled=false;
+  }
 };
 
 function renderAdminList(items){
@@ -589,56 +690,72 @@ function renderAdminList(items){
     const card=document.createElement("div");
     card.className="admin-card";
 
-    const plusText=(i.plus_ones||[])
-      .map(p=>`Plus-One ${p.slot_number}: ${escapeHtml(p.guest_name||"unnamed")} — ${escapeHtml(p.attendance)}`)
-      .join("<br>");
+    const attachedByGuest=new Map();
+    const unattached=[];
+    (i.plus_ones||[]).forEach(p=>{
+      if(p.host_guest_id){
+        if(!attachedByGuest.has(p.host_guest_id))attachedByGuest.set(p.host_guest_id,[]);
+        attachedByGuest.get(p.host_guest_id).push(p);
+      }else unattached.push(p);
+    });
 
-    const guestEditors=(i.guests||[]).map(g=>`
-      <div class="admin-guest-edit-row">
-        <input
-          class="input"
-          type="text"
-          value="${escapeHtml(g.full_name)}"
-          data-guest-name-input="${g.id}"
-          aria-label="Edit ${escapeHtml(g.full_name)}"
-        >
-        <span class="admin-guest-attendance">${escapeHtml(g.attendance||"pending")}</span>
-        <button
-          class="btn admin-guest-save"
-          type="button"
-          data-save-guest-name="${g.id}"
-        >Save Name</button>
+    const guestEditors=(i.guests||[]).map(g=>{
+      const attached=(attachedByGuest.get(g.id)||[]).map(p=>`
+        <div class="admin-attached-plus-row">
+          <span>+1 for ${escapeHtml(g.full_name)}${p.guest_name?`: ${escapeHtml(p.guest_name)}`:""} — ${escapeHtml(p.attendance||"pending")}</span>
+          <button class="btn ghost admin-remove-person" type="button" data-remove-plus="${p.id}">Remove +1</button>
+        </div>
+      `).join("");
+
+      return `
+        <div class="admin-guest-edit-row">
+          <input class="input" type="text" value="${escapeHtml(g.full_name)}" data-guest-name-input="${g.id}" aria-label="Edit ${escapeHtml(g.full_name)}">
+          <button class="btn admin-person-plus" type="button" title="Add a plus-one for ${escapeHtml(g.full_name)}" aria-label="Add a plus-one for ${escapeHtml(g.full_name)}" data-add-plus="${g.id}">+</button>
+          <button class="btn ghost admin-remove-person" type="button" data-remove-guest="${g.id}">Remove</button>
+          <button class="btn admin-guest-save" type="button" data-save-guest-name="${g.id}">Save Name</button>
+          <span class="admin-guest-attendance">RSVP: ${escapeHtml(g.attendance||"pending")}</span>
+        </div>
+        ${attached?`<div class="admin-attached-plus">${attached}</div>`:""}
+      `;
+    }).join("");
+
+    const legacyPlus=unattached.map(p=>`
+      <div class="admin-attached-plus-row">
+        <span>Household +1 ${p.slot_number}${p.guest_name?`: ${escapeHtml(p.guest_name)}`:""} — ${escapeHtml(p.attendance||"pending")}</span>
+        <button class="btn ghost admin-remove-person" type="button" data-remove-plus="${p.id}">Remove +1</button>
       </div>
     `).join("");
 
     card.innerHTML=`
-      <div class="admin-card-head">
-        <div>
-          <div class="admin-house">${escapeHtml(i.household_name)}</div>
-          <div class="admin-meta">
-            ${escapeHtml(i.primary_contact_name)}
-            ${i.contact_email||i.contact_phone ? ` • ${escapeHtml(i.contact_email||i.contact_phone)}` : ""}
-            <br>${escapeHtml(i.confirmation_code||"")}
-          </div>
-        </div>
-        <button class="btn danger" data-delete="${i.id}" type="button">Delete</button>
+      <div class="admin-house-edit">
+        <input class="input" data-household-input="${i.id}" value="${escapeHtml(i.household_name)}" aria-label="Edit invitation name">
+        <button class="btn" type="button" data-save-household="${i.id}">Save Invitation Name</button>
+      </div>
+      <div class="admin-meta">
+        Primary: ${escapeHtml(i.primary_contact_name)}<br>
+        ${escapeHtml(i.confirmation_code||"")}
       </div>
 
       <div class="admin-status-pills">
-        <span class="pill ${i.rsvp_submitted_at?'yes':'pending'}">
-          ${i.rsvp_submitted_at?'RSVP received':'Awaiting RSVP'}
-        </span>
-        <span class="pill">
-          ${i.plus_ones_allowed||0} plus-one${Number(i.plus_ones_allowed||0)===1?'':'s'}
-        </span>
+        <span class="pill ${i.rsvp_submitted_at?'yes':'pending'}">${i.rsvp_submitted_at?'RSVP received':'Awaiting RSVP'}</span>
+        <span class="pill">${(i.plus_ones||[]).length} plus-one${(i.plus_ones||[]).length===1?'':'s'}</span>
       </div>
+
+      <div class="admin-card-actions">
+        <button class="btn admin-reset" type="button" data-reset-rsvp="${i.id}">Reset RSVP for Testing</button>
+        <button class="btn danger" data-delete="${i.id}" type="button">Delete Entire Invitation</button>
+      </div>
+      <div class="admin-card-note">Reset only clears Yes/No responses and submitted status. It keeps the household, invited names, plus-one permissions, and mailing information.</div>
 
       <div class="admin-guest-editor">
-        <div class="admin-guest-editor-title">Edit Invited Names</div>
+        <div class="admin-guest-editor-title">Edit Invited People</div>
         ${guestEditors || '<div class="admin-meta">No named guests on this invitation.</div>'}
+        ${legacyPlus?`<div class="admin-attached-plus"><b>Existing household plus-ones</b>${legacyPlus}</div>`:""}
+        <div class="admin-add-guest">
+          <input class="input" type="text" data-add-guest-input="${i.id}" placeholder="Add another invited person">
+          <button class="btn" type="button" data-add-guest="${i.id}">+ Add Guest</button>
+        </div>
       </div>
-
-      ${plusText?`<div class="admin-meta" style="margin-top:12px">${plusText}</div>`:""}
     `;
 
     list.appendChild(card);
@@ -651,50 +768,95 @@ function renderAdminList(items){
     <div class="stat"><strong>${responded}</strong><span>RSVPs In</span></div>
   `;
 
-  list.querySelectorAll("[data-save-guest-name]").forEach(btn=>{
-    btn.onclick=async()=>{
-      if(!adminCode)return;
-      const guestId=btn.dataset.saveGuestName;
-      const input=list.querySelector(`[data-guest-name-input="${guestId}"]`);
-      const newName=(input?.value||"").trim();
+  list.querySelectorAll("[data-save-household]").forEach(btn=>btn.onclick=async()=>{
+    const id=btn.dataset.saveHousehold;
+    const input=list.querySelector(`[data-household-input="${id}"]`);
+    const value=(input?.value||"").trim();
+    if(value.length<2){alert("Enter the invitation / household name.");return;}
+    btn.disabled=true;
+    try{
+      const {error}=await sb.rpc("admin_update_wedding_household_name",{p_code:adminCode,p_invitation_id:id,p_household_name:value});
+      if(error)throw error;
+      $("adminMessage").textContent="Invitation name updated ✓";
+      await refreshAdmin();
+    }catch(e){alert(e.message||"Could not update invitation name.");btn.disabled=false;}
+  });
 
-      if(newName.length<2){
-        alert("Enter the corrected guest name first.");
-        return;
-      }
+  list.querySelectorAll("[data-save-guest-name]").forEach(btn=>btn.onclick=async()=>{
+    const guestId=btn.dataset.saveGuestName;
+    const input=list.querySelector(`[data-guest-name-input="${guestId}"]`);
+    const newName=(input?.value||"").trim();
+    if(newName.length<2){alert("Enter the corrected guest name first.");return;}
+    btn.disabled=true;
+    try{
+      const {data,error}=await sb.rpc("admin_update_wedding_guest_name",{p_code:adminCode,p_guest_id:guestId,p_full_name:newName});
+      if(error)throw error;
+      $("adminMessage").textContent=`Name updated to ${data?.full_name||newName} ✓`;
+      await refreshAdmin();
+    }catch(e){alert(e.message||"Could not update this guest name.");btn.disabled=false;}
+  });
 
-      const original=btn.textContent;
-      btn.disabled=true;
-      btn.textContent="Saving…";
+  list.querySelectorAll("[data-add-plus]").forEach(btn=>btn.onclick=async()=>{
+    btn.disabled=true;
+    try{
+      const {data,error}=await sb.rpc("admin_add_plus_one_for_guest",{p_code:adminCode,p_guest_id:btn.dataset.addPlus});
+      if(error)throw error;
+      $("adminMessage").textContent=`Plus-one added for ${data?.host_guest_name||"guest"} ✓`;
+      await refreshAdmin();
+    }catch(e){alert(e.message||"Could not add a plus-one.");btn.disabled=false;}
+  });
 
-      try{
-        const {data,error}=await sb.rpc("admin_update_wedding_guest_name",{
-          p_code:adminCode,
-          p_guest_id:guestId,
-          p_full_name:newName
-        });
-        if(error)throw error;
+  list.querySelectorAll("[data-remove-plus]").forEach(btn=>btn.onclick=async()=>{
+    if(!confirm("Remove this plus-one spot?"))return;
+    btn.disabled=true;
+    try{
+      const {error}=await sb.rpc("admin_remove_wedding_plus_one",{p_code:adminCode,p_plus_one_id:btn.dataset.removePlus});
+      if(error)throw error;
+      $("adminMessage").textContent="Plus-one removed ✓";
+      await refreshAdmin();
+    }catch(e){alert(e.message||"Could not remove the plus-one.");btn.disabled=false;}
+  });
 
-        $("adminMessage").textContent=`Name updated to ${data?.full_name||newName} ✓`;
-        await refreshAdmin();
-      }catch(e){
-        alert(e.message||"Could not update this guest name.");
-        btn.disabled=false;
-        btn.textContent=original;
-      }
-    };
+  list.querySelectorAll("[data-add-guest]").forEach(btn=>btn.onclick=async()=>{
+    const invitationId=btn.dataset.addGuest;
+    const input=list.querySelector(`[data-add-guest-input="${invitationId}"]`);
+    const name=(input?.value||"").trim();
+    if(name.length<2){alert("Enter the guest name first.");return;}
+    btn.disabled=true;
+    try{
+      const {error}=await sb.rpc("admin_add_wedding_guest",{p_code:adminCode,p_invitation_id:invitationId,p_full_name:name});
+      if(error)throw error;
+      $("adminMessage").textContent=`${name} added ✓`;
+      await refreshAdmin();
+    }catch(e){alert(e.message||"Could not add the guest.");btn.disabled=false;}
+  });
+
+  list.querySelectorAll("[data-remove-guest]").forEach(btn=>btn.onclick=async()=>{
+    if(!confirm("Remove this person from the invitation? Their attached plus-one will also be removed."))return;
+    btn.disabled=true;
+    try{
+      const {error}=await sb.rpc("admin_remove_wedding_guest",{p_code:adminCode,p_guest_id:btn.dataset.removeGuest});
+      if(error)throw error;
+      $("adminMessage").textContent="Guest removed ✓";
+      await refreshAdmin();
+    }catch(e){alert(e.message||"Could not remove this guest.");btn.disabled=false;}
+  });
+
+  list.querySelectorAll("[data-reset-rsvp]").forEach(btn=>btn.onclick=async()=>{
+    if(!confirm("Reset this household's RSVP back to pending for testing? Names and invitation details will stay."))return;
+    btn.disabled=true;
+    try{
+      const {error}=await sb.rpc("admin_reset_wedding_rsvp",{p_code:adminCode,p_invitation_id:btn.dataset.resetRsvp});
+      if(error)throw error;
+      $("adminMessage").textContent="RSVP reset to pending ✓";
+      await refreshAdmin();
+    }catch(e){alert(e.message||"Could not reset this RSVP.");btn.disabled=false;}
   });
 
   list.querySelectorAll("[data-delete]").forEach(btn=>btn.onclick=async()=>{
-    if(!confirm("Delete this entire invitation and its RSVP data?"))return;
-    const {error}=await sb.rpc("admin_delete_wedding_invitation",{
-      p_code:adminCode,
-      p_invitation_id:btn.dataset.delete
-    });
-    if(error){
-      alert(error.message);
-      return;
-    }
+    if(!confirm("Delete this ENTIRE invitation and all of its RSVP data? This cannot be undone."))return;
+    const {error}=await sb.rpc("admin_delete_wedding_invitation",{p_code:adminCode,p_invitation_id:btn.dataset.delete});
+    if(error){alert(error.message);return;}
     await refreshAdmin();
   });
 }

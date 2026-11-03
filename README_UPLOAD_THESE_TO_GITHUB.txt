@@ -1,19 +1,12 @@
-TIM & DASHIA — WEBSITE HTML (v33)
+UPLOAD EVERYTHING IN THIS FOLDER TO THE ROOT OF YOUR Wedding_tourney GITHUB REPO.
 
-Upload the CONTENTS of this folder to the ROOT of the GitHub repo Wedding_tourney.
-Replace the old copies when GitHub asks.
+This v36 website includes:
+- RSVP Yes/No selected-state fix
+- Admin reset household RSVP for testing
+- Per-person + button for plus-ones
+- Add/remove individual invited guests without deleting the invitation
+- Edit invitation name and guest spelling
+- First Name + Last Initial invitation lookup only
+- Existing tournament scoring fix and wedding pages
 
-Included:
-- index.html                 Home page
-- our-story.html             Our Story page
-- details.html               Wedding Details page
-- rsvp.html                  RSVP page
-- volleyball.html            Volleyball tournament app
-- assets/                    Website images used by the site/email
-- .nojekyll                  GitHub Pages support file
-
-IMPORTANT RSVP BEHAVIOR
-- Find My Invitation uses ONLY: First Name + Last Initial.
-- It does NOT ask for phone/email to locate an invitation.
-- Email/phone are collected only AFTER the invitation is found, as party contact information.
-- An email address is needed only if that party wants an emailed confirmation.
+Also run the REQUIRED current RSVP SQL in 01_UPLOAD_TO_SUPABASE_SQL.

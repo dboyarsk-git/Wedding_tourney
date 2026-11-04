@@ -2,135 +2,569 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="tim-dashia-site-build" content="v29-details">
+<meta name="tim-dashia-site-build" content="v37-details-planner">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#efe4d3">
 <title>Details · Tim & Dashia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--cream:#efe4d3;--paper:#f7efe4;--ink:#3a2b22;--green:#6b1f2a;--maroon:#6b1f2a;--type:"Courier Prime","Courier New",monospace;--serif:"Cormorant Garamond",serif;--script:"Caveat",cursive}
+:root{
+  --cream:#efe4d3;--paper:#f8f0e5;--paper2:#fffaf2;--ink:#3a2b22;--muted:#806f62;
+  --maroon:#6b1f2a;--maroon2:#4f1720;--line:#cdbba5;--yellow:#f2d66f;
+  --type:"Courier Prime","Courier New",monospace;--serif:"Cormorant Garamond",serif;--script:"Caveat",cursive;
+}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;display:grid;place-items:center;background:linear-gradient(180deg,#f8f0e4,#efe4d3);color:var(--ink);padding:24px}
-.card{width:min(720px,94vw);padding:54px 32px;text-align:center;background:rgba(247,239,228,.9);border:1px solid rgba(58,43,34,.14);box-shadow:0 20px 60px rgba(62,42,27,.12)}
-.kicker{font:700 11px var(--type);letter-spacing:.13em;text-transform:uppercase}
-h1{font:500 clamp(58px,9vw,92px)/.9 var(--serif);margin:10px 0}
-.script{font:500 37px var(--script);color:var(--green)}
-p{font:400 15px/1.7 var(--type);margin:20px auto;max-width:520px}
-a{display:inline-block;margin-top:15px;padding:12px 18px;background:var(--green);color:#fff;text-decoration:none;font:700 10px var(--type);letter-spacing:.1em;text-transform:uppercase}
-</style>
-
-<style id="v25-maroon-buttons">
-/* v25 — cohesive maroon buttons across the wedding site */
-button,
-input[type="button"],
-input[type="submit"],
-input[type="reset"],
-.outline-button,
-.btn,
-.solid-button,
-.primary,
-.small-btn,
-.ghost,
-.danger,
-.light,
-.redbtn,
-.admin-button,
-.editor-button,
-.editor-tools button,
-.confirm-link button,
-.registration-success-link button,
-.registration-success-actions button,
-.rule-editor-actions button,
-.score-protection-actions button {
-  background:#6b1f2a !important;
-  color:#fff !important;
-  border-color:#6b1f2a !important;
+html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(180deg,#f9f2e8,#efe4d3);color:var(--ink);font-family:var(--serif);min-height:100vh}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+.site-header{position:sticky;top:0;z-index:50;background:rgba(248,240,229,.96);border-bottom:1px solid rgba(58,43,34,.12);backdrop-filter:blur(8px)}
+.nav-shell{max-width:1280px;margin:auto;padding:16px 24px;display:flex;align-items:center;gap:18px}
+.monogram{font:500 30px var(--serif);text-decoration:none;color:var(--ink);letter-spacing:.16em;white-space:nowrap}
+.nav-line{height:1px;background:#bba78e;flex:1}
+.nav-links{display:flex;gap:20px}
+.nav-links a{font:700 10px var(--type);letter-spacing:.08em;text-transform:uppercase;color:var(--ink);text-decoration:none}
+.nav-links a.active{color:var(--maroon)}
+.menu-button{display:none;border:0;background:var(--maroon);color:#fff;padding:12px 16px;font:700 10px var(--type);letter-spacing:.09em}
+.public-shell{min-height:calc(100vh - 80px);display:grid;place-items:center;padding:50px 24px}
+.coming-card{position:relative;width:min(760px,96vw);text-align:center;padding:62px 34px;background:rgba(248,240,229,.93);border:1px solid rgba(58,43,34,.14);box-shadow:0 24px 70px rgba(62,42,27,.11)}
+.kicker{font:700 11px var(--type);letter-spacing:.16em;text-transform:uppercase}
+.coming-card h1{font:500 clamp(58px,9vw,96px)/.9 var(--serif);margin:12px 0}
+.script{font:500 40px var(--script);color:var(--maroon)}
+.coming-card p{font:400 18px/1.55 var(--serif);max-width:560px;margin:22px auto}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:2px solid var(--maroon);background:var(--maroon);color:#fff;padding:12px 18px;text-decoration:none;font:700 11px var(--type);letter-spacing:.08em;text-transform:uppercase;min-height:44px}
+.btn:hover{background:var(--maroon2);border-color:var(--maroon2)}
+.btn.secondary{background:transparent;color:var(--maroon)}
+.btn.small{padding:8px 11px;min-height:36px;font-size:9px}
+.admin-launch{position:fixed;right:18px;bottom:18px;z-index:60;box-shadow:0 10px 26px rgba(58,43,34,.18)}
+.construction-tape{position:absolute;height:30px;width:190px;border-top:2px solid #2f2924;border-bottom:2px solid #2f2924;background:repeating-linear-gradient(135deg,var(--yellow) 0 22px,transparent 22px 44px);pointer-events:none}
+.tape-a{top:-16px;left:40px;transform:rotate(-5deg)}
+.tape-b{bottom:26px;right:-42px;transform:rotate(7deg)}
+.planner-shell{display:none;max-width:1500px;margin:0 auto;padding:24px 20px 100px}
+body.planner-open .public-shell{display:none}
+body.planner-open .planner-shell{display:block}
+.planner-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:18px}
+.planner-title h1{font:500 clamp(40px,6vw,72px)/1 var(--serif);margin:0}
+.planner-title .script{font-size:32px}
+.save-state{font:700 10px var(--type);letter-spacing:.06em;color:var(--muted);margin-top:8px}
+.section-tabs{position:sticky;top:71px;z-index:40;display:flex;gap:8px;overflow-x:auto;padding:12px 0;background:linear-gradient(180deg,rgba(239,228,211,.98),rgba(239,228,211,.92));border-top:1px solid rgba(58,43,34,.08);border-bottom:1px solid rgba(58,43,34,.12);margin-bottom:22px}
+.section-tabs button{white-space:nowrap;background:var(--paper);border:1px solid #b8a58e;padding:9px 12px;font:700 9px var(--type);letter-spacing:.07em;text-transform:uppercase}
+.section-tabs button.active{background:var(--maroon);border-color:var(--maroon);color:#fff}
+.planner-section{display:none}
+.planner-section.active{display:block}
+.section-card{background:rgba(248,240,229,.96);border:1px solid rgba(58,43,34,.16);padding:22px;box-shadow:0 14px 38px rgba(58,43,34,.07);margin-bottom:22px}
+.section-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:18px}
+.section-head h2{font:500 38px/1 var(--serif);margin:0}
+.section-sub{color:var(--muted);font-size:16px;line-height:1.45;max-width:760px}
+.field-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.field label{display:block;font:700 9px var(--type);letter-spacing:.07em;text-transform:uppercase;margin-bottom:6px}
+.input,textarea,select{width:100%;border:1px solid #c5b29a;background:#fffaf3;padding:10px 11px;min-height:42px;border-radius:0}
+textarea{min-height:90px;resize:vertical}
+.table-wrap{overflow-x:auto;border:1px solid #cfbda7;background:#fffaf3}
+.planner-table{width:100%;min-width:850px;border-collapse:collapse}
+.planner-table th{background:#eadcc9;font:700 9px var(--type);letter-spacing:.06em;text-transform:uppercase;padding:9px;border:1px solid #cfbda7;text-align:left}
+.planner-table td{border:1px solid #dfcfbd;padding:5px;vertical-align:top}
+.planner-table input,.planner-table textarea,.planner-table select{border:0;background:transparent;padding:7px;min-width:95px}
+.planner-table textarea{min-height:54px}
+.row-actions{display:flex;gap:5px}
+.delete-row{border:0;background:transparent;color:var(--maroon);font:700 13px var(--type)}
+.money-total{font-weight:600;white-space:nowrap;padding:12px!important}
+.summary-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px}
+.summary-card{padding:14px;background:#fffaf3;border:1px solid #cfbda7}
+.summary-card span{display:block;font:700 8px var(--type);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.summary-card strong{font:500 28px var(--serif)}
+/* Timeline */
+.timeline-layout{display:grid;grid-template-columns:minmax(430px,1.4fr) minmax(300px,.6fr);gap:18px}
+.timeline-scroll{overflow:auto;max-height:72vh;border:1px solid #cfbda7;background:#fffaf3}
+.timeline{position:relative;min-width:480px;height:2176px;background:repeating-linear-gradient(to bottom,transparent 0 33px,#dfcfbd 33px 34px)}
+.timeline-time{position:absolute;left:0;width:76px;padding:8px 8px 0;font:700 9px var(--type);color:#78685b}
+.timeline-axis{position:absolute;left:76px;top:0;bottom:0;width:1px;background:#bfa991}
+.timeline-event{position:absolute;left:88px;right:12px;border:2px solid rgba(58,43,34,.75);padding:7px 28px 10px 10px;overflow:hidden;user-select:none;touch-action:none;box-shadow:0 3px 8px rgba(58,43,34,.08)}
+.timeline-event.selected{outline:3px solid var(--maroon);outline-offset:2px}
+.timeline-event strong{display:block;font:700 11px var(--type);letter-spacing:.04em}
+.timeline-event small{display:block;margin-top:3px;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.resize-handle{position:absolute;left:0;right:0;bottom:0;height:9px;cursor:ns-resize;background:repeating-linear-gradient(90deg,transparent 0 6px,rgba(58,43,34,.35) 6px 8px)}
+.drag-dot{position:absolute;right:8px;top:7px;font:700 14px var(--type)}
+.event-editor{position:sticky;top:132px}
+.color-palette{display:flex;flex-wrap:wrap;gap:8px}
+.color-chip{width:34px;height:34px;border:2px solid rgba(58,43,34,.5);padding:0}
+.color-chip.active{outline:3px solid var(--maroon);outline-offset:2px}
+.schedule-hint{padding:11px 13px;background:rgba(242,214,111,.28);border:1px dashed #6b5a49;font-size:15px;margin-bottom:12px}
+.budget-category-linked{background:rgba(242,214,111,.18)!important}
+.linked-note{font-size:11px;color:var(--muted)}
+@media(max-width:900px){
+  .nav-line,.nav-links{display:none}.menu-button{display:block;margin-left:auto}
+  .timeline-layout{grid-template-columns:1fr}.event-editor{position:static}
+  .field-grid{grid-template-columns:1fr}.summary-strip{grid-template-columns:repeat(2,1fr)}
+  .planner-top{flex-direction:column}.section-tabs{top:72px}
 }
-button:hover,
-input[type="button"]:hover,
-input[type="submit"]:hover,
-input[type="reset"]:hover,
-.outline-button:hover,
-.btn:hover,
-.solid-button:hover,
-.primary:hover,
-.small-btn:hover,
-.ghost:hover,
-.danger:hover,
-.light:hover,
-.redbtn:hover,
-.admin-button:hover,
-.editor-button:hover,
-.editor-tools button:hover {
-  background:#4f1720 !important;
-  color:#fff !important;
-  border-color:#4f1720 !important;
-}
-button:disabled,
-input[type="button"]:disabled,
-input[type="submit"]:disabled {
-  opacity:.55 !important;
-  cursor:not-allowed !important;
+@media(max-width:600px){
+  .nav-shell{padding:14px 18px}.monogram{font-size:26px}
+  .public-shell{padding:30px 14px}.coming-card{padding:44px 20px}
+  .planner-shell{padding:16px 10px 90px}.section-card{padding:14px}
+  .summary-strip{grid-template-columns:1fr 1fr}
+  .admin-launch{right:10px;bottom:10px}
 }
 </style>
-
-
-<style id="v29-construction-doodles">
-:root{--construction-yellow:#f2d66f;--construction-ink:#2f2924}
-.construction-tape-mark{
-  position:absolute;z-index:8;height:30px;width:170px;pointer-events:none;
-  border-top:2px solid var(--construction-ink);border-bottom:2px solid var(--construction-ink);
-  background:repeating-linear-gradient(135deg,var(--construction-yellow) 0 20px,transparent 20px 40px);
-  filter:drop-shadow(0 3px 2px rgba(58,43,34,.08));
-}
-.construction-cone-mark{position:absolute;z-index:8;width:62px;height:auto;pointer-events:none;overflow:visible}
-.construction-cone-mark .cone-line{fill:none;stroke:var(--construction-ink);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
-.construction-cone-mark .cone-fill{fill:var(--construction-yellow);stroke:var(--construction-ink);stroke-width:3.2;stroke-linejoin:round}
-.construction-cone-mark .cone-clear{fill:transparent;stroke:var(--construction-ink);stroke-width:3.2;stroke-linejoin:round}
-@media(max-width:600px){.construction-tape-mark{width:125px;height:24px}.construction-cone-mark{width:48px}}
-</style>
-
-
-<style id="v29-details-admin-workview">
-.card{position:relative;overflow:visible}
-.details-admin-construction{display:none}
-body.details-admin-mode .details-admin-construction{display:block}
-.details-work-tape-1{top:-18px;left:-36px;transform:rotate(-7deg)}
-.details-work-tape-2{bottom:26px;right:-45px;transform:rotate(6deg);width:220px}
-.details-work-cone{right:10px;top:18px;transform:rotate(8deg)}
-.details-admin-note{display:none;margin:22px auto 0;max-width:560px;padding:13px 16px;border:2px dashed #2f2924;background:rgba(242,214,111,.28);font:700 11px/1.5 var(--type);letter-spacing:.05em}
-body.details-admin-mode .details-admin-note{display:block}
-.details-admin-toggle{position:fixed;right:18px;bottom:18px;z-index:30;border:1px solid var(--maroon);background:var(--maroon);color:#fff;padding:10px 14px;font:700 10px var(--type);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
-</style>
-
 </head>
 <body>
-<div class="card">
-  <div class="details-admin-construction"><div class="construction-tape-mark details-work-tape-1"></div><div class="construction-tape-mark details-work-tape-2"></div><svg class="construction-cone-mark details-work-cone" viewBox="0 0 72 92" aria-hidden="true">
-  <path class="cone-clear" d="M27 8h18l7 20H20L27 8Z"/>
-  <path class="cone-fill" d="M20 28h32l8 24H12l8-24Z"/>
-  <path class="cone-clear" d="M12 52h48l8 24H4l8-24Z"/>
-  <path class="cone-line" d="M3 76h66l-5 9H8l-5-9Z"/>
-  <path class="cone-line" d="M31 14h10M18 38h36M11 62h50"/>
-</svg></div>
-  <div class="kicker">Tim & Dashia</div>
-  <h1>Details</h1>
-  <div class="script">Coming soon ♡</div>
-  <p>This page is intentionally blank for now while we get the main cover page exactly right.</p>
-  <a href="index.html">← Back Home</a>
-  <div class="details-admin-note">ADMIN REMINDER: this page still needs the backend flow for automated guest emails, the Amazon/registry link, and final wedding details.</div>
-</div>
-<button class="details-admin-toggle" id="detailsAdminToggle" type="button">Admin Work View</button>
+<header class="site-header">
+  <div class="nav-shell">
+    <a class="monogram" href="index.html">T | D</a>
+    <div class="nav-line"></div>
+    <button class="menu-button" id="menuButton" type="button">MENU</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="our-story.html">Our Story</a>
+      <a class="active" href="details.html">Details</a>
+      <a href="rsvp.html">RSVP</a>
+      <a href="volleyball.html">Volleyball Tournament</a>
+    </nav>
+  </div>
+</header>
+
+<main class="public-shell">
+  <section class="coming-card">
+    <div class="kicker">Tim & Dashia</div>
+    <h1>Details</h1>
+    <div class="script">Coming soon ♡</div>
+    <p>We’re still putting the day together. The final wedding details will live here once everything is ready.</p>
+    <a class="btn" href="index.html">← Back Home</a>
+  </section>
+</main>
+
+<button class="btn admin-launch" id="plannerAdminBtn" type="button">Wedding Planner Admin</button>
+
+<main class="planner-shell" id="plannerShell">
+  <div class="planner-top">
+    <div class="planner-title">
+      <div class="kicker">Private Admin Workspace</div>
+      <h1>Wedding Planner</h1>
+      <div class="script">organized chaos, but prettier ♡</div>
+      <div class="save-state" id="saveState">Not loaded yet.</div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn secondary" id="closePlanner" type="button">Close Admin</button>
+      <button class="btn" id="savePlanner" type="button">Save Planner</button>
+    </div>
+  </div>
+
+  <div class="construction-tape tape-a"></div>
+  <div class="construction-tape tape-b"></div>
+
+  <nav class="section-tabs" id="sectionTabs">
+    <button data-tab="schedule" class="active">Schedule</button>
+    <button data-tab="budget">Budget</button>
+    <button data-tab="photography">Photography</button>
+    <button data-tab="catering">Catering</button>
+    <button data-tab="cake">Cake</button>
+    <button data-tab="flowers">Flowers DIY</button>
+    <button data-tab="hairMakeup">Hair & Makeup</button>
+    <button data-tab="attire">Attire</button>
+    <button data-tab="venue">Venue</button>
+    <button data-tab="entertainment">Entertainment</button>
+  </nav>
+
+  <section class="planner-section active" data-section="schedule">
+    <div class="section-card">
+      <div class="section-head">
+        <div>
+          <h2>Wedding Day Schedule</h2>
+          <div class="section-sub">6:00 AM–10:00 PM in 15-minute increments. Drag an activity block up/down to move it. Drag the striped bottom edge to make that same activity longer or shorter.</div>
+        </div>
+        <button class="btn" id="addScheduleEvent" type="button">+ Add Activity</button>
+      </div>
+      <div class="schedule-hint">Color-code related activities. The timeline snaps to 15-minute increments automatically.</div>
+      <div class="timeline-layout">
+        <div class="timeline-scroll"><div class="timeline" id="timeline"></div></div>
+        <div class="event-editor">
+          <div class="section-card" style="margin:0">
+            <div class="section-head"><div><h2 style="font-size:30px">Activity Details</h2><div class="section-sub">Select a block on the timeline to edit it.</div></div></div>
+            <div id="eventEditorEmpty">No activity selected.</div>
+            <div id="eventEditorFields" style="display:none">
+              <div class="field"><label>Activity</label><input class="input" id="evActivity"></div>
+              <div class="field-grid" style="margin-top:10px">
+                <div class="field"><label>Start</label><select id="evStart"></select></div>
+                <div class="field"><label>Duration</label><select id="evDuration"></select></div>
+                <div class="field"><label>Person / Owner</label><input class="input" id="evOwner"></div>
+              </div>
+              <div class="field-grid" style="margin-top:10px">
+                <div class="field"><label>Location</label><input class="input" id="evLocation"></div>
+                <div class="field" style="grid-column:span 2"><label>Description</label><input class="input" id="evDescription"></div>
+              </div>
+              <div class="field" style="margin-top:10px"><label>Notes</label><textarea id="evNotes"></textarea></div>
+              <div class="field" style="margin-top:10px"><label>Color</label><div class="color-palette" id="colorPalette"></div></div>
+              <div style="display:flex;gap:8px;margin-top:14px">
+                <button class="btn secondary small" id="duplicateEvent" type="button">Duplicate</button>
+                <button class="btn small" id="deleteEvent" type="button">Delete Activity</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="planner-section" data-section="budget">
+    <div class="section-card">
+      <div class="section-head">
+        <div><h2>Budget Dashboard</h2><div class="section-sub">Linked actuals pull automatically from the vendor sections below so you do not enter the same cost twice.</div></div>
+      </div>
+      <div class="summary-strip">
+        <div class="summary-card"><span>Total Budget</span><strong id="budgetTotalCard">$0</strong></div>
+        <div class="summary-card"><span>Estimated</span><strong id="budgetEstimateCard">$0</strong></div>
+        <div class="summary-card"><span>Actual</span><strong id="budgetActualCard">$0</strong></div>
+        <div class="summary-card"><span>Remaining</span><strong id="budgetRemainingCard">$0</strong></div>
+      </div>
+      <div class="field" style="max-width:300px;margin-bottom:14px"><label>Total Budget</label><input id="totalBudget" class="input" type="number" step="100"></div>
+      <div class="table-wrap"><table class="planner-table"><thead><tr><th>Category</th><th>Estimate</th><th>Actual</th><th>% of Budget</th><th>Remaining vs Estimate</th></tr></thead><tbody id="budgetBody"></tbody></table></div>
+    </div>
+  </section>
+
+  <section class="planner-section" data-section="photography"><div class="section-card">
+    <div class="section-head"><div><h2>Photography</h2><div class="section-sub">Compare wedding-day coverage, engagement photos, albums, and notes.</div></div><button class="btn small" data-add-row="photography">+ Row</button></div>
+    <div class="table-wrap"><table class="planner-table"><thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Website</th><th>Wedding Day</th><th>Engagement Photos</th><th>Photo Album</th><th>Total Cost</th><th>Notes</th><th></th></tr></thead><tbody id="photographyBody"></tbody></table></div>
+  </div></section>
+
+  <section class="planner-section" data-section="catering"><div class="section-card">
+    <div class="section-head"><div><h2>Catering</h2><div class="section-sub">Compare caterers and let the total calculate from cost per person × guest count.</div></div><button class="btn small" data-add-row="catering">+ Row</button></div>
+    <div class="table-wrap"><table class="planner-table"><thead><tr><th>Caterer</th><th>Contact Name</th><th>Phone</th><th>Email</th><th>Website</th><th>Cost / Person</th><th>Guest Count</th><th>Total Cost</th><th>Notes</th><th></th></tr></thead><tbody id="cateringBody"></tbody></table></div>
+  </div></section>
+
+  <section class="planner-section" data-section="cake"><div class="section-card">
+    <div class="section-head"><div><h2>Wedding Cake</h2><div class="section-sub">Track slices, per-slice pricing, transportation, and bakery comparisons.</div></div><button class="btn small" data-add-row="cake">+ Row</button></div>
+    <div class="field" style="max-width:320px;margin-bottom:14px"><label>Approximate Number of Slices</label><input id="cakeSlices" class="input" type="number"></div>
+    <div class="table-wrap"><table class="planner-table"><thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Website</th><th>Cost / Slice</th><th>Transport Cost</th><th>Total Cost</th><th>Notes</th><th></th></tr></thead><tbody id="cakeBody"></tbody></table></div>
+  </div></section>
+
+  <section class="planner-section" data-section="flowers"><div class="section-card">
+    <div class="section-head"><div><h2>DIY Flowers · Trader Joe’s</h2><div class="section-sub">Plan what you are making, how many arrangements you need, stems, bunches, cost, and prep so DIY flowers do not turn into guesswork.</div></div><button class="btn small" data-add-row="flowers">+ Arrangement</button></div>
+    <div class="table-wrap"><table class="planner-table"><thead><tr><th>Arrangement</th><th>Qty</th><th>Flowers / Greenery</th><th>Stems Each</th><th>Total Stems</th><th>Estimated Bunches</th><th>Price / Bunch</th><th>Estimated Cost</th><th>Purchased?</th><th>Prep / Assembly Notes</th><th></th></tr></thead><tbody id="flowersBody"></tbody></table></div>
+  </div></section>
+
+  <section class="planner-section" data-section="hairMakeup"><div class="section-card">
+    <div class="section-head"><div><h2>Hair & Makeup</h2><div class="section-sub">Compare artists, trials, day-of pricing, other people, extra costs, and totals.</div></div><button class="btn small" data-add-row="hairMakeup">+ Row</button></div>
+    <div class="field-grid" style="margin-bottom:14px">
+      <div class="field"><label>Bride</label><input id="hmBrideCount" class="input" type="number"></div>
+      <div class="field"><label>Additional People</label><input id="hmAdditional" class="input" type="number"></div>
+      <div class="field"><label>Hair Hours</label><input id="hmHairHours" class="input" type="number" step=".5"></div>
+    </div>
+    <div class="table-wrap"><table class="planner-table"><thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Website</th><th>Pricing Type</th><th>Bride Trial</th><th>Bride Day-of</th><th>Others Day-of / Person</th><th>Extra Costs</th><th>Total</th><th>Notes</th><th></th></tr></thead><tbody id="hairMakeupBody"></tbody></table></div>
+  </div></section>
+
+  <section class="planner-section" data-section="attire"><div class="section-card">
+    <div class="section-head"><div><h2>Wedding Attire</h2><div class="section-sub">Track dresses, suits, shoes, accessories, alterations, and vendor information.</div></div><button class="btn small" data-add-row="attire">+ Row</button></div>
+    <div class="table-wrap"><table class="planner-table"><thead><tr><th>Category</th><th>Name / Store</th><th>Phone</th><th>Email</th><th>Website</th><th>Need Alterations?</th><th>Total Cost</th><th>Notes</th><th></th></tr></thead><tbody id="attireBody"></tbody></table></div>
+  </div></section>
+
+  <section class="planner-section" data-section="venue"><div class="section-card">
+    <div class="section-head"><div><h2>Venue</h2><div class="section-sub">Compare venues, capacity, hours, costs, and food/drink requirements.</div></div><button class="btn small" data-add-row="venue">+ Row</button></div>
+    <div class="table-wrap"><table class="planner-table"><thead><tr><th>Venue</th><th>Contact Name</th><th>Phone</th><th>Email</th><th>Website</th><th>Address</th><th>Capacity</th><th># Hours</th><th>Room Cost</th><th>Cost / Person</th><th>Food/Drink Min.</th><th>Total Cost</th><th>Notes</th><th></th></tr></thead><tbody id="venueBody"></tbody></table></div>
+  </div></section>
+
+  <section class="planner-section" data-section="entertainment"><div class="section-card">
+    <div class="section-head"><div><h2>Entertainment</h2><div class="section-sub">Simple comparison list: person/company, number, and cost.</div></div><button class="btn small" data-add-row="entertainment">+ Row</button></div>
+    <div class="table-wrap"><table class="planner-table" style="min-width:650px"><thead><tr><th>Person / Company</th><th>Number</th><th>Cost</th><th></th></tr></thead><tbody id="entertainmentBody"></tbody></table></div>
+  </div></section>
+</main>
+
 <script>
-const DETAILS_ADMIN_HASH="18642fa8fb69ca94183ef39f93692a597872125a8b7d607afab643dfd89569a8";
-async function detailsSha256(value){const data=new TextEncoder().encode(value);const digest=await crypto.subtle.digest("SHA-256",data);return [...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,"0")).join("");}
-document.getElementById("detailsAdminToggle")?.addEventListener("click",async()=>{
-  if(document.body.classList.contains("details-admin-mode")){document.body.classList.remove("details-admin-mode");return;}
-  const code=prompt("Enter the Admin code to show unfinished Details work:"); if(code===null)return;
-  if(await detailsSha256(code)!==DETAILS_ADMIN_HASH){alert("Incorrect admin code.");return;}
-  document.body.classList.add("details-admin-mode");
+const SUPABASE_URL="https://uygotksjyqusbdoepzft.supabase.co";
+const SUPABASE_KEY="sb_publishable_7946Ght6J3pY2k9UcNbkhA_dDTwn89q";
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const ROW_H=34;
+const SLOT_COUNT=64;
+const START_MIN=6*60;
+const COLORS=[
+  {name:"Butter",value:"#f2d66f"},{name:"Dusty Rose",value:"#e7b8b7"},{name:"Sage",value:"#c7d2b7"},
+  {name:"Powder Blue",value:"#bfd2df"},{name:"Lavender",value:"#d7c6df"},{name:"Peach",value:"#ecc9a7"},
+  {name:"Sand",value:"#dcc7aa"},{name:"Cream",value:"#f6ead8"}
+];
+let adminCode="";
+let state=null;
+let selectedEventId=null;
+let saveTimer=null;
+
+const money=v=>new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:2}).format(Number(v||0));
+const uid=()=>crypto.randomUUID?.()||("id_"+Date.now()+"_"+Math.random().toString(16).slice(2));
+const num=v=>Number(v||0)||0;
+function slotLabel(slot){
+  const total=START_MIN+slot*15;
+  const h=Math.floor(total/60),m=total%60;
+  const ap=h>=12?"PM":"AM";
+  const hh=((h+11)%12)+1;
+  return `${hh}:${String(m).padStart(2,"0")} ${ap}`;
+}
+function blankRows(n,make){return Array.from({length:n},()=>make());}
+function defaults(){
+  const budgetRows=[
+    ["Ceremony",500],["Reception",750],["Printed materials",750],["Gifts/favors",750],["Venue",2250],
+    ["Attire",2250],["Rings",500],["Hair & makeup",250],["Flowers",2000],["Cake",500],
+    ["Caterer & drinks",8500],["Photography",3000],["Entertainment",1750],["Misc",1250],
+    ["Custom category 1",0],["Custom category 2",0],["Custom category 3",0],["Custom category 4",0]
+  ].map(([category,estimate])=>({category,estimate,actual:0}));
+  return {
+    scheduleEvents:[],
+    totalBudget:25000,
+    budgetRows,
+    cakeSlices:200,
+    hmBrideCount:1,hmAdditional:5,hmHairHours:3,
+    photography:blankRows(4,()=>({id:uid(),name:"",phone:"",email:"",website:"",weddingDay:0,engagement:0,album:0,notes:""})),
+    catering:blankRows(4,()=>({id:uid(),caterer:"",contact:"",phone:"",email:"",website:"",costPerPerson:0,guestCount:0,notes:""})),
+    cake:blankRows(4,()=>({id:uid(),name:"",phone:"",email:"",website:"",costPerSlice:0,transport:0,notes:""})),
+    flowers:blankRows(6,()=>({id:uid(),arrangement:"",qty:0,flowers:"",stemsEach:0,bunches:0,pricePerBunch:0,purchased:false,notes:""})),
+    hairMakeup:blankRows(3,()=>({id:uid(),name:"",phone:"",email:"",website:"",pricingType:"Per person",trial:0,brideDay:0,othersDay:0,extra:0,notes:""})),
+    attire:blankRows(4,()=>({id:uid(),category:"",name:"",phone:"",email:"",website:"",alterations:"No",totalCost:0,notes:""})),
+    venue:blankRows(3,()=>({id:uid(),venue:"",contact:"",phone:"",email:"",website:"",address:"",capacity:0,hours:0,roomCost:0,costPerPerson:0,foodDrinkMin:0,totalCost:0,notes:""})),
+    entertainment:blankRows(5,()=>({id:uid(),person:"",number:"",cost:0}))
+  };
+}
+function mergeDefaults(saved){
+  const d=defaults();
+  if(!saved||typeof saved!=="object")return d;
+  return {...d,...saved,
+    budgetRows:Array.isArray(saved.budgetRows)?saved.budgetRows:d.budgetRows,
+    scheduleEvents:Array.isArray(saved.scheduleEvents)?saved.scheduleEvents:d.scheduleEvents
+  };
+}
+function scheduleSave(){
+  localStorage.setItem("tim_dashia_wedding_planner_v1",JSON.stringify(state));
+  setSaveState("Changes waiting to sync…");
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(savePlanner,1200);
+}
+function setSaveState(msg){document.getElementById("saveState").textContent=msg}
+async function loadPlanner(){
+  setSaveState("Loading private planner…");
+  try{
+    const {data,error}=await sb.rpc("admin_get_wedding_planner",{p_code:adminCode});
+    if(error)throw error;
+    state=mergeDefaults(data?.data||{});
+    localStorage.setItem("tim_dashia_wedding_planner_v1",JSON.stringify(state));
+    setSaveState("Loaded from Supabase ✓");
+  }catch(e){
+    console.error(e);
+    try{state=mergeDefaults(JSON.parse(localStorage.getItem("tim_dashia_wedding_planner_v1")||"{}"));}catch{state=defaults()}
+    setSaveState("Planner backend not ready — using this browser copy. Run the v37 planner SQL.");
+  }
+  renderAll();
+}
+async function savePlanner(){
+  if(!state||!adminCode)return;
+  localStorage.setItem("tim_dashia_wedding_planner_v1",JSON.stringify(state));
+  setSaveState("Saving…");
+  try{
+    const {error}=await sb.rpc("admin_save_wedding_planner",{p_code:adminCode,p_data:state});
+    if(error)throw error;
+    setSaveState("Saved to Supabase ✓");
+  }catch(e){console.error(e);setSaveState("Saved on this device, but Supabase save failed.");}
+}
+document.getElementById("plannerAdminBtn").onclick=async()=>{
+  const code=prompt("Enter the Wedding Planner Admin code:");
+  if(code===null)return;
+  const {data,error}=await sb.rpc("admin_get_wedding_planner",{p_code:code});
+  if(error){alert("Incorrect Admin code or planner backend is not installed yet.");return;}
+  adminCode=code;
+  state=mergeDefaults(data?.data||{});
+  document.body.classList.add("planner-open");
+  renderAll();
+  setSaveState("Loaded from Supabase ✓");
+};
+document.getElementById("closePlanner").onclick=()=>document.body.classList.remove("planner-open");
+document.getElementById("savePlanner").onclick=savePlanner;
+document.getElementById("menuButton").onclick=()=>document.getElementById("navLinks").classList.toggle("open");
+document.querySelectorAll("#sectionTabs button").forEach(btn=>btn.onclick=()=>{
+  document.querySelectorAll("#sectionTabs button").forEach(b=>b.classList.toggle("active",b===btn));
+  document.querySelectorAll(".planner-section").forEach(s=>s.classList.toggle("active",s.dataset.section===btn.dataset.tab));
+  window.scrollTo({top:70,behavior:"smooth"});
 });
+function renderAll(){
+  renderTimeline();renderEventEditor();renderPhotography();renderCatering();renderCake();renderFlowers();
+  renderHairMakeup();renderAttire();renderVenue();renderEntertainment();renderBudget();bindTopFields();
+}
+function bindTopFields(){
+  [["totalBudget","totalBudget"],["cakeSlices","cakeSlices"],["hmBrideCount","hmBrideCount"],["hmAdditional","hmAdditional"],["hmHairHours","hmHairHours"]].forEach(([id,key])=>{
+    const el=document.getElementById(id); if(!el)return;
+    el.value=state[key]??"";
+    el.oninput=()=>{state[key]=num(el.value);renderBudget(); if(key==="cakeSlices")renderCake(); if(key.startsWith("hm"))renderHairMakeup();scheduleSave();};
+  });
+}
+/* Timeline */
+function renderTimeline(){
+  const tl=document.getElementById("timeline");tl.innerHTML='<div class="timeline-axis"></div>';
+  for(let i=0;i<SLOT_COUNT;i++){
+    const t=document.createElement("div");t.className="timeline-time";t.style.top=`${i*ROW_H}px`;t.textContent=slotLabel(i);tl.appendChild(t);
+  }
+  state.scheduleEvents.forEach(ev=>{
+    const block=document.createElement("div");block.className="timeline-event"+(ev.id===selectedEventId?" selected":"");
+    block.style.top=`${ev.startSlot*ROW_H+2}px`;block.style.height=`${Math.max(1,ev.durationSlots)*ROW_H-4}px`;block.style.background=ev.color||COLORS[0].value;
+    block.dataset.id=ev.id;
+    block.innerHTML=`<strong>${escapeHtml(ev.activity||"Untitled Activity")}</strong><small>${escapeHtml(ev.owner||ev.location||"")}</small><span class="drag-dot">⋮⋮</span><div class="resize-handle"></div>`;
+    block.onclick=e=>{if(e.target.classList.contains("resize-handle"))return;selectedEventId=ev.id;renderTimeline();renderEventEditor();};
+    attachDrag(block,ev);
+    tl.appendChild(block);
+  });
+}
+function attachDrag(block,ev){
+  block.onpointerdown=e=>{
+    if(e.button!==undefined&&e.button!==0)return;
+    const resizing=e.target.classList.contains("resize-handle");
+    block.setPointerCapture?.(e.pointerId);
+    const y=e.clientY,startSlot=ev.startSlot,startDur=ev.durationSlots;
+    document.body.style.userSelect="none";
+    const move=me=>{
+      const delta=Math.round((me.clientY-y)/ROW_H);
+      if(resizing) ev.durationSlots=Math.max(1,Math.min(SLOT_COUNT-ev.startSlot,startDur+delta));
+      else ev.startSlot=Math.max(0,Math.min(SLOT_COUNT-ev.durationSlots,startSlot+delta));
+      selectedEventId=ev.id;renderTimeline();renderEventEditor();
+    };
+    const up=()=>{
+      window.removeEventListener("pointermove",move);window.removeEventListener("pointerup",up);
+      document.body.style.userSelect="";scheduleSave();
+    };
+    window.addEventListener("pointermove",move);window.addEventListener("pointerup",up,{once:true});
+  };
+}
+document.getElementById("addScheduleEvent").onclick=()=>{
+  const ev={id:uid(),startSlot:8,durationSlots:4,activity:"New Activity",description:"",owner:"",location:"",notes:"",color:COLORS[0].value};
+  state.scheduleEvents.push(ev);selectedEventId=ev.id;renderTimeline();renderEventEditor();scheduleSave();
+};
+function renderEventEditor(){
+  const ev=state?.scheduleEvents?.find(x=>x.id===selectedEventId);
+  document.getElementById("eventEditorEmpty").style.display=ev?"none":"block";
+  document.getElementById("eventEditorFields").style.display=ev?"block":"none";
+  if(!ev)return;
+  const start=document.getElementById("evStart"),dur=document.getElementById("evDuration");
+  start.innerHTML=Array.from({length:SLOT_COUNT},(_,i)=>`<option value="${i}">${slotLabel(i)}</option>`).join("");
+  dur.innerHTML=Array.from({length:Math.min(32,SLOT_COUNT-ev.startSlot)},(_,i)=>`<option value="${i+1}">${(i+1)*15} min</option>`).join("");
+  start.value=ev.startSlot;dur.value=ev.durationSlots;
+  [["evActivity","activity"],["evOwner","owner"],["evLocation","location"],["evDescription","description"],["evNotes","notes"]].forEach(([id,key])=>{
+    const el=document.getElementById(id);el.value=ev[key]||"";el.oninput=()=>{ev[key]=el.value;renderTimeline();scheduleSave();};
+  });
+  start.onchange=()=>{ev.startSlot=Math.min(num(start.value),SLOT_COUNT-ev.durationSlots);renderTimeline();renderEventEditor();scheduleSave();};
+  dur.onchange=()=>{ev.durationSlots=Math.min(num(dur.value),SLOT_COUNT-ev.startSlot);renderTimeline();scheduleSave();};
+  const pal=document.getElementById("colorPalette");pal.innerHTML="";
+  COLORS.forEach(c=>{const b=document.createElement("button");b.className="color-chip"+(ev.color===c.value?" active":"");b.style.background=c.value;b.title=c.name;b.onclick=()=>{ev.color=c.value;renderTimeline();renderEventEditor();scheduleSave();};pal.appendChild(b);});
+  document.getElementById("deleteEvent").onclick=()=>{if(confirm("Delete this schedule activity?")){state.scheduleEvents=state.scheduleEvents.filter(x=>x.id!==ev.id);selectedEventId=null;renderTimeline();renderEventEditor();scheduleSave();}};
+  document.getElementById("duplicateEvent").onclick=()=>{const copy={...ev,id:uid(),startSlot:Math.min(SLOT_COUNT-ev.durationSlots,ev.startSlot+ev.durationSlots)};state.scheduleEvents.push(copy);selectedEventId=copy.id;renderTimeline();renderEventEditor();scheduleSave();};
+}
+function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function cellInput(section,row,field,type="text",opts={}){
+  const val=row[field]??"";
+  if(type==="select") return `<select data-sec="${section}" data-id="${row.id}" data-field="${field}">${opts.options.map(o=>`<option ${String(o)===String(val)?"selected":""}>${escapeHtml(o)}</option>`).join("")}</select>`;
+  if(type==="textarea") return `<textarea data-sec="${section}" data-id="${row.id}" data-field="${field}">${escapeHtml(val)}</textarea>`;
+  if(type==="checkbox") return `<input type="checkbox" data-sec="${section}" data-id="${row.id}" data-field="${field}" ${val?"checked":""}>`;
+  return `<input type="${type}" ${type==="number"?'step="0.01"':''} value="${escapeHtml(val)}" data-sec="${section}" data-id="${row.id}" data-field="${field}">`;
+}
+function bindTableInputs(){
+  document.querySelectorAll("[data-sec][data-id][data-field]").forEach(el=>{
+    el.oninput=el.onchange=()=>{
+      const rows=state[el.dataset.sec];const row=rows.find(r=>r.id===el.dataset.id);if(!row)return;
+      row[el.dataset.field]=el.type==="checkbox"?el.checked:el.type==="number"?num(el.value):el.value;
+      renderDerivedOnly(el.dataset.sec);scheduleSave();
+    };
+  });
+  document.querySelectorAll("[data-delete-row]").forEach(btn=>btn.onclick=()=>{
+    const [sec,id]=btn.dataset.deleteRow.split("|");state[sec]=state[sec].filter(r=>r.id!==id);renderSection(sec);scheduleSave();
+  });
+}
+function addRow(section){
+  const makers={
+    photography:()=>({id:uid(),name:"",phone:"",email:"",website:"",weddingDay:0,engagement:0,album:0,notes:""}),
+    catering:()=>({id:uid(),caterer:"",contact:"",phone:"",email:"",website:"",costPerPerson:0,guestCount:0,notes:""}),
+    cake:()=>({id:uid(),name:"",phone:"",email:"",website:"",costPerSlice:0,transport:0,notes:""}),
+    flowers:()=>({id:uid(),arrangement:"",qty:0,flowers:"",stemsEach:0,bunches:0,pricePerBunch:0,purchased:false,notes:""}),
+    hairMakeup:()=>({id:uid(),name:"",phone:"",email:"",website:"",pricingType:"Per person",trial:0,brideDay:0,othersDay:0,extra:0,notes:""}),
+    attire:()=>({id:uid(),category:"",name:"",phone:"",email:"",website:"",alterations:"No",totalCost:0,notes:""}),
+    venue:()=>({id:uid(),venue:"",contact:"",phone:"",email:"",website:"",address:"",capacity:0,hours:0,roomCost:0,costPerPerson:0,foodDrinkMin:0,totalCost:0,notes:""}),
+    entertainment:()=>({id:uid(),person:"",number:"",cost:0})
+  }; state[section].push(makers[section]());renderSection(section);scheduleSave();
+}
+document.querySelectorAll("[data-add-row]").forEach(b=>b.onclick=()=>addRow(b.dataset.addRow));
+function delButton(sec,id){return `<button class="delete-row" title="Delete row" data-delete-row="${sec}|${id}">×</button>`}
+function renderPhotography(){
+  document.getElementById("photographyBody").innerHTML=state.photography.map(r=>`<tr>
+    <td>${cellInput("photography",r,"name")}</td><td>${cellInput("photography",r,"phone")}</td><td>${cellInput("photography",r,"email","email")}</td><td>${cellInput("photography",r,"website")}</td>
+    <td>${cellInput("photography",r,"weddingDay","number")}</td><td>${cellInput("photography",r,"engagement","number")}</td><td>${cellInput("photography",r,"album","number")}</td>
+    <td class="money-total" data-photo-total="${r.id}">${money(num(r.weddingDay)+num(r.engagement)+num(r.album))}</td><td>${cellInput("photography",r,"notes","textarea")}</td><td>${delButton("photography",r.id)}</td></tr>`).join("");bindTableInputs();
+}
+function renderCatering(){
+  document.getElementById("cateringBody").innerHTML=state.catering.map(r=>`<tr>
+    <td>${cellInput("catering",r,"caterer")}</td><td>${cellInput("catering",r,"contact")}</td><td>${cellInput("catering",r,"phone")}</td><td>${cellInput("catering",r,"email","email")}</td><td>${cellInput("catering",r,"website")}</td>
+    <td>${cellInput("catering",r,"costPerPerson","number")}</td><td>${cellInput("catering",r,"guestCount","number")}</td><td class="money-total" data-catering-total="${r.id}">${money(num(r.costPerPerson)*num(r.guestCount))}</td>
+    <td>${cellInput("catering",r,"notes","textarea")}</td><td>${delButton("catering",r.id)}</td></tr>`).join("");bindTableInputs();
+}
+function renderCake(){
+  document.getElementById("cakeBody").innerHTML=state.cake.map(r=>`<tr><td>${cellInput("cake",r,"name")}</td><td>${cellInput("cake",r,"phone")}</td><td>${cellInput("cake",r,"email","email")}</td><td>${cellInput("cake",r,"website")}</td>
+    <td>${cellInput("cake",r,"costPerSlice","number")}</td><td>${cellInput("cake",r,"transport","number")}</td><td class="money-total" data-cake-total="${r.id}">${money(num(r.costPerSlice)*num(state.cakeSlices)+num(r.transport))}</td><td>${cellInput("cake",r,"notes","textarea")}</td><td>${delButton("cake",r.id)}</td></tr>`).join("");bindTableInputs();
+}
+function renderFlowers(){
+  document.getElementById("flowersBody").innerHTML=state.flowers.map(r=>`<tr><td>${cellInput("flowers",r,"arrangement")}</td><td>${cellInput("flowers",r,"qty","number")}</td><td>${cellInput("flowers",r,"flowers","textarea")}</td>
+    <td>${cellInput("flowers",r,"stemsEach","number")}</td><td class="money-total" data-flower-stems="${r.id}">${num(r.qty)*num(r.stemsEach)}</td><td>${cellInput("flowers",r,"bunches","number")}</td>
+    <td>${cellInput("flowers",r,"pricePerBunch","number")}</td><td class="money-total" data-flower-cost="${r.id}">${money(num(r.bunches)*num(r.pricePerBunch))}</td><td>${cellInput("flowers",r,"purchased","checkbox")}</td><td>${cellInput("flowers",r,"notes","textarea")}</td><td>${delButton("flowers",r.id)}</td></tr>`).join("");bindTableInputs();
+}
+function hmTotal(r){return num(r.trial)+num(r.brideDay)+num(r.othersDay)*num(state.hmAdditional)+num(r.extra)}
+function renderHairMakeup(){
+  document.getElementById("hairMakeupBody").innerHTML=state.hairMakeup.map(r=>`<tr><td>${cellInput("hairMakeup",r,"name")}</td><td>${cellInput("hairMakeup",r,"phone")}</td><td>${cellInput("hairMakeup",r,"email","email")}</td><td>${cellInput("hairMakeup",r,"website")}</td>
+    <td>${cellInput("hairMakeup",r,"pricingType","select",{options:["Per person","Package","Hourly"]})}</td><td>${cellInput("hairMakeup",r,"trial","number")}</td><td>${cellInput("hairMakeup",r,"brideDay","number")}</td><td>${cellInput("hairMakeup",r,"othersDay","number")}</td><td>${cellInput("hairMakeup",r,"extra","number")}</td>
+    <td class="money-total" data-hm-total="${r.id}">${money(hmTotal(r))}</td><td>${cellInput("hairMakeup",r,"notes","textarea")}</td><td>${delButton("hairMakeup",r.id)}</td></tr>`).join("");bindTableInputs();
+}
+function renderAttire(){
+  document.getElementById("attireBody").innerHTML=state.attire.map(r=>`<tr><td>${cellInput("attire",r,"category")}</td><td>${cellInput("attire",r,"name")}</td><td>${cellInput("attire",r,"phone")}</td><td>${cellInput("attire",r,"email","email")}</td><td>${cellInput("attire",r,"website")}</td><td>${cellInput("attire",r,"alterations","select",{options:["No","Yes","Maybe","Included"]})}</td><td>${cellInput("attire",r,"totalCost","number")}</td><td>${cellInput("attire",r,"notes","textarea")}</td><td>${delButton("attire",r.id)}</td></tr>`).join("");bindTableInputs();
+}
+function renderVenue(){
+  document.getElementById("venueBody").innerHTML=state.venue.map(r=>`<tr><td>${cellInput("venue",r,"venue")}</td><td>${cellInput("venue",r,"contact")}</td><td>${cellInput("venue",r,"phone")}</td><td>${cellInput("venue",r,"email","email")}</td><td>${cellInput("venue",r,"website")}</td><td>${cellInput("venue",r,"address")}</td><td>${cellInput("venue",r,"capacity","number")}</td><td>${cellInput("venue",r,"hours","number")}</td><td>${cellInput("venue",r,"roomCost","number")}</td><td>${cellInput("venue",r,"costPerPerson","number")}</td><td>${cellInput("venue",r,"foodDrinkMin","number")}</td><td>${cellInput("venue",r,"totalCost","number")}</td><td>${cellInput("venue",r,"notes","textarea")}</td><td>${delButton("venue",r.id)}</td></tr>`).join("");bindTableInputs();
+}
+function renderEntertainment(){
+  document.getElementById("entertainmentBody").innerHTML=state.entertainment.map(r=>`<tr><td>${cellInput("entertainment",r,"person")}</td><td>${cellInput("entertainment",r,"number")}</td><td>${cellInput("entertainment",r,"cost","number")}</td><td>${delButton("entertainment",r.id)}</td></tr>`).join("");bindTableInputs();
+}
+function renderSection(sec){({photography:renderPhotography,catering:renderCatering,cake:renderCake,flowers:renderFlowers,hairMakeup:renderHairMakeup,attire:renderAttire,venue:renderVenue,entertainment:renderEntertainment}[sec]||(()=>{}))();renderBudget();}
+function renderDerivedOnly(sec){
+  if(sec==="photography")state.photography.forEach(r=>{const el=document.querySelector(`[data-photo-total="${r.id}"]`);if(el)el.textContent=money(num(r.weddingDay)+num(r.engagement)+num(r.album));});
+  if(sec==="catering")state.catering.forEach(r=>{const el=document.querySelector(`[data-catering-total="${r.id}"]`);if(el)el.textContent=money(num(r.costPerPerson)*num(r.guestCount));});
+  if(sec==="cake")state.cake.forEach(r=>{const el=document.querySelector(`[data-cake-total="${r.id}"]`);if(el)el.textContent=money(num(r.costPerSlice)*num(state.cakeSlices)+num(r.transport));});
+  if(sec==="flowers")state.flowers.forEach(r=>{const s=document.querySelector(`[data-flower-stems="${r.id}"]`),c=document.querySelector(`[data-flower-cost="${r.id}"]`);if(s)s.textContent=num(r.qty)*num(r.stemsEach);if(c)c.textContent=money(num(r.bunches)*num(r.pricePerBunch));});
+  if(sec==="hairMakeup")state.hairMakeup.forEach(r=>{const el=document.querySelector(`[data-hm-total="${r.id}"]`);if(el)el.textContent=money(hmTotal(r));});
+  renderBudget();
+}
+function linkedActuals(){
+  return {
+    "Venue":state.venue.reduce((s,r)=>s+num(r.totalCost),0),
+    "Attire":state.attire.reduce((s,r)=>s+num(r.totalCost),0),
+    "Hair & makeup":state.hairMakeup.reduce((s,r)=>s+hmTotal(r),0),
+    "Flowers":state.flowers.reduce((s,r)=>s+num(r.bunches)*num(r.pricePerBunch),0),
+    "Cake":state.cake.reduce((s,r)=>s+num(r.costPerSlice)*num(state.cakeSlices)+num(r.transport),0),
+    "Caterer & drinks":state.catering.reduce((s,r)=>s+num(r.costPerPerson)*num(r.guestCount),0),
+    "Photography":state.photography.reduce((s,r)=>s+num(r.weddingDay)+num(r.engagement)+num(r.album),0),
+    "Entertainment":state.entertainment.reduce((s,r)=>s+num(r.cost),0)
+  };
+}
+function renderBudget(){
+  if(!state)return;
+  const linked=linkedActuals(),body=document.getElementById("budgetBody");
+  body.innerHTML=state.budgetRows.map((r,i)=>{
+    const isLinked=Object.prototype.hasOwnProperty.call(linked,r.category),actual=isLinked?linked[r.category]:num(r.actual);
+    const pct=state.totalBudget?num(r.estimate)/num(state.totalBudget)*100:0;
+    return `<tr class="${isLinked?"budget-category-linked":""}">
+      <td><input value="${escapeHtml(r.category)}" data-budget-index="${i}" data-budget-field="category"></td>
+      <td><input type="number" step="0.01" value="${num(r.estimate)}" data-budget-index="${i}" data-budget-field="estimate"></td>
+      <td>${isLinked?`<div class="money-total">${money(actual)}<div class="linked-note">Auto from planner section</div></div>`:`<input type="number" step="0.01" value="${actual}" data-budget-index="${i}" data-budget-field="actual">`}</td>
+      <td class="money-total">${pct.toFixed(1)}%</td><td class="money-total">${money(num(r.estimate)-actual)}</td></tr>`;
+  }).join("");
+  document.querySelectorAll("[data-budget-index]").forEach(el=>el.oninput=()=>{
+    const r=state.budgetRows[num(el.dataset.budgetIndex)],field=el.dataset.budgetField;
+    r[field]=field==="category"?el.value:num(el.value);scheduleSave();renderBudget();
+  });
+  const estimate=state.budgetRows.reduce((s,r)=>s+num(r.estimate),0);
+  const actual=state.budgetRows.reduce((s,r)=>s+(Object.prototype.hasOwnProperty.call(linked,r.category)?linked[r.category]:num(r.actual)),0);
+  document.getElementById("budgetTotalCard").textContent=money(state.totalBudget);
+  document.getElementById("budgetEstimateCard").textContent=money(estimate);
+  document.getElementById("budgetActualCard").textContent=money(actual);
+  document.getElementById("budgetRemainingCard").textContent=money(num(state.totalBudget)-actual);
+}
 </script>
 </body>
 </html>
